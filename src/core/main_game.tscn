@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://tdb8d8mdvj61"]
+
+[node name="MainGame" type="Node" unique_id=1065262524]
+
+[node name="System" type="Node" parent="." unique_id=2005422184]
+
+[node name="Map" type="Node2D" parent="." unique_id=833944702]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Map" unique_id=1023929134]

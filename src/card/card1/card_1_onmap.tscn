@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bacw3c6mite5s"]
+
+[ext_resource type="Script" uid="uid://bekoka8xju7td" path="res://src/card/card1/card_1_onmap.gd" id="1_rp4cr"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yr583"]
+load_path = "res://.godot/imported/card1.png-bac730bc1fdd7b72783efbda222da736.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2agvh"]
+load_path = "res://.godot/imported/hp_b.png-4b2b4692f071203021c08287a1b8b2f4.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4u74v"]
+load_path = "res://.godot/imported/hp_player.png-7bb26d2d9ce599f2b862d4eebde2d8fb.ctex"
+
+[node name="player1_card1_onmap" type="Node2D" unique_id=361188102]
+script = ExtResource("1_rp4cr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858826433]
+texture_filter = 1
+texture = SubResource("CompressedTexture2D_yr583")
+
+[node name="hp" type="TextureProgressBar" parent="." unique_id=1653397060]
+texture_filter = 1
+offset_left = -40.0
+offset_top = 42.0
+offset_right = 40.0
+offset_bottom = 46.0
+texture_under = SubResource("CompressedTexture2D_2agvh")
+texture_over = SubResource("CompressedTexture2D_4u74v")

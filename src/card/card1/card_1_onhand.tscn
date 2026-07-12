@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://csje3wc5pgi4s"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tqvij"]
+load_path = "res://.godot/imported/card1.png-bac730bc1fdd7b72783efbda222da736.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x3v1r"]
+load_path = "res://.godot/imported/card1.png-bac730bc1fdd7b72783efbda222da736.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tna73"]
+load_path = "res://.godot/imported/card1.png-bac730bc1fdd7b72783efbda222da736.ctex"
+
+[node name="card1_onhand" type="Control" unique_id=1562481650]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=376728341]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -56.0
+offset_right = 40.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("CompressedTexture2D_tqvij")
+texture_pressed = SubResource("CompressedTexture2D_x3v1r")
+texture_hover = SubResource("CompressedTexture2D_tna73")
