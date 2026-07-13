@@ -1,11 +1,71 @@
 extends Node
 class_name GameGrid
 
-# Called when the node enters the scene tree for the first time.
+enum Board {LAND, RIVER, NULL}
+enum Obstacle {ROCK, WOOD, NULL}
+
+@export var board:TileMapLayer
+@export var obstacle:TileMapLayer
+
+var grid_data:Dictionary = {}
+
 func _ready() -> void:
-	pass # Replace with function body.
+	_init_grid()
+	
+func _init_grid() -> void:
+	grid_data.clear()
+	if not board:
+		print("错误：board引用")
+		return
+	for cell_position in board.get_used_cells():
+		var tile_data = board.get_cell_tile_data(cell_position)
+		#默认地形
+		var board_type = Board.LAND
+		if tile_data:
+			var custom_board = tile_data.get_custom_data("Board")
+			if typeof(custom_board) == TYPE_INT:
+				board_type = custom_board as Board
+			else:
+				print("错误：棋盘类型返回非int类型")
+				return
+		grid_data[cell_position]={
+			"uint" : null,
+			"board" : board_type,
+			"obstacle" : Obstacle.NULL
+		}
+		
+	if not obstacle:
+		print("错误：obstacle引用")
+		return
+	for cell_position in obstacle.get_used_cells():
+		var tile_data = obstacle.get_cell_tile_data(cell_position)
+		#默认地形
+		var obstacle_type = Obstacle.ROCK
+		if tile_data:
+			var custom_obstacle = tile_data.get_custom_data("Obstacle")
+			if typeof(custom_obstacle) == TYPE_INT:
+				obstacle_type = custom_obstacle as Obstacle
+			else:
+				print("错误：棋盘类型返回非int类型")
+				return
+		grid_data[cell_position]["obstacle"] = obstacle_type
+		
+func get_cell_data(cell_position:Vector2i) -> Dictionary:
+	return grid_data.get(cell_position,{})
+	
+func get_all_cell_data() -> Dictionary:
+	return grid_data
 
+## 获取地形类型的字符串表示（小写）
+func get_board_string(board_val: int) -> String:
+	var key = Board.find_key(board_val)
+	if key:
+		return key.to_lower()
+	return "unknown"
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+## 获取障碍物类型的字符串表示（小写）
+func get_obstacle_string(obstacle_val: int) -> String:
+	var key = Obstacle.find_key(obstacle_val)
+	if key:
+		return key.to_lower()
+	return "unknown"
