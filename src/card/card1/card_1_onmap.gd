@@ -26,4 +26,4 @@ func _process(delta: float) -> void:
 	$hp.value=hp;
 	if(hp<=0):
 		pass
-	pass
+	

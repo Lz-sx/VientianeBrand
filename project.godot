@@ -18,10 +18,15 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom_font="uid://dqt8pu81tp24x"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"

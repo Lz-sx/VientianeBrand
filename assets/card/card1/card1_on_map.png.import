@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvodbnjdpsjfw"
-path="res://.godot/imported/hp_enemy.png-37e903cb99849d4c3079c09151f178e5.ctex"
+uid="uid://by538xoa41cmt"
+path="res://.godot/imported/card1_on_map.png-ac5bcbb2fe9f7681e2de05e6df0fef3d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/card/hp_enemy.png"
-dest_files=["res://.godot/imported/hp_enemy.png-37e903cb99849d4c3079c09151f178e5.ctex"]
+source_file="res://assets/card/card1/card1_on_map.png"
+dest_files=["res://.godot/imported/card1_on_map.png-ac5bcbb2fe9f7681e2de05e6df0fef3d.ctex"]
 
 [params]
 
