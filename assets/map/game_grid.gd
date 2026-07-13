@@ -1,9 +1,5 @@
 extends Node
-class_name Data
-enum Player{
-	PLAYER1, 
-	PLAYER2
-}
+class_name GameGrid
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

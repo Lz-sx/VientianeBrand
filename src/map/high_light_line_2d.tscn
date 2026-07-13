@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://jadf4u7pswbs"]
+
+[ext_resource type="Script" uid="uid://co2d7ma1cshwy" path="res://src/map/high_light_line_2d.gd" id="1_p6p0e"]
+
+[node name="HighLightLine2D" type="Line2D" unique_id=744060826]
+texture_filter = 1
+points = PackedVector2Array(-16, 0, 0, 8, 16, 0, 0, -8, -16, 0)
+width = 1.0
+script = ExtResource("1_p6p0e")
