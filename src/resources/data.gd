@@ -1,5 +1,9 @@
 extends Node
-enum Player{PLAYER1, PLAYER2}
+class_name DATA
+enum Player{
+	PLAYER1, 
+	PLAYER2
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
