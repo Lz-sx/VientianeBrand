@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://assets/map/game_grid.gd" id="5_nx426"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
 [ext_resource type="Script" uid="uid://b2j8se1u08flr" path="res://src/resources/data.gd" id="7_prdqg"]
-[ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base_onmap/card_base_onmap.tscn" id="8_gtuoi"]
 [ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
@@ -54,10 +53,6 @@ y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAD/////AAAEAAQAAAD//wAAAAAEAAQAAAD//wEAAAAEAAQAAAADAAMAAAAIAAMAAAD9/wUAAAAJAAMAAAD+//z/AAADAAQAAAD8//r/AAAAAAQAAAADAAUAAAABAAQAAAD//wMAAAABAAQAAAACAPr/AAAIAAMAAAD7/wUAAAAJAAQAAAACAP7/AAACAAQAAAA=")
 tile_set = ExtResource("2_bsx2m")
-
-[node name="CardBaseOnmap" parent="Map/Obstacle" unique_id=361188102 instance=ExtResource("8_gtuoi")]
-y_sort_enabled = true
-position = Vector2(-96, 9.536743e-07)
 
 [node name="GameGrid" type="Node" parent="Map" unique_id=352285289 node_paths=PackedStringArray("board", "obstacle")]
 script = ExtResource("5_nx426")

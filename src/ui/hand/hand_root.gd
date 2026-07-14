@@ -1,13 +1,15 @@
 extends Control
 class_name HandRoot
-
-const CARD_BASE_ONHAND = preload("uid://csje3wc5pgi4s")
 @export var offset_y:int = 100
+@onready var data: Data = $"../../Data"
+const CARD_BASE_ONHAND = preload("uid://va7mf6bcwcax")
+
 var base_position = Vector2(DisplayServer.window_get_size().x/2.0, DisplayServer.window_get_size().y - offset_y)
 var card_size:int = 0
 
 func add_card():
 	var new_card = CARD_BASE_ONHAND.instantiate()
+	new_card.setup(data)
 	add_child(new_card)
 	card_size+=1
 	await get_tree().create_timer(0.1).timeout

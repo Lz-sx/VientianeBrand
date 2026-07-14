@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://va7mf6bcwcax"]
+
+[ext_resource type="PackedScene" uid="uid://csje3wc5pgi4s" path="res://src/card/card_base_onhand/card_base_onhand.tscn" id="1_rj3f6"]
+[ext_resource type="Script" uid="uid://bggmi16wn2prw" path="res://src/card/character_card/card1/card_1_onhand.gd" id="2_yinpo"]
+
+[node name="Card1Onhand" unique_id=1562481650 instance=ExtResource("1_rj3f6")]
+script = ExtResource("2_yinpo")
+Affiliation = 2
+Type = 1

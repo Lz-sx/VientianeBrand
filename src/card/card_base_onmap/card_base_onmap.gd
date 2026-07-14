@@ -1,19 +1,21 @@
 extends Node2D
-class_name CardBase
+class_name CardBaseOnmap
 @export var data:Data
 @onready var hp_line: TextureProgressBar = $Hp
 
 @export var hp = 20
 @export var damage = 10
-@export var speed = 1
 
-var Faction:int
+@export var Faction:Data.Faction
+@export var Affiliation:Data.Affiliation
+@export var Type:Data.Type
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hp_line.max_value=hp;
 	hp_line.value=hp;
-
+	data = $"../../../Data"
+	
 func _init_Faction(Faction_:int):
 	Faction = Faction_
 	match Faction:
