@@ -38,22 +38,16 @@ func _update_labels(tile_position:Vector2i)->void:
 		
 	var cell_data = map.game_grid.get_cell_data(tile_position)
 	
-	print(cell_data)
-	print(tile_position)
 	if not cell_data.is_empty():
 		var board_val = cell_data.get("board")
 		var obstacle_val = cell_data.get("obstacle")
 		if board_val != null:
 			label_2.text = map.game_grid.get_board_string(board_val)
-			print(map.game_grid.get_board_string(1))
 		else:
 			label_2.text = "unknown"
 		if obstacle_val != null:
 			label_3.text = map.game_grid.get_obstacle_string(obstacle_val)
 		else:
-			label_3.text = "unknown"	
-	else:
-		
-		print("错误：cell_data为空")
+			label_3.text = "unknown"		
 	
 	

@@ -3,12 +3,18 @@
 [ext_resource type="Script" uid="uid://c4m1f61ykgp6d" path="res://src/core/main_game.gd" id="1_bsx2m"]
 [ext_resource type="TileSet" uid="uid://w5g648em3kms" path="res://assets/map/new_tile_set.tres" id="2_bsx2m"]
 [ext_resource type="Script" uid="uid://cs5jm0tlhmtqr" path="res://src/map/map.gd" id="2_bycoy"]
+[ext_resource type="Script" uid="uid://cn3hsgqksojee" path="res://src/core/unit_spawner.gd" id="2_gtuoi"]
 [ext_resource type="Script" uid="uid://bfsos7cleq1oi" path="res://src/camera/camera_2d.gd" id="2_ike8k"]
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://assets/map/game_grid.gd" id="5_nx426"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
+[ext_resource type="Script" uid="uid://b2j8se1u08flr" path="res://src/resources/data.gd" id="7_prdqg"]
+[ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base_onhand/card_base_onmap.tscn" id="8_gtuoi"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
+
+[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333]
+script = ExtResource("2_gtuoi")
 
 [node name="System" type="Node" parent="." unique_id=2005422184]
 
@@ -39,9 +45,14 @@ tile_set = ExtResource("2_bsx2m")
 
 [node name="Obstacle" type="TileMapLayer" parent="Map" unique_id=366284143]
 z_index = 2
+y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAD/////AAAEAAQAAAD//wAAAAAEAAQAAAD//wEAAAAEAAQAAAADAAMAAAAIAAMAAAD9/wUAAAAJAAMAAAD+//z/AAADAAQAAAD8//r/AAAAAAQAAAADAAUAAAABAAQAAAD//wMAAAABAAQAAAACAPr/AAAIAAMAAAD7/wUAAAAJAAQAAAACAP7/AAACAAQAAAA=")
 tile_set = ExtResource("2_bsx2m")
+
+[node name="CardBaseOnmap" parent="Map/Obstacle" unique_id=361188102 instance=ExtResource("8_gtuoi")]
+y_sort_enabled = true
+position = Vector2(-96, 9.536743e-07)
 
 [node name="GameGrid" type="Node" parent="Map" unique_id=352285289 node_paths=PackedStringArray("board", "obstacle")]
 script = ExtResource("5_nx426")
@@ -60,4 +71,15 @@ script = ExtResource("2_ike8k")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Environment" unique_id=1745191833]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1914673235]
+[node name="Hand" type="CanvasLayer" parent="." unique_id=1914673235]
+
+[node name="Control" type="Control" parent="Hand" unique_id=1792260433]
+layout_mode = 3
+anchor_top = 0.25
+anchor_bottom = 0.25
+offset_left = -223.0
+offset_top = -59.0
+offset_right = 218.0
+
+[node name="Data" type="Node" parent="." unique_id=481019998]
+script = ExtResource("7_prdqg")

@@ -11,7 +11,6 @@ var grid_data:Dictionary = {}
 
 func _ready() -> void:
 	_init_grid()
-	print(grid_data)
 	
 func _init_grid() -> void:
 	grid_data.clear()
