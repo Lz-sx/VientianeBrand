@@ -1,18 +1,24 @@
 [gd_scene format=3 uid="uid://csje3wc5pgi4s"]
 
+[ext_resource type="Texture2D" uid="uid://bib4g1h0pykjq" path="res://assets/card/cardbase/card1_on_hand.png" id="1_cqjwv"]
 [ext_resource type="Script" uid="uid://cff5uj07w2xwp" path="res://src/card/card_base_onhand/card_base_onhand.gd" id="1_vebrn"]
 
 [node name="CardBaseOnhand" type="Control" unique_id=1562481650]
 layout_mode = 3
 anchors_preset = 0
+offset_right = 39.999996
+offset_bottom = 55.999992
 scale = Vector2(2.5, 2.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_vebrn")
 
-[node name="TextureButton" type="Panel" parent="." unique_id=1823287628]
+[node name="TextureButton" type="TextureButton" parent="." unique_id=282656276]
 texture_filter = 1
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 56.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_cqjwv")
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="TextureButton" to="." method="_on_texture_button_mouse_entered"]
+[connection signal="mouse_exited" from="TextureButton" to="." method="_on_texture_button_mouse_exited"]
