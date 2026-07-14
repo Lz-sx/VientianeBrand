@@ -39,6 +39,7 @@ func _update_labels(tile_position:Vector2i)->void:
 	var cell_data = map.game_grid.get_cell_data(tile_position)
 	
 	if not cell_data.is_empty():
+		visible = true
 		var board_val = cell_data.get("board")
 		var obstacle_val = cell_data.get("obstacle")
 		if board_val != null:
@@ -49,5 +50,6 @@ func _update_labels(tile_position:Vector2i)->void:
 			label_3.text = map.game_grid.get_obstacle_string(obstacle_val)
 		else:
 			label_3.text = "unknown"		
-	
+	else:
+		visible = false
 	

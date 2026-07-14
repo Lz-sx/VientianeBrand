@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://tdb8d8mdvj61"]
 
 [ext_resource type="Script" uid="uid://c4m1f61ykgp6d" path="res://src/core/main_game.gd" id="1_bsx2m"]
+[ext_resource type="Script" uid="uid://by1yuv8ooq15t" path="res://src/core/deal_cards.gd" id="2_13ca8"]
 [ext_resource type="TileSet" uid="uid://w5g648em3kms" path="res://assets/map/new_tile_set.tres" id="2_bsx2m"]
 [ext_resource type="Script" uid="uid://cs5jm0tlhmtqr" path="res://src/map/map.gd" id="2_bycoy"]
 [ext_resource type="Script" uid="uid://cn3hsgqksojee" path="res://src/core/unit_spawner.gd" id="2_gtuoi"]
@@ -8,10 +9,14 @@
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://assets/map/game_grid.gd" id="5_nx426"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
 [ext_resource type="Script" uid="uid://b2j8se1u08flr" path="res://src/resources/data.gd" id="7_prdqg"]
-[ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base_onhand/card_base_onmap.tscn" id="8_gtuoi"]
+[ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base_onmap/card_base_onmap.tscn" id="8_gtuoi"]
+[ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
+
+[node name="DealCards" type="Node" parent="." unique_id=72600965]
+script = ExtResource("2_13ca8")
 
 [node name="UnitSpawner" type="Node" parent="." unique_id=1436689333]
 script = ExtResource("2_gtuoi")
@@ -71,15 +76,21 @@ script = ExtResource("2_ike8k")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Environment" unique_id=1745191833]
 
-[node name="Hand" type="CanvasLayer" parent="." unique_id=1914673235]
+[node name="HandLayer" type="CanvasLayer" parent="." unique_id=1914673235]
 
-[node name="Control" type="Control" parent="Hand" unique_id=1792260433]
+[node name="HandRoot" type="Control" parent="HandLayer" unique_id=1792260433]
 layout_mode = 3
-anchor_top = 0.25
-anchor_bottom = 0.25
-offset_left = -223.0
-offset_top = -59.0
-offset_right = 218.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -648.0
+offset_right = 576.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("9_h37xf")
 
 [node name="Data" type="Node" parent="." unique_id=481019998]
 script = ExtResource("7_prdqg")
