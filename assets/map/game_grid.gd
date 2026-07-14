@@ -1,8 +1,8 @@
 extends Node
 class_name GameGrid
 
-enum Board {LAND, RIVER, NULL}
-enum Obstacle {ROCK, WOOD, NULL}
+enum Board {LAND=1, RIVER, NULL}
+enum Obstacle {ROCK=1, WOOD, NULL}
 
 @export var board:TileMapLayer
 @export var obstacle:TileMapLayer
@@ -11,6 +11,7 @@ var grid_data:Dictionary = {}
 
 func _ready() -> void:
 	_init_grid()
+	print(grid_data)
 	
 func _init_grid() -> void:
 	grid_data.clear()
