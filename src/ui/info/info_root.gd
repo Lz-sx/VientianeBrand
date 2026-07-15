@@ -1,7 +1,8 @@
-extends Node
-class_name MainGame
+extends Control
+class_name InfoRoot
 
-var active_units:Array[CardBaseOnmap]
+@onready var rich_text_label: RichTextLabel = $RichTextLabel
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

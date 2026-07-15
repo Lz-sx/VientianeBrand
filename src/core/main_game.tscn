@@ -6,10 +6,11 @@
 [ext_resource type="Script" uid="uid://cs5jm0tlhmtqr" path="res://src/map/map.gd" id="2_bycoy"]
 [ext_resource type="Script" uid="uid://cn3hsgqksojee" path="res://src/core/unit_spawner.gd" id="2_gtuoi"]
 [ext_resource type="Script" uid="uid://bfsos7cleq1oi" path="res://src/camera/camera_2d.gd" id="2_ike8k"]
-[ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://assets/map/game_grid.gd" id="5_nx426"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
+[ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://src/map/game_grid.gd" id="7_h37xf"]
 [ext_resource type="Script" uid="uid://b2j8se1u08flr" path="res://src/resources/data.gd" id="7_prdqg"]
 [ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
+[ext_resource type="Script" uid="uid://buuvu7vqjj0w8" path="res://src/ui/info/info_root.gd" id="11_13ca8"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
@@ -17,8 +18,13 @@ script = ExtResource("1_bsx2m")
 [node name="DealCards" type="Node" parent="." unique_id=72600965]
 script = ExtResource("2_13ca8")
 
-[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333]
+[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333 node_paths=PackedStringArray("data", "map")]
 script = ExtResource("2_gtuoi")
+data = NodePath("../Data")
+map = NodePath("../Map")
+
+[node name="Data" type="Node" parent="." unique_id=481019998]
+script = ExtResource("7_prdqg")
 
 [node name="System" type="Node" parent="." unique_id=2005422184]
 
@@ -26,6 +32,11 @@ script = ExtResource("2_gtuoi")
 tile_set = ExtResource("2_bsx2m")
 script = ExtResource("2_bycoy")
 game_grid = NodePath("GameGrid")
+
+[node name="GameGrid" type="Node" parent="Map" unique_id=352285289 node_paths=PackedStringArray("board", "obstacle")]
+script = ExtResource("7_h37xf")
+board = NodePath("../Board")
+obstacle = NodePath("../Obstacle")
 
 [node name="HighLightSelector" parent="Map" unique_id=744060826 node_paths=PackedStringArray("map") instance=ExtResource("5_rt44x")]
 z_index = 1
@@ -53,11 +64,6 @@ y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAD/////AAAEAAQAAAD//wAAAAAEAAQAAAD//wEAAAAEAAQAAAADAAMAAAAIAAMAAAD9/wUAAAAJAAMAAAD+//z/AAADAAQAAAD8//r/AAAAAAQAAAADAAUAAAABAAQAAAD//wMAAAABAAQAAAACAPr/AAAIAAMAAAD7/wUAAAAJAAQAAAACAP7/AAACAAQAAAA=")
 tile_set = ExtResource("2_bsx2m")
-
-[node name="GameGrid" type="Node" parent="Map" unique_id=352285289 node_paths=PackedStringArray("board", "obstacle")]
-script = ExtResource("5_nx426")
-board = NodePath("../Board")
-obstacle = NodePath("../Obstacle")
 
 [node name="Camera" type="Node2D" parent="." unique_id=848638604]
 
@@ -87,5 +93,22 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("9_h37xf")
 
-[node name="Data" type="Node" parent="." unique_id=481019998]
-script = ExtResource("7_prdqg")
+[node name="InfoLayer" type="CanvasLayer" parent="." unique_id=1555014288]
+
+[node name="InfoRoot" type="Control" parent="InfoLayer" unique_id=1898787209]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 84.0
+offset_right = 214.0
+offset_bottom = 502.0
+script = ExtResource("11_13ca8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/InfoRoot" unique_id=1307714942]
+layout_mode = 0
+offset_right = 214.0
+offset_bottom = 418.0
+
+[node name="Panel" type="Panel" parent="InfoLayer/InfoRoot" unique_id=240711814]
+layout_mode = 0
+offset_right = 214.0
+offset_bottom = 418.0

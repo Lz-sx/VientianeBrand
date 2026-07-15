@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://bl18eeurtyeb"]
-
-[ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base_onmap/card_base_onmap.tscn" id="1_4nfwh"]
-[ext_resource type="Script" uid="uid://2v0le4js82ni" path="res://src/card/vehicle_card_base/vehicle_card_base.gd" id="2_ygcvc"]
-
-[node name="VehicleCardBase" unique_id=361188102 instance=ExtResource("1_4nfwh")]
-script = ExtResource("2_ygcvc")
-speed = 3

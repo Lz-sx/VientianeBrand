@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bsfevywtjtfko"]
+
+[ext_resource type="PackedScene" uid="uid://csje3wc5pgi4s" path="res://src/card/card_base/card_base_onhand/card_base_onhand.tscn" id="1_gn68n"]
+[ext_resource type="Script" uid="uid://b84kam3lw1t1m" path="res://src/card/card_pool/building_card/citadel/citadel_onhand.gd" id="2_c3r8b"]
+[ext_resource type="Texture2D" uid="uid://dyo5efpuddjbh" path="res://assets/card/building_card/citadel/citadel_on_hand.png" id="3_7p4kf"]
+
+[node name="CitadelOnhand" unique_id=1562481650 instance=ExtResource("1_gn68n")]
+script = ExtResource("2_c3r8b")
+
+[node name="TextureButton" parent="." index="0" unique_id=282656276]
+texture_normal = ExtResource("3_7p4kf")

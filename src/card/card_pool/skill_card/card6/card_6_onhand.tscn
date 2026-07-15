@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bslo38b3g0458"]
+
+[ext_resource type="PackedScene" uid="uid://csje3wc5pgi4s" path="res://src/card/card_base/card_base_onhand/card_base_onhand.tscn" id="1_a5g5a"]
+[ext_resource type="Script" uid="uid://bda6rx3xdhudv" path="res://src/card/card_pool/skill_card/card6/card_6_onhand.gd" id="2_tl5au"]
+[ext_resource type="Texture2D" uid="uid://3kdy2jew3l3d" path="res://assets/card/skill/card6/card6_on_hand.png" id="3_gueig"]
+
+[node name="Card6Onhand" unique_id=1562481650 instance=ExtResource("1_a5g5a")]
+script = ExtResource("2_tl5au")
+id = 6
+Affiliation = 1
+Type = 6
+
+[node name="TextureButton" parent="." index="0" unique_id=282656276]
+texture_normal = ExtResource("3_gueig")

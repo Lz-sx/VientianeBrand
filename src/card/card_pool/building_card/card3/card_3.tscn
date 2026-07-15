@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dp1lbplm5vws"]
+
+[ext_resource type="PackedScene" uid="uid://bg5lukcd8tetl" path="res://src/card/card_base/building_card_base/building_card_base.tscn" id="1_vw8mo"]
+[ext_resource type="Script" uid="uid://clci8e7xuce23" path="res://src/card/card_pool/building_card/card3/card_3.gd" id="2_wknmx"]
+[ext_resource type="Texture2D" uid="uid://cs2ik3chwlwqi" path="res://assets/card/building_card/card3/card3_on_map.png" id="3_vw8mo"]
+
+[node name="Card3" unique_id=361188102 instance=ExtResource("1_vw8mo")]
+script = ExtResource("2_wknmx")
+id = 3
+hp = 30
+Affiliation = 2
+Type = 3
+
+[node name="Sprite2D" parent="." index="0" unique_id=1858826433]
+texture = ExtResource("3_vw8mo")

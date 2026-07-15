@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://3u80sra8fdel"]
+
+[ext_resource type="PackedScene" uid="uid://csje3wc5pgi4s" path="res://src/card/card_base/card_base_onhand/card_base_onhand.tscn" id="1_yse7o"]
+[ext_resource type="Script" uid="uid://ggc133jxui5o" path="res://src/card/card_pool/weapon_card/card5/card_5_onhand.gd" id="2_7f20r"]
+[ext_resource type="Texture2D" uid="uid://crnagdvhyxk5c" path="res://assets/card/weapon_card/card5/card5_on_hand.png" id="3_htk8i"]
+
+[node name="Card5Onhand" unique_id=1562481650 instance=ExtResource("1_yse7o")]
+script = ExtResource("2_7f20r")
+Affiliation = 2
+Type = 4
+
+[node name="TextureButton" parent="." index="0" unique_id=282656276]
+texture_normal = ExtResource("3_htk8i")

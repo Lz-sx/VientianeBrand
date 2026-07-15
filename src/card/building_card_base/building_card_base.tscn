@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bg5lukcd8tetl"]
-
-[ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base_onmap/card_base_onmap.tscn" id="1_2d14l"]
-[ext_resource type="Script" uid="uid://b0ti4oduuwwmg" path="res://src/card/building_card_base/building_card_base.gd" id="2_ctea8"]
-
-[node name="BuildingCardBase" unique_id=361188102 instance=ExtResource("1_2d14l")]
-script = ExtResource("2_ctea8")

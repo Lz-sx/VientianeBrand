@@ -1,12 +1,9 @@
-extends Node
-class_name MainGame
+extends CardBaseOnhand
 
-var active_units:Array[CardBaseOnmap]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	_ready()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

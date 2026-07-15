@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bcjly5e8n0h5h"]
+
+[ext_resource type="PackedScene" uid="uid://csje3wc5pgi4s" path="res://src/card/card_base/card_base_onhand/card_base_onhand.tscn" id="1_cg350"]
+[ext_resource type="Script" uid="uid://0end4wqf46av" path="res://src/card/card_pool/vehicle_card/card_2/card_2_onhand.gd" id="2_ekxx1"]
+[ext_resource type="Texture2D" uid="uid://bqrexgs7a8rbt" path="res://assets/card/vehicle_card/card2/card2_on_hand.png" id="3_cg350"]
+
+[node name="Card2Onhand" unique_id=1562481650 instance=ExtResource("1_cg350")]
+script = ExtResource("2_ekxx1")
+id = 2
+Affiliation = 2
+Type = 2
+
+[node name="TextureButton" parent="." index="0" unique_id=282656276]
+texture_normal = ExtResource("3_cg350")

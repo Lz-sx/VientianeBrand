@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b4utn1adkr2cv"]
+
+[ext_resource type="PackedScene" uid="uid://bl18eeurtyeb" path="res://src/card/card_base/vehicle_card_base/vehicle_card_base.tscn" id="1_8foe2"]
+[ext_resource type="Script" uid="uid://el8f6jtcppcu" path="res://src/card/card_pool/vehicle_card/card_2/card_2.gd" id="2_m5jue"]
+[ext_resource type="Texture2D" uid="uid://dlkwy2dwsapnr" path="res://assets/card/vehicle_card/card2/card2_on_map.png" id="3_8foe2"]
+
+[node name="Card2" unique_id=361188102 instance=ExtResource("1_8foe2")]
+visible = false
+script = ExtResource("2_m5jue")
+id = 2
+Affiliation = 2
+Type = 2
+
+[node name="Sprite2D" parent="." index="0" unique_id=1858826433]
+texture = ExtResource("3_8foe2")
