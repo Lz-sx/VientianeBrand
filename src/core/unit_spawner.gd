@@ -1,13 +1,12 @@
 extends Node
 class_name UnitSpawner
 
-@export var data: Data
 @export var container:Node
 @export var map: Map
 
 func spawn_uint(id:int, cell_position:Vector2i) -> CardBaseOnmap:
 	var world_position = map.get_global_from_tile(cell_position)
-	var unit = load(data.card_data[id]["map_uid"])
+	var unit = load(Data.card_data[id]["map_uid"])
 	var unit_instance = unit.instantiate()
 	unit_instance.position = world_position
 	if container:

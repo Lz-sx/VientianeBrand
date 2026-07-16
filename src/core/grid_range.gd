@@ -2,8 +2,6 @@ extends Node
 class_name  GridRange
 
 @export var game_grid: GameGrid
-@export var data: Data
-
 
 #位置
 var attack_grid:Array[Vector2i]
@@ -13,7 +11,7 @@ var units_in_attack_grid:Array[CardBaseOnmap]
 var units_in_move_grid:Array[CardBaseOnmap]
 #可交互位置和其中单位
 var attackable_cells_and_units:Dictionary
-var interactable_cells_and_units:Dictionary
+var occupancy_cells_and_units:Dictionary
 
 
 func get_cells_in_range(center: Vector2i, range: int) -> Array[Vector2i]:
@@ -35,7 +33,7 @@ const DIRS: Array[Vector2i] = [
 func find_move_grid(center: Vector2i, selected_unit:CardBaseOnmap, speed: int) -> void:
 	move_grid.clear()
 	units_in_move_grid.clear()
-	interactable_cells_and_units.clear()
+	occupancy_cells_and_units.clear()
 	# BFS 队列：存 [坐标, 已走步数]
 	var queue: Array = [[center, 0]]
 	# 记录已访问的格子，避免重复
@@ -60,7 +58,7 @@ func find_move_grid(center: Vector2i, selected_unit:CardBaseOnmap, speed: int) -
 			if game_grid.grid_data[next_pos]["unit"] != null:
 				units_in_move_grid.append(game_grid.grid_data[next_pos]["unit"])
 				
-				find_interactable_cells_and_units(selected_unit,game_grid.grid_data[next_pos]["unit"],next_pos)
+				find_occupiable_cells_and_units(selected_unit,game_grid.grid_data[next_pos]["unit"],next_pos)
 				continue
 			visited[next_pos] = true
 			queue.append([next_pos, steps + 1])
@@ -73,21 +71,33 @@ func find_attack_grid(center: Vector2i, selected_unit:CardBaseOnmap,range: int):
 	for position in attack_grid:
 		if game_grid.grid_data[position]["unit"] != null:
 			units_in_attack_grid.append(game_grid.grid_data[position]["unit"])
+			find_attackable_cells_and_units(selected_unit,game_grid.grid_data[position]["unit"],position)
 			
 
 func find_attackable_cells_and_units(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap,position:Vector2i):
 	if selected_unit.Faction != target_unit.Faction:
 		attackable_cells_and_units[position]=target_unit
 		
-func find_interactable_cells_and_units(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap,position:Vector2i):
+func find_occupiable_cells_and_units(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap,position:Vector2i):
 	if selected_unit.Faction == target_unit.Faction:
-		if target_unit.Type == data.Type.VEHICLE:
+		if target_unit.Type == Data.Type.VEHICLE:
 			target_unit = target_unit as VehicleCardBase
-			if target_unit.capacity > 0 and selected_unit.Type!=data.Type.VEHICLE and selected_unit.Type!=data.Type.BUILDING:
-				interactable_cells_and_units[position]=target_unit
-		elif target_unit.Type == data.Type.BUILDING:
+			if target_unit.capacity > 0 and selected_unit.Type!=Data.Type.VEHICLE and selected_unit.Type!=Data.Type.BUILDING:
+				occupancy_cells_and_units[position]=target_unit
+				return
+		elif target_unit.Type == Data.Type.BUILDING:
 			target_unit = target_unit as BuildingCardBase
-			if target_unit.capacity > 0 and selected_unit.Type != data.Type.BUILDING:
-				interactable_cells_and_units[position]=target_unit
-			
-			
+			if target_unit.capacity > 0 and selected_unit.Type != Data.Type.BUILDING:
+				occupancy_cells_and_units[position]=target_unit
+				return
+			if target_unit.capacity==0:
+				var child:CardBaseOnmap = selected_unit.get_node("Garrison").get_child(0)
+				if child.Type == Data.Type.CHARACTER and selected_unit.Type == Data.Type.VEHICLE:
+					occupancy_cells_and_units[position]=target_unit
+					return
+				child = child as VehicleCardBase
+				if child.Type==Data.Type.VEHICLE and child.capacity > 0 and selected_unit.Type==Data.Type.CHARACTER:
+					occupancy_cells_and_units[position]=target_unit
+					return
+				
+				

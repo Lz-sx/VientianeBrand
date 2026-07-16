@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c4m1f61ykgp6d" path="res://src/core/main_game.gd" id="1_bsx2m"]
 [ext_resource type="Script" uid="uid://by1yuv8ooq15t" path="res://src/core/deal_cards.gd" id="2_13ca8"]
+[ext_resource type="Script" uid="uid://bs78wqrhjr68r" path="res://src/core/attack.gd" id="2_blgo5"]
 [ext_resource type="TileSet" uid="uid://w5g648em3kms" path="res://assets/map/new_tile_set.tres" id="2_bsx2m"]
 [ext_resource type="Script" uid="uid://cs5jm0tlhmtqr" path="res://src/map/map.gd" id="2_bycoy"]
 [ext_resource type="Script" uid="uid://cn3hsgqksojee" path="res://src/core/unit_spawner.gd" id="2_gtuoi"]
@@ -9,7 +10,6 @@
 [ext_resource type="Script" uid="uid://cwacto642igw6" path="res://src/core/grid_range.gd" id="5_e2aou"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://src/map/game_grid.gd" id="7_h37xf"]
-[ext_resource type="Script" uid="uid://b2j8se1u08flr" path="res://src/resources/data.gd" id="7_prdqg"]
 [ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
 [ext_resource type="Script" uid="uid://byh2spy4e75x3" path="res://src/map/draw_high_light_area.gd" id="9_os0rc"]
 [ext_resource type="Script" uid="uid://buuvu7vqjj0w8" path="res://src/ui/info/info_root.gd" id="11_13ca8"]
@@ -19,23 +19,24 @@
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
 
+[node name="Attack" type="Node" parent="." unique_id=833544139 node_paths=PackedStringArray("grid_range")]
+script = ExtResource("2_blgo5")
+grid_range = NodePath("../GridRange")
+
+[node name="Interaction" type="Node" parent="." unique_id=2046096653]
+
 [node name="DealCards" type="Node" parent="." unique_id=72600965]
 script = ExtResource("2_13ca8")
 
-[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333 node_paths=PackedStringArray("data", "map")]
+[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333 node_paths=PackedStringArray("map")]
 script = ExtResource("2_gtuoi")
-data = NodePath("../Data")
 map = NodePath("../Map")
-
-[node name="Data" type="Node" parent="." unique_id=481019998]
-script = ExtResource("7_prdqg")
 
 [node name="System" type="Node" parent="." unique_id=2005422184]
 
-[node name="GridRange" type="Node" parent="." unique_id=1058967385 node_paths=PackedStringArray("game_grid", "data")]
+[node name="GridRange" type="Node" parent="." unique_id=1058967385 node_paths=PackedStringArray("game_grid")]
 script = ExtResource("5_e2aou")
 game_grid = NodePath("../Map/GameGrid")
-data = NodePath("../Data")
 
 [node name="Map" type="TileMapLayer" parent="." unique_id=1950687381 node_paths=PackedStringArray("game_grid")]
 tile_set = ExtResource("2_bsx2m")

@@ -1,6 +1,5 @@
 extends Node2D
 class_name CardBaseOnmap
-@export var data:Data
 @onready var hp_line: TextureProgressBar = $Hp
 
 @export var id:int
@@ -20,9 +19,9 @@ func _ready() -> void:
 func _init_Faction(Faction_:int):
 	Faction = Faction_
 	match Faction:
-		data.Faction.PLAYER1:
+		Data.Faction.PLAYER1:
 			$hp.texture_over="res://assets/card/hp_player1.png"
-		data.Faction.PLAYER2:
+		Data.Faction.PLAYER2:
 			$hp.texture_over="res://assets/card/hp_player2.png"
 		_:
 			print("错误：阵营匹配")

@@ -6,3 +6,5 @@
 [node name="BuildingCardBase" unique_id=361188102 instance=ExtResource("1_2d14l")]
 script = ExtResource("2_ctea8")
 capacity = 1
+
+[node name="Garrison" type="Node2D" parent="." index="2" unique_id=771749926]

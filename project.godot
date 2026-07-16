@@ -14,6 +14,10 @@ config/name="VientianeBrand"
 run/main_scene="uid://tdb8d8mdvj61"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
+[autoload]
+
+Data="*uid://4cyqiycrdk0w"
+
 [display]
 
 window/stretch/mode="viewport"

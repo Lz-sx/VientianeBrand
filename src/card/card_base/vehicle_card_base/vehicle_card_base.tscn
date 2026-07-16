@@ -6,3 +6,6 @@
 [node name="VehicleCardBase" unique_id=361188102 instance=ExtResource("1_4nfwh")]
 script = ExtResource("2_ygcvc")
 speed = 3
+capacity = 1
+
+[node name="Passenger" type="Node2D" parent="." index="2" unique_id=37573752]

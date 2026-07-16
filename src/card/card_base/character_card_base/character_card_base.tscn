@@ -6,3 +6,7 @@
 [node name="CharacterCardBase" unique_id=361188102 instance=ExtResource("1_qabvn")]
 script = ExtResource("2_a2jum")
 speed = 2
+
+[node name="Weapon" type="Node2D" parent="." index="2" unique_id=783382387]
+
+[node name="Armor" type="Node2D" parent="." index="3" unique_id=1304509886]

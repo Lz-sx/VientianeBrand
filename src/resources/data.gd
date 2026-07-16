@@ -1,5 +1,5 @@
 extends Node
-class_name Data
+
 enum Faction{
 	PLAYER1=1, 
 	PLAYER2
@@ -48,7 +48,7 @@ var card_data:Dictionary = {
 	4:{
 		"name":"铠甲","hand_uid":"uid://fffptp88pfnc","map_uid":null,
 		"affiliation":Affiliation.MORTAL,"type":Type.ARMOR,
-		"sp":5,
+		"damage_reduction":5,
 		"text":"超薄"
 	},
 	5:{

@@ -91,4 +91,11 @@ func add_unit(unit:CardBaseOnmap, cell_position:Vector2i) -> bool:
 
 func is_usable(cell_position:Vector2i) -> bool:
 	return true
-	
+
+func remove_unit(cell_position:Vector2i) -> bool:
+	if not grid_data.has(cell_position):
+		push_warning("错误：没有此网格坐标")
+		return false
+	grid_data[cell_position]["unit"] = null
+	grid_changed.emit()
+	return true
