@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://cs5jm0tlhmtqr" path="res://src/map/map.gd" id="2_bycoy"]
 [ext_resource type="Script" uid="uid://cn3hsgqksojee" path="res://src/core/unit_spawner.gd" id="2_gtuoi"]
 [ext_resource type="Script" uid="uid://bfsos7cleq1oi" path="res://src/camera/camera_2d.gd" id="2_ike8k"]
+[ext_resource type="Script" uid="uid://05ypbpw0mo61" path="res://src/core/occupancy.gd" id="3_blgo5"]
+[ext_resource type="Script" uid="uid://dyyxp4i183aat" path="res://src/core/movement.gd" id="3_rtaji"]
 [ext_resource type="Script" uid="uid://cwacto642igw6" path="res://src/core/grid_range.gd" id="5_e2aou"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://src/map/game_grid.gd" id="7_h37xf"]
@@ -19,17 +21,23 @@
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
 
-[node name="Attack" type="Node" parent="." unique_id=833544139 node_paths=PackedStringArray("grid_range")]
+[node name="Combat" type="Node" parent="." unique_id=833544139 node_paths=PackedStringArray("grid_range")]
 script = ExtResource("2_blgo5")
 grid_range = NodePath("../GridRange")
 
-[node name="Interaction" type="Node" parent="." unique_id=2046096653]
+[node name="Movement" type="Node" parent="." unique_id=166321598 node_paths=PackedStringArray("game_grid")]
+script = ExtResource("3_rtaji")
+game_grid = NodePath("../Map/GameGrid")
+
+[node name="Occupancy" type="Node" parent="." unique_id=2046096653]
+script = ExtResource("3_blgo5")
 
 [node name="DealCards" type="Node" parent="." unique_id=72600965]
 script = ExtResource("2_13ca8")
 
-[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333 node_paths=PackedStringArray("map")]
+[node name="UnitSpawner" type="Node" parent="." unique_id=1436689333 node_paths=PackedStringArray("container", "map")]
 script = ExtResource("2_gtuoi")
+container = NodePath("../Map/Obstacle")
 map = NodePath("../Map")
 
 [node name="System" type="Node" parent="." unique_id=2005422184]

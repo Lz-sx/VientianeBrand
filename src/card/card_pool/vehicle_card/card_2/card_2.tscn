@@ -7,7 +7,12 @@
 [node name="Card2" unique_id=361188102 instance=ExtResource("1_8foe2")]
 visible = false
 script = ExtResource("2_m5jue")
+speed = 5
 id = 2
+hp = 20
+damage = 5
+attack_range = 1
+deployment_range = 1
 Affiliation = 2
 Type = 2
 

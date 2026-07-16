@@ -6,7 +6,7 @@ class_name CardBaseOnmap
 @export var hp = 20
 @export var damage = 10
 @export var attack_range = 1
-
+@export var deployment_range = 2
 var Faction:Data.Faction
 @export var Affiliation:Data.Affiliation
 @export var Type:Data.Type

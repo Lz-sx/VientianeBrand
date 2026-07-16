@@ -7,6 +7,10 @@
 [node name="Card1Onmap" unique_id=361188102 instance=ExtResource("1_2mmpu")]
 script = ExtResource("2_6vorc")
 id = 1
+hp = 20
+damage = 10
+attack_range = 1
+deployment_range = 1
 Affiliation = 2
 Type = 1
 

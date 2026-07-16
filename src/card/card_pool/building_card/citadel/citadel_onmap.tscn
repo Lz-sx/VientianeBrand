@@ -6,7 +6,12 @@
 
 [node name="CitadelOnmap" unique_id=361188102 instance=ExtResource("1_j32qy")]
 script = ExtResource("2_ijxlj")
-attack_range = 4
+capacity = 0
+id = 0
+hp = 30
+damage = 10
+attack_range = 7
+deployment_range = 4
 Affiliation = 2
 Type = 3
 

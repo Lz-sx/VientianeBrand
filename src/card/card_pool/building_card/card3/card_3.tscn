@@ -8,6 +8,8 @@
 script = ExtResource("2_wknmx")
 id = 3
 hp = 30
+damage = 10
+attack_range = 6
 Affiliation = 2
 Type = 3
 
