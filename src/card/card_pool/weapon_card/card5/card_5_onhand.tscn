@@ -6,6 +6,7 @@
 
 [node name="Card5Onhand" unique_id=1562481650 instance=ExtResource("1_yse7o")]
 script = ExtResource("2_7f20r")
+id = 5
 Affiliation = 2
 Type = 4
 
