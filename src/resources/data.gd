@@ -24,7 +24,7 @@ var card_data:Dictionary = {
 	0:{
 		"name":"大本营","hand_uid":"uid://bsfevywtjtfko","map_uid":"uid://bix7xf80pa2x8",
 		"affiliation":Affiliation.MORTAL,"type":Type.BUILDING,
-		"hp":30,"damage":10,"attack_range":7,
+		"hp":30,"damage":10,"attack_range":7,"capacity":0,
 		"text":"不要爆了就行"
 	},
 	1:{
@@ -36,13 +36,13 @@ var card_data:Dictionary = {
 	2:{
 		"name":"马","hand_uid":"uid://bcjly5e8n0h5h","map_uid":"uid://b4utn1adkr2cv",
 		"affiliation":Affiliation.MORTAL,"type":Type.VEHICLE,
-		"hp":20,"damage":5,"attack_range":1,"speed":5,
+		"hp":20,"damage":5,"attack_range":1,"speed":5,"capacity":1,
 		"text":"这是马"
 	},
 	3:{
 		"name":"瞭望塔","hand_uid":"uid://oebutx1q38fk","map_uid":"uid://dp1lbplm5vws",
 		"affiliation":Affiliation.MORTAL,"type":Type.BUILDING,
-		"hp":30,"damage":10,"attack_range":6,
+		"hp":30,"damage":10,"attack_range":6,"capacity":1,
 		"text":"站得高，看得远"
 	},
 	4:{

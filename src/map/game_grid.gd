@@ -9,6 +9,9 @@ signal grid_changed
 @export var board:TileMapLayer
 @export var obstacle:TileMapLayer
 
+
+
+
 var grid_data:Dictionary = {}
 
 func _ready() -> void:
@@ -31,7 +34,7 @@ func _init_grid() -> void:
 				print("错误：棋盘类型返回非int类型")
 				return
 		grid_data[cell_position]={
-			"uint" : null,
+			"unit" : null,
 			"board" : board_type,
 			"obstacle" : Obstacle.NULL
 		}

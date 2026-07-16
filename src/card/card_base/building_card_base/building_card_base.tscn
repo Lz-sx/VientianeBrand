@@ -5,3 +5,4 @@
 
 [node name="BuildingCardBase" unique_id=361188102 instance=ExtResource("1_2d14l")]
 script = ExtResource("2_ctea8")
+capacity = 1
