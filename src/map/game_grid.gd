@@ -9,9 +9,6 @@ signal grid_changed
 @export var board:TileMapLayer
 @export var obstacle:TileMapLayer
 
-
-
-
 var grid_data:Dictionary = {}
 
 func _ready() -> void:
