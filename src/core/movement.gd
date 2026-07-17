@@ -4,6 +4,7 @@ class_name Movement
 @export var game_grid: GameGrid
 
 func move(selected_unit:CardBaseOnmap, tile_position:Vector2i):
+	selected_unit.z_index = 50
 	game_grid.remove_unit_by_unit(selected_unit)
 	# 缓存原始缩放，动画结束还原
 	var original_scale = selected_unit.scale
@@ -23,6 +24,7 @@ func move(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 	tween.tween_property(selected_unit, "scale", original_scale, 0.12)
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_IN)
+	selected_unit.z_index = 0
 	# 动画全部走完后，把单位注册进网格
 	tween.finished.connect(func():
 		game_grid.add_unit(selected_unit,tile_position)

@@ -91,7 +91,7 @@ func find_occupiable_cells_and_units(selected_unit:CardBaseOnmap,target_unit:Car
 				occupancy_cells_and_units[position]=target_unit
 				return
 			if target_unit.capacity==0:
-				var child:CardBaseOnmap = selected_unit.get_node("Garrison").get_child(0)
+				var child:CardBaseOnmap = target_unit.get_node("Garrison").get_child(0)
 				if child.Type == Data.Type.CHARACTER and selected_unit.Type == Data.Type.VEHICLE:
 					occupancy_cells_and_units[position]=target_unit
 					return

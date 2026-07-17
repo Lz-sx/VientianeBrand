@@ -90,7 +90,9 @@ func add_unit(unit:CardBaseOnmap, cell_position:Vector2i) -> bool:
 	return true
 
 func is_usable(cell_position:Vector2i) -> bool:
-	return true
+	if get_cell_data(cell_position) == null:
+		return true
+	return false
 
 func remove_unit_by_pos(cell_position:Vector2i) -> bool:
 	if not grid_data.has(cell_position):
@@ -101,4 +103,6 @@ func remove_unit_by_pos(cell_position:Vector2i) -> bool:
 	return true
 
 func remove_unit_by_unit(unit:CardBaseOnmap) -> bool:
+	if grid_data.find_key(unit) == null:
+		return false
 	return remove_unit_by_pos(grid_data.find_key(unit))
