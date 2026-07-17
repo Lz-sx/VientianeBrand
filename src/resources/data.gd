@@ -54,7 +54,7 @@ var card_data:Dictionary = {
 	5:{
 		"name":"剑","hand_uid":"uid://3u80sra8fdel","map_uid":null,
 		"affiliation":Affiliation.MORTAL,"type":Type.WEAPON,
-		"damage":5,
+		"damage":5,"attack_range":6,
 		"text":"剑来！！"
 	},
 	6:{

@@ -74,6 +74,7 @@ func rotate(unit:CardBaseOnmap,position:Vector2i,rotation:int):
 func occupy(selected_unit:CardBaseOnmap,tile_position:Vector2i):
 	var target_unit = game_grid.get_cell_data(tile_position)
 	movement.move(selected_unit,tile_position)
+	selected_unit.shield_and_hp_off()
 	match occupy_unit(selected_unit,target_unit):
 		0:
 			rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
@@ -98,6 +99,7 @@ func vacate(selected_unit:CardBaseOnmap,tile_position:Vector2i):
 		selected_unit = selected_unit as VehicleCardBase
 		if selected_unit.capacity == Data.card_data[selected_unit.id]["capacity"]:
 			rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+	selected_unit.shield_and_hp_on()
 	movement.move(selected_unit,tile_position)
 
 # Called when the node enters the scene tree for the first time.

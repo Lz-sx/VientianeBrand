@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c0yo55ece4t4f"]
+
+[ext_resource type="PackedScene" uid="uid://cvw407rwr77h5" path="res://src/card/card_base/armor_card_base/armor_card_base.tscn" id="1_ex2eb"]
+[ext_resource type="Script" uid="uid://krwxwxqpr63b" path="res://src/card/card_pool/armor_card/card4/card_4_onmap.gd" id="2_lmqwa"]
+
+[node name="Card4Onmap" unique_id=361188102 instance=ExtResource("1_ex2eb")]
+script = ExtResource("2_lmqwa")

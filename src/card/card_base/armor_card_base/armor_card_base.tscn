@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cvw407rwr77h5"]
+
+[ext_resource type="Script" uid="uid://d3stlqbskochc" path="res://src/card/card_base/armor_card_base/armor_card_base.gd" id="1_lgwk0"]
+
+[node name="ArmorCardBase" type="Node2D" unique_id=361188102]
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_lgwk0")
