@@ -7,19 +7,28 @@
 [ext_resource type="Script" uid="uid://cs5jm0tlhmtqr" path="res://src/map/map.gd" id="2_bycoy"]
 [ext_resource type="Script" uid="uid://cn3hsgqksojee" path="res://src/core/unit_spawner.gd" id="2_gtuoi"]
 [ext_resource type="Script" uid="uid://bfsos7cleq1oi" path="res://src/camera/camera_2d.gd" id="2_ike8k"]
+[ext_resource type="Script" uid="uid://dc1ne4npp5ofm" path="res://src/core/turn_judge_manager.gd" id="2_rvmly"]
 [ext_resource type="Script" uid="uid://05ypbpw0mo61" path="res://src/core/occupancy.gd" id="3_blgo5"]
 [ext_resource type="Script" uid="uid://dyyxp4i183aat" path="res://src/core/movement.gd" id="3_rtaji"]
 [ext_resource type="Script" uid="uid://cwacto642igw6" path="res://src/core/grid_range.gd" id="5_e2aou"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://src/map/game_grid.gd" id="7_h37xf"]
+[ext_resource type="Script" uid="uid://c6i87o45874nk" path="res://src/states/state_machine_base.gd" id="8_xas7x"]
+[ext_resource type="Script" uid="uid://d3m3ydmqpa7qy" path="res://src/states/init_state.gd" id="9_ghf7q"]
 [ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
 [ext_resource type="Script" uid="uid://byh2spy4e75x3" path="res://src/map/draw_high_light_area.gd" id="9_os0rc"]
+[ext_resource type="Script" uid="uid://bhwutfh336qi7" path="res://src/states/start_state.gd" id="10_n6123"]
 [ext_resource type="Script" uid="uid://buuvu7vqjj0w8" path="res://src/ui/info/info_root.gd" id="11_13ca8"]
 [ext_resource type="TileSet" uid="uid://g318klpm4oqt" path="res://assets/map/high_light_area.tres" id="11_os0rc"]
 [ext_resource type="PackedScene" uid="uid://bqurcqpdries" path="res://src/card/card_pool/character_card/card_1/card_1_onmap.tscn" id="11_tfyxi"]
+[ext_resource type="Script" uid="uid://cdpmuhsens7do" path="res://src/states/player_2_state.gd" id="12_rvmly"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
+
+[node name="TurnJudgeManager" type="Node" parent="." unique_id=695591722 node_paths=PackedStringArray("hand_layer")]
+script = ExtResource("2_rvmly")
+hand_layer = NodePath("../HandLayer")
 
 [node name="Combat" type="Node" parent="." unique_id=833544139 node_paths=PackedStringArray("grid_range", "game_grid", "occupancy")]
 script = ExtResource("2_blgo5")
@@ -51,6 +60,25 @@ game_grid = NodePath("../Map/GameGrid")
 [node name="GridRange" type="Node" parent="." unique_id=1058967385 node_paths=PackedStringArray("game_grid")]
 script = ExtResource("5_e2aou")
 game_grid = NodePath("../Map/GameGrid")
+
+[node name="MainStateMachine" type="Node" parent="." unique_id=2120945107]
+script = ExtResource("8_xas7x")
+metadata/_custom_type_script = "uid://c6i87o45874nk"
+
+[node name="InitState" type="Node" parent="MainStateMachine" unique_id=413950346]
+script = ExtResource("9_ghf7q")
+
+[node name="StartState" type="Node" parent="MainStateMachine" unique_id=1929963409]
+script = ExtResource("10_n6123")
+
+[node name="Player1State" type="Node" parent="MainStateMachine" unique_id=351586193]
+script = ExtResource("8_xas7x")
+metadata/_custom_type_script = "uid://c6i87o45874nk"
+
+[node name="Node" type="Node" parent="MainStateMachine/Player1State" unique_id=1853279810]
+
+[node name="Player2State" type="Node" parent="MainStateMachine" unique_id=1030000427]
+script = ExtResource("12_rvmly")
 
 [node name="Map" type="TileMapLayer" parent="." unique_id=1950687381 node_paths=PackedStringArray("game_grid")]
 tile_set = ExtResource("2_bsx2m")

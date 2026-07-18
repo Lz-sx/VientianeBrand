@@ -5,8 +5,8 @@ class_name HandRoot
 var base_position = Vector2(DisplayServer.window_get_size().x/2.0, DisplayServer.window_get_size().y - offset_y)
 var card_size:int = 0
 
-func add_card():
-	var CARD_BASE_ONHAND = load(Data.card_data[1]["hand_uid"])
+func add_card(id:int):
+	var CARD_BASE_ONHAND = Data.card_data[id]["hand_uid"]
 	var new_card = CARD_BASE_ONHAND.instantiate()
 	add_child(new_card)
 	card_size+=1
@@ -37,9 +37,11 @@ func move():
 			tween.parallel().tween_property(card,"rotation_degrees", angle, 0.1)
 
 func _ready() -> void:
-	add_card()
-	add_card()
-	add_card()
-	add_card()
-	add_card()
-	add_card()
+	add_card(1)
+	add_card(2)
+	add_card(3)
+	add_card(1)
+	add_card(2)
+	add_card(4)
+	add_card(5)
+	add_card(6)
