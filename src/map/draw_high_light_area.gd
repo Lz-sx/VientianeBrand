@@ -14,18 +14,25 @@ const HIGHLIGHT_GREEN_COORDS: Vector2i = Vector2i(1, 1)
 # 根据 move_grid 画高亮
 func draw_move_highlight() -> void:
 	clear_highlight()
-	for tile_position in grid_range.move_grid:
+	for tile_position in grid_range.move_range:
 		high_light_area.set_cell(tile_position, HIGHLIGHT_SOURCE, HIGHLIGHT_BULE_COORDS)
-	for tile_position in grid_range.interactable_cells_and_units.keys():
+	for tile_position in grid_range.occupy_cell_map.keys():
 		high_light_area.set_cell(tile_position, HIGHLIGHT_SOURCE, HIGHLIGHT_GREEN_COORDS)
 
 func draw_attack_highlight() -> void:
 	clear_highlight()
-	for tile_position in grid_range.attack_grid:
+	for tile_position in grid_range.attack_range:
 		high_light_area.set_cell(tile_position, HIGHLIGHT_SOURCE, HIGHLIGHT_YELLOW_COORDS)
-	for tile_position in grid_range.attackable_cells_and_units.keys():
+	for tile_position in grid_range.attack_target_map.keys():
 		high_light_area.set_cell(tile_position, HIGHLIGHT_SOURCE, HIGHLIGHT_RED_COORDS)
-	
+
+func draw_deploy_highlight():
+	clear_highlight()
+	for tile_position in grid_range.deploy_range:
+		high_light_area.set_cell(tile_position, HIGHLIGHT_SOURCE, HIGHLIGHT_BULE_COORDS)
+	for tile_position in grid_range.occupy_cell_map.keys():
+		high_light_area.set_cell(tile_position, HIGHLIGHT_SOURCE, HIGHLIGHT_GREEN_COORDS)
+		
 # 清除所有高亮
 func clear_highlight() -> void:
 	high_light_area.clear()
