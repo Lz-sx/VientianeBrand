@@ -14,6 +14,7 @@ var grid_data:Dictionary = {}
 func _ready() -> void:
 	_init_grid()
 	
+	
 func _init_grid() -> void:
 	grid_data.clear()
 	if not board:

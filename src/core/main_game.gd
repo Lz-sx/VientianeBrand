@@ -1,6 +1,8 @@
 extends Node
 class_name MainGame
 
+const Action_Point:int = 3
+
 @onready var main_state_machine: StateMachineBase = $MainStateMachine
 @onready var turn_judge_manager: TurnJudgeManager = $TurnJudgeManager
 @onready var combat: Attack = $Combat
@@ -10,8 +12,10 @@ class_name MainGame
 @onready var unit_spawner: UnitSpawner = $UnitSpawner
 @onready var grid_range: GridRange = $GridRange
 
+var player1_action_point:int = 3
+var player2_action_point:int = 3
 
-var active_units:Array[CardBaseOnmap]
+#var active_units:Array[CardBaseOnmap]
 
 #备份
 func backup_game_state():
