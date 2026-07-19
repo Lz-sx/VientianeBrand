@@ -21,8 +21,15 @@
 [ext_resource type="Script" uid="uid://buuvu7vqjj0w8" path="res://src/ui/info/info_root.gd" id="11_13ca8"]
 [ext_resource type="TileSet" uid="uid://g318klpm4oqt" path="res://assets/map/high_light_area.tres" id="11_os0rc"]
 [ext_resource type="PackedScene" uid="uid://bqurcqpdries" path="res://src/card/card_pool/character_card/card_1/card_1_onmap.tscn" id="11_tfyxi"]
-[ext_resource type="Script" uid="uid://c6w0s04ndnfcs" path="res://src/states/turn_start_state.gd" id="12_6xjgj"]
+[ext_resource type="Script" uid="uid://c6w0s04ndnfcs" path="res://src/states/start_turn_state.gd" id="12_6xjgj"]
 [ext_resource type="Script" uid="uid://cdpmuhsens7do" path="res://src/states/player_2_state.gd" id="12_rvmly"]
+[ext_resource type="Script" uid="uid://notame3lk2lj" path="res://src/states/idle_state.gd" id="13_kdxye"]
+[ext_resource type="Script" uid="uid://dsb0n8680awkj" path="res://src/states/deploy_state.gd" id="14_7dxeu"]
+[ext_resource type="Script" uid="uid://s2blpo1f2e7d" path="res://src/states/hand_operate_state.gd" id="14_cg7r0"]
+[ext_resource type="Script" uid="uid://c82rldgy3yjwt" path="res://src/states/unit_selected_state.gd" id="16_g0oku"]
+[ext_resource type="Script" uid="uid://cwu8xefr8ifky" path="res://src/states/move_state.gd" id="17_ucad4"]
+[ext_resource type="Script" uid="uid://cijkw0h4svf4g" path="res://src/states/attack_state.gd" id="18_ovyt5"]
+[ext_resource type="Script" uid="uid://dqilacepxcl78" path="res://src/states/end_turn_state.gd" id="19_md0c5"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
@@ -47,8 +54,10 @@ game_grid = NodePath("../Map/GameGrid")
 unit_spawner = NodePath("../UnitSpawner")
 movement = NodePath("../Movement")
 
-[node name="DealCards" type="Node" parent="." unique_id=72600965]
+[node name="DealCards" type="Node" parent="." unique_id=72600965 node_paths=PackedStringArray("main_game", "hand_root")]
 script = ExtResource("2_13ca8")
+main_game = NodePath("..")
+hand_root = NodePath("../HandLayer/HandRoot")
 
 [node name="UnitSpawner" type="Node" parent="." unique_id=1436689333 node_paths=PackedStringArray("container", "map", "game_grid")]
 script = ExtResource("2_gtuoi")
@@ -76,8 +85,29 @@ script = ExtResource("10_n6123")
 script = ExtResource("8_xas7x")
 metadata/_custom_type_script = "uid://c6i87o45874nk"
 
-[node name="TurnStartState" type="Node" parent="MainStateMachine/Player1State" unique_id=1853279810]
+[node name="StartTurnState" type="Node" parent="MainStateMachine/Player1State" unique_id=1853279810]
 script = ExtResource("12_6xjgj")
+
+[node name="IdleState" type="Node" parent="MainStateMachine/Player1State" unique_id=631580397]
+script = ExtResource("13_kdxye")
+
+[node name="HandOperateState" type="Node" parent="MainStateMachine/Player1State" unique_id=1993456548]
+script = ExtResource("14_cg7r0")
+
+[node name="DeployState" type="Node" parent="MainStateMachine/Player1State" unique_id=89406322]
+script = ExtResource("14_7dxeu")
+
+[node name="UnitSelectedState" type="Node" parent="MainStateMachine/Player1State" unique_id=875920611]
+script = ExtResource("16_g0oku")
+
+[node name="MoveState" type="Node" parent="MainStateMachine/Player1State" unique_id=877545444]
+script = ExtResource("17_ucad4")
+
+[node name="AttackState" type="Node" parent="MainStateMachine/Player1State" unique_id=2052111140]
+script = ExtResource("18_ovyt5")
+
+[node name="EndTurnState" type="Node" parent="MainStateMachine/Player1State" unique_id=1856392526]
+script = ExtResource("19_md0c5")
 
 [node name="Player2State" type="Node" parent="MainStateMachine" unique_id=1030000427]
 script = ExtResource("12_rvmly")

@@ -1,8 +1,6 @@
 extends Node
 class_name MainGame
 
-const Action_Point:int = 3
-
 @onready var main_state_machine: StateMachineBase = $MainStateMachine
 @onready var turn_judge_manager: TurnJudgeManager = $TurnJudgeManager
 @onready var combat: Attack = $Combat
@@ -15,6 +13,13 @@ const Action_Point:int = 3
 var player1_action_point:int = 3
 var player2_action_point:int = 3
 
+var player1_draw_count_delta = 0
+var player2_draw_count_delta = 0
+
+var player1_hand:Array[int]=[]
+var player2_hand:Array[int]=[]
+
+var hand_card_be_selected:CardBaseOnhand = null
 #var active_units:Array[CardBaseOnmap]
 
 #备份

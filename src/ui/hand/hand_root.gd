@@ -2,12 +2,14 @@ extends Control
 class_name HandRoot
 @export var offset_y:int = 100
 #const CARD_BASE_ONHAND = preload("uid://va7mf6bcwcax")
+var start_position = Vector2(DisplayServer.window_get_size().x/2.0, -100)
 var base_position = Vector2(DisplayServer.window_get_size().x/2.0, DisplayServer.window_get_size().y - offset_y)
 var card_size:int = 0
 
 func add_card(id:int):
 	var CARD_BASE_ONHAND = Data.card_data[id]["hand_uid"]
 	var new_card = CARD_BASE_ONHAND.instantiate()
+	new_card.position = start_position
 	add_child(new_card)
 	card_size+=1
 	await get_tree().create_timer(0.1).timeout
@@ -36,12 +38,4 @@ func move():
 			tween.tween_property(card,"global_position",target_position,0.1)
 			tween.parallel().tween_property(card,"rotation_degrees", angle, 0.1)
 
-func _ready() -> void:
-	add_card(1)
-	add_card(2)
-	add_card(3)
-	add_card(1)
-	add_card(2)
-	add_card(4)
-	add_card(5)
-	add_card(6)
+	

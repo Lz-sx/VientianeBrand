@@ -31,5 +31,8 @@ func _on_texture_button_mouse_exited() -> void:
 	tween.tween_property(texture_button,"position",Vector2(0,0),0.1)
 
 
-func _on_texture_button_pressed() -> void:
+func selected() -> void:
 	line_2d.visible = true
+	
+func deselect() -> void:
+	line_2d.visible = false

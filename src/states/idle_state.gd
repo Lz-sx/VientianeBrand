@@ -2,7 +2,7 @@ extends StateBase
 
 func _on_enter() -> void:
 	pass
-
+	
 ## 退出状态时触发
 func _on_exit() -> void:
 	pass
@@ -13,4 +13,5 @@ func _state_process(_delta: float) -> void:
 
 ## 状态处理输入事件
 func _state_input(_event: InputEvent) -> void:
-	pass
+	if _event.is_action_pressed("mouse_left"):
+		pass
