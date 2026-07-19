@@ -17,6 +17,7 @@ func deal_card_to_hand(faction:Data.Faction,draw_count_delta:int):
 				hand_root.add_card(id_queue[i])
 			elif faction == Data.Faction.PLAYER2:
 				main_game.player2_hand.append(id_queue[i])
+		await get_tree().create_timer(0.25).timeout
 
 
 
