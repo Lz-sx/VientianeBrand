@@ -5,7 +5,7 @@ class_name UnitSpawner
 @export var map: Map
 @export var game_grid: GameGrid
 
-func spawn_unit(id:int, cell_position:Vector2i) -> CardBaseOnmap:
+func spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction) -> CardBaseOnmap:
 	var world_position = map.get_global_from_tile(cell_position)
 	# 1. 校验卡牌ID是否存在
 	if not Data.card_data.has(id):
@@ -17,6 +17,7 @@ func spawn_unit(id:int, cell_position:Vector2i) -> CardBaseOnmap:
 		return null
 	# 实例化
 	var unit_instance = unit_scene.instantiate()
+	unit_instance._init_Faction(faction)
 	unit_instance.position = world_position
 	# 校验容器
 	if container == null:
@@ -25,6 +26,7 @@ func spawn_unit(id:int, cell_position:Vector2i) -> CardBaseOnmap:
 		return null
 	container.add_child(unit_instance)
 	game_grid.add_unit(unit_instance, cell_position)
+	unit_instance.Faction = faction
 	# 类型校验，防止场景挂载脚本错误
 	if unit_instance is CardBaseOnmap:
 		return unit_instance

@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://cwacto642igw6" path="res://src/core/grid_range.gd" id="5_e2aou"]
 [ext_resource type="PackedScene" uid="uid://5t03bgicytpv" path="res://src/map/high_light_selector.tscn" id="5_rt44x"]
 [ext_resource type="Script" uid="uid://ff85kfeb3j3m" path="res://src/map/game_grid.gd" id="7_h37xf"]
-[ext_resource type="Script" uid="uid://djwpwl0elj7dd" path="res://src/core/arm.gd" id="8_bdmve"]
 [ext_resource type="Script" uid="uid://c6i87o45874nk" path="res://src/states/state_machine_base.gd" id="8_xas7x"]
 [ext_resource type="Script" uid="uid://d3m3ydmqpa7qy" path="res://src/states/init_state.gd" id="9_ghf7q"]
 [ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
@@ -50,10 +49,9 @@ grid_range = NodePath("../GridRange")
 game_grid = NodePath("../Map/GameGrid")
 occupancy = NodePath("../Occupancy")
 
-[node name="Movement" type="Node" parent="." unique_id=166321598 node_paths=PackedStringArray("game_grid", "map")]
+[node name="Movement" type="Node" parent="." unique_id=166321598 node_paths=PackedStringArray("game_grid")]
 script = ExtResource("3_rtaji")
 game_grid = NodePath("../Map/GameGrid")
-map = NodePath("../Map")
 
 [node name="Occupancy" type="Node" parent="." unique_id=2046096653 node_paths=PackedStringArray("game_grid", "unit_spawner", "movement")]
 script = ExtResource("3_blgo5")
@@ -71,9 +69,6 @@ script = ExtResource("2_gtuoi")
 container = NodePath("../Map/Obstacle")
 map = NodePath("../Map")
 game_grid = NodePath("../Map/GameGrid")
-
-[node name="Arm" type="Node" parent="." unique_id=245049500]
-script = ExtResource("8_bdmve")
 
 [node name="System" type="Node" parent="." unique_id=2005422184]
 

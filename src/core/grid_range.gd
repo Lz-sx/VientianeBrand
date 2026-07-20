@@ -3,6 +3,9 @@ class_name  GridRange
 
 @export var game_grid: GameGrid
 
+
+var start_range:Array[Vector2i]
+
 var active_unit_map:Dictionary
 var deploy_range:Array[Vector2i]
 #位置
@@ -14,16 +17,57 @@ var units_in_move:Array[CardBaseOnmap]
 #可交互位置和其中单位
 var attack_target_map:Dictionary
 var occupy_cell_map:Dictionary
+var arm_slot_map:Dictionary
 
+var CENTER_POSITION:Vector2i = Vector2i(-1,0)
+var X_LENGTH = 20
+var Y_LENGTH = 20
+var START_Y = 1
+
+func clear():
+	start_range.clear()
+	active_unit_map.clear()
+	deploy_range.clear()
+	attack_range.clear()
+	move_range.clear()
+	units_in_attack.clear()
+	units_in_move.clear()
+	attack_target_map.clear()
+	occupy_cell_map.clear()
+
+func find_start_range(selected_unit_faction:Data.Faction):
+	start_range.clear()
+	for x in range(-X_LENGTH/2, X_LENGTH/2):
+		if selected_unit_faction == Data.Faction.PLAYER1:
+			for y in range(START_Y, Y_LENGTH/2):
+				if game_grid.grid_data.has(Vector2i(x,y)):
+					if game_grid.grid_data[Vector2i(x,y)]["obstacle"] == game_grid.Obstacle.NULL:
+						start_range.append(Vector2i(x,y))
+		if selected_unit_faction == Data.Faction.PLAYER2:
+			for y in range(-START_Y, -Y_LENGTH/2):
+				if game_grid.grid_data.has(Vector2i(x,y)):
+					if game_grid.grid_data[Vector2i(x,y)]["obstacle"] == game_grid.Obstacle.NULL:
+						start_range.append(Vector2i(x,y))
+						
 func find_active_unit_map():
+	active_unit_map.clear()
 	for cell_pos in game_grid.grid_data:
-		var unit = game_grid.grid_data[cell_pos].get("unit", null)
+		var unit = game_grid.grid_data[cell_pos]["unit"]
 		if unit != null:
 			active_unit_map[cell_pos] = unit
 
 func find_deploy_range(selected_unit_faction:Data.Faction, selected_unit_type:Data.Type):
+	if selected_unit_type == Data.Type.WEAPON or selected_unit_type == Data.Type.ARMOR\
+	or selected_unit_type == Data.Type.SKILL:
+		return
 	deploy_range.clear()
-	var temp_set: Dictionary # key存坐标，自动去重
+	find_active_unit_map()
+	#交互部分查找
+	for pos in active_unit_map:
+		find_occupy_cell_map(selected_unit_faction,selected_unit_type,\
+		active_unit_map[pos],pos)
+		
+	var temp_set: Dictionary = {}# key存坐标，自动去重
 	for cell_pos in active_unit_map:
 		var unit = active_unit_map[cell_pos]
 		if unit.Faction == selected_unit_faction:
@@ -31,10 +75,9 @@ func find_deploy_range(selected_unit_faction:Data.Faction, selected_unit_type:Da
 			for pos in cells:
 				temp_set[pos] = true
 	# 把唯一的key转回数组
-	deploy_range = temp_set.keys()
-	for pos in active_unit_map:
-		find_occupy_cell_map(selected_unit_faction,selected_unit_type,\
-		active_unit_map[pos],pos)
+	for pos in temp_set.keys():
+		if game_grid.grid_data[pos]["obstacle"] == game_grid.Obstacle.NULL:
+			deploy_range.append(pos)
 	
 		
 	
@@ -42,8 +85,10 @@ func get_cells_in_range(center: Vector2i, range: int) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []	
 	for x in range(-range, range + 1):
 		for y in range(-range, range + 1):
-			if abs(x) + abs(y) <= range and game_grid.grid_data.has(Vector2i(x,y)):
-				cells.append(center + Vector2i(x, y))
+			if abs(x) + abs(y) <= range and abs(x) + abs(y) != 0 and \
+			game_grid.grid_data.has(Vector2i(x,y)):
+				if game_grid.grid_data.has(center + Vector2i(x, y)):
+					cells.append(center + Vector2i(x, y))
 	return cells
 	
 # 四个方向：上下左右
@@ -111,8 +156,7 @@ target_unit:CardBaseOnmap,position:Vector2i):
 	if selected_unit_faction == target_unit.Faction:
 		if target_unit.Type == Data.Type.VEHICLE:
 			target_unit = target_unit as VehicleCardBase
-			if target_unit.capacity > 0 and selected_unit_type!=Data.Type.VEHICLE \
-			and selected_unit_type!=Data.Type.BUILDING:
+			if target_unit.capacity > 0 and selected_unit_type!=Data.Type.VEHICLE:
 				occupy_cell_map[position]=target_unit
 				return
 		elif target_unit.Type == Data.Type.BUILDING:
@@ -121,16 +165,27 @@ target_unit:CardBaseOnmap,position:Vector2i):
 				occupy_cell_map[position]=target_unit
 				return
 			if target_unit.capacity==0:
-				var child:CardBaseOnmap = target_unit.get_node("Garrison").get_child(0)
-				if child.Type == Data.Type.CHARACTER and selected_unit_type ==\
-				 Data.Type.VEHICLE:
-					occupy_cell_map[position]=target_unit
-					return
-				child = child as VehicleCardBase
-				if child.Type==Data.Type.VEHICLE and child.capacity > 0 and\
-				 selected_unit_type==Data.Type.CHARACTER:
-					occupy_cell_map[position]=target_unit
-					return
+				for child in target_unit.get_node("Garrison").get_children():
+					if child.Type == Data.Type.CHARACTER and selected_unit_type ==\
+					 Data.Type.VEHICLE:
+						occupy_cell_map[position]=target_unit
+						return
+					child = child as VehicleCardBase
+					if child.Type==Data.Type.VEHICLE and child.capacity > 0 and\
+					 selected_unit_type==Data.Type.CHARACTER:
+						occupy_cell_map[position]=target_unit
+						return
 		
-				
-				
+func find_arm_slot_map(selected_unit_faction:Data.Faction, selected_unit_type:Data.Type):
+	if selected_unit_type != Data.Type.WEAPON and selected_unit_type != Data.Type.ARMOR:
+		return
+	arm_slot_map.clear()
+	find_active_unit_map()
+	for pos in active_unit_map:
+		if active_unit_map[pos].Type == Data.Type.CHARACTER and \
+		active_unit_map[pos].Faction == selected_unit_faction:
+			var unit = active_unit_map[pos] as CharacterCardBase
+			if not unit.get_node("Weapon").get_children() and selected_unit_type == Data.Type.WEAPON:
+				arm_slot_map[pos] = unit
+			if not unit.get_node("Armor").get_children() and selected_unit_type == Data.Type.ARMOR:
+				arm_slot_map[pos] = unit

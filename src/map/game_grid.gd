@@ -12,8 +12,7 @@ signal grid_changed
 var grid_data:Dictionary = {}
 
 func _ready() -> void:
-	_init_grid()
-	
+	pass
 	
 func _init_grid() -> void:
 	grid_data.clear()
@@ -54,7 +53,9 @@ func _init_grid() -> void:
 		grid_data[cell_position]["obstacle"] = obstacle_type
 		
 func get_cell_data(cell_position:Vector2i) -> Dictionary:
-	return grid_data.get(cell_position,{})
+	if not grid_data.has(cell_position):
+		return {}
+	return grid_data[cell_position]
 	
 func get_all_cell_data() -> Dictionary:
 	return grid_data
@@ -88,7 +89,7 @@ func add_unit(unit:CardBaseOnmap, cell_position:Vector2i) -> bool:
 	return true
 
 func is_usable(cell_position:Vector2i) -> bool:
-	if get_cell_data(cell_position) == null:
+	if not get_cell_data(cell_position) == null:
 		return true
 	return false
 

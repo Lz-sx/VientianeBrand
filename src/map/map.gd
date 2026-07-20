@@ -11,3 +11,9 @@ func get_global_from_tile(tile:Vector2) -> Vector2i:
 	
 func get_hovered_tile() -> Vector2i:
 	return local_to_map(get_local_mouse_position())
+
+func is_click_on_map() -> bool:
+	if game_grid.grid_data.has(get_hovered_tile()):
+		return true
+	else:
+		return false

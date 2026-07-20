@@ -33,6 +33,8 @@ func _on_texture_button_mouse_exited() -> void:
 
 func selected() -> void:
 	line_2d.visible = true
+	get_parent().hand_card_selected_change(self)
 	
 func deselect() -> void:
 	line_2d.visible = false
+	

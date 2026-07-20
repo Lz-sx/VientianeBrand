@@ -1,7 +1,8 @@
 extends StateBase
 
 func _on_enter() -> void:
-	pass
+	await main_game.deal_cards.start_deal_card(Data.Faction.PLAYER1)
+	parent_fsm.change_state("IdleState")
 	
 ## 退出状态时触发
 func _on_exit() -> void:

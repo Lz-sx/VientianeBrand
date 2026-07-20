@@ -17,6 +17,11 @@ func remove_node(selected_unit:CardBaseOnmap):
 	game_grid.remove_unit_by_unit(selected_unit)
 
 func occupy_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap) -> int:
+	print(selected_unit.Faction)
+	print(selected_unit.Type)
+	print(target_unit.Faction)
+	print(target_unit.Type)
+
 	if selected_unit.Faction == target_unit.Faction:
 		if target_unit.Type == Data.Type.VEHICLE:
 			target_unit = target_unit as VehicleCardBase
@@ -25,34 +30,60 @@ func occupy_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap) -> int:
 				target_unit.get_node("Passenger").add_child(selected_unit)
 				target_unit.capacity-=1
 				return 0
+			if selected_unit.Type == Data.Type.BUILDING:
+				selected_unit = selected_unit as BuildingCardBase
+				var pos = game_grid.grid_data.find_key(target_unit)
+				remove_node(target_unit)
+				game_grid.add_unit(selected_unit,pos)
+				selected_unit.capacity -= 1
+				selected_unit.get_node("Garrison").add_child(target_unit)
+				return 5
 		elif target_unit.Type == Data.Type.BUILDING:
-				target_unit = target_unit as BuildingCardBase
-				if target_unit.capacity > 0 and selected_unit.Type == Data.Type.VEHICLE:
+			target_unit = target_unit as BuildingCardBase
+			if target_unit.capacity > 0 and selected_unit.Type == Data.Type.VEHICLE:
+				remove_node(selected_unit)
+				target_unit.get_node("Garrison").add_child(selected_unit)
+				target_unit.capacity-=1
+				return 1
+			if target_unit.capacity > 0 and selected_unit.Type == Data.Type.CHARACTER:
+				remove_node(selected_unit)
+				target_unit.get_node("Garrison").add_child(selected_unit)
+				target_unit.capacity-=1
+				return 2
+			if target_unit.capacity==0:
+				var child:CardBaseOnmap = target_unit.get_node("Garrison").get_child(0)
+				if child.Type == Data.Type.CHARACTER and selected_unit.Type == Data.Type.VEHICLE:
+					selected_unit = selected_unit as VehicleCardBase
 					remove_node(selected_unit)
+					remove_node(child)
+					selected_unit.get_node("Passenger").add_child(child)
+					selected_unit.capacity-=1
 					target_unit.get_node("Garrison").add_child(selected_unit)
-					target_unit.capacity-=1
-					return 1
-				if target_unit.capacity > 0 and selected_unit.Type == Data.Type.CHARACTER:
+					return 3
+				child = child as VehicleCardBase
+				if child.Type==Data.Type.VEHICLE and child.capacity > 0 and selected_unit.Type==Data.Type.CHARACTER:
 					remove_node(selected_unit)
-					target_unit.get_node("Garrison").add_child(selected_unit)
-					target_unit.capacity-=1
-					return 2
-				if target_unit.capacity==0:
-					var child:CardBaseOnmap = target_unit.get_node("Garrison").get_child(0)
-					if child.Type == Data.Type.CHARACTER and selected_unit.Type == Data.Type.VEHICLE:
-						selected_unit = selected_unit as VehicleCardBase
-						remove_node(selected_unit)
-						remove_node(child)
-						selected_unit.get_node("Passenger").add_child(child)
-						selected_unit.capacity-=1
-						target_unit.get_node("Garrison").add_child(selected_unit)
-						return 3
-					child = child as VehicleCardBase
-					if child.Type==Data.Type.VEHICLE and child.capacity > 0 and selected_unit.Type==Data.Type.CHARACTER:
-						remove_node(selected_unit)
-						child.get_node("Passenger").add_child(child)
-						child.capacity-=1
-						return 4
+					child.get_node("Passenger").add_child(child)
+					child.capacity-=1
+					return 4
+		elif target_unit.Type == Data.Type.CHARACTER:
+			if selected_unit.Type == Data.Type.BUILDING:
+				selected_unit = selected_unit as BuildingCardBase
+				var pos = game_grid.grid_data.find_key(target_unit)
+				remove_node(target_unit)
+				game_grid.add_unit(selected_unit,pos)
+				selected_unit.capacity -= 1
+				selected_unit.get_node("Garrison").add_child(target_unit)
+				return 6
+			elif selected_unit.Type == Data.Type.VEHICLE:
+				selected_unit = selected_unit as VehicleCardBase
+				var pos = game_grid.grid_data.find_key(target_unit)
+				remove_node(target_unit)
+				game_grid.add_unit(selected_unit,pos)
+				selected_unit.capacity -= 1
+				selected_unit.get_node("Passenger").add_child(target_unit)
+				return 7
+	print(-1)
 	return -1
 			
 func vacate_unit(selected_unit:CardBaseOnmap,tile_position:Vector2i):
@@ -72,23 +103,31 @@ func rotate(unit:CardBaseOnmap,position:Vector2i,rotation:int):
 	tween.set_ease(Tween.EASE_OUT)
 
 func occupy(selected_unit:CardBaseOnmap,tile_position:Vector2i):
-	var target_unit = game_grid.get_cell_data(tile_position)
+	var target_unit = game_grid.get_cell_data(tile_position)["unit"]
+	print("占据")
 	movement.move(selected_unit,tile_position)
 	selected_unit.shield_and_hp_off()
 	match occupy_unit(selected_unit,target_unit):
 		0:
-			rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-			rotate(target_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
+			await rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+			await rotate(target_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
 		1:
 			selected_unit = selected_unit as VehicleCardBase
 			if selected_unit.capacity == Data.card_data[selected_unit.id]["capacity"]:
-				rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
+				await rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
 		2:
-			rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+			await rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
 		3:
-			rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
+			await rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
 		4:
-			rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+			await rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+		5:
+			await rotate(target_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
+		6:
+			await rotate(target_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+		7:
+			await rotate(target_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
+			await rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
 		_:
 			push_warning("错误：occupy函数判断链")
 	

@@ -6,6 +6,8 @@
 
 [node name="CitadelOnhand" unique_id=1562481650 instance=ExtResource("1_gn68n")]
 script = ExtResource("2_c3r8b")
+Affiliation = 2
+Type = 3
 
 [node name="TextureButton" parent="." index="0" unique_id=282656276]
 texture_normal = ExtResource("3_7p4kf")
