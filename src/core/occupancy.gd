@@ -17,11 +17,6 @@ func remove_node(selected_unit:CardBaseOnmap):
 	game_grid.remove_unit_by_unit(selected_unit)
 
 func occupy_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap) -> int:
-	print(selected_unit.Faction)
-	print(selected_unit.Type)
-	print(target_unit.Faction)
-	print(target_unit.Type)
-
 	if selected_unit.Faction == target_unit.Faction:
 		if target_unit.Type == Data.Type.VEHICLE:
 			target_unit = target_unit as VehicleCardBase
@@ -144,8 +139,3 @@ func vacate(selected_unit:CardBaseOnmap,tile_position:Vector2i):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

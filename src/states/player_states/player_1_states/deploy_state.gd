@@ -8,6 +8,7 @@ func _on_enter() -> void:
 		var card_on_map = main_game.unit_spawner.spawn_unit(main_game.hand_card_be_selected.id,\
 		main_game.map.get_hovered_tile(),Data.Faction.PLAYER1)
 		main_game.occupancy.occupy(card_on_map,main_game.map.get_hovered_tile())
+		
 	parent_fsm.change_state("IdleState")
 	
 ## 退出状态时触发

@@ -38,8 +38,3 @@ func _ready() -> void:
 			id_queue.append(int(k))
 	id_queue.shuffle()
 	id_size = id_queue.size()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
