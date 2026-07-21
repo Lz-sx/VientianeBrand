@@ -3,6 +3,7 @@ class_name Occupancy
 @export var game_grid: GameGrid
 @export var unit_spawner: UnitSpawner
 @export var movement: Movement
+@export var map: Map
 
 #@export var y_offset:Vector2i = Vector2i(0,-5)
 const  OCCUPY_OFFSET_RIGHT:Vector2i = Vector2i(5,-13)
@@ -27,9 +28,14 @@ func occupy_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap) -> int:
 				return 0
 			if selected_unit.Type == Data.Type.BUILDING:
 				selected_unit = selected_unit as BuildingCardBase
-				var pos = game_grid.grid_data.find_key(target_unit)
+				var pos_raw = game_grid.grid_data.find_key(target_unit)
+				if pos_raw == null:
+					return -1
+				# 复制一份独立坐标，不受字典删除影响
+				var pos:Vector2i = pos_raw.duplicate()
 				remove_node(target_unit)
 				game_grid.add_unit(selected_unit,pos)
+				selected_unit.position = map.get_global_from_tile(pos)
 				selected_unit.capacity -= 1
 				selected_unit.get_node("Garrison").add_child(target_unit)
 				return 5
@@ -78,7 +84,6 @@ func occupy_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap) -> int:
 				selected_unit.capacity -= 1
 				selected_unit.get_node("Passenger").add_child(target_unit)
 				return 7
-	print(-1)
 	return -1
 			
 func vacate_unit(selected_unit:CardBaseOnmap,tile_position:Vector2i):
@@ -89,6 +94,7 @@ func vacate_unit(selected_unit:CardBaseOnmap,tile_position:Vector2i):
 		unit_spawner.container.add_child(selected_unit)
 
 func rotate(unit:CardBaseOnmap,position:Vector2i,rotation:int):
+	unit.get_node("Sprite2D").scale += Vector2(0.4,0.4)
 	var tween:Tween = create_tween()
 	# 同时平滑移动位置 + 旋转
 	tween.tween_property(unit, "position", position, 0.4)
@@ -99,6 +105,8 @@ func rotate(unit:CardBaseOnmap,position:Vector2i,rotation:int):
 
 func occupy(selected_unit:CardBaseOnmap,tile_position:Vector2i):
 	var target_unit = game_grid.get_cell_data(tile_position)["unit"]
+	print(selected_unit.id)
+	print(target_unit.id)
 	print("占据")
 	movement.move(selected_unit,tile_position)
 	selected_unit.shield_and_hp_off()

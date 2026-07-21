@@ -1,6 +1,5 @@
 extends  HighLightLine
 class_name HighLightSelector
-
 @export var map:Map
 @onready var label_1: Label = $Label1
 @onready var label_2: Label = $Label2
@@ -43,7 +42,8 @@ func _update_labels(tile_position:Vector2i)->void:
 		var board_val = cell_data.get("board")
 		var obstacle_val = cell_data.get("obstacle")
 		if board_val != null:
-			label_2.text = map.game_grid.get_board_string(board_val)
+			#label_2.text = map.game_grid.get_board_string(board_val)
+			label_2.text = map.game_grid.get_unit_string(cell_data.get("unit"))
 		else:
 			label_2.text = "unknown"
 		if obstacle_val != null:

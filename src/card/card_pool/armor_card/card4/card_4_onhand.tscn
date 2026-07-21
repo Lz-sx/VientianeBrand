@@ -6,9 +6,6 @@
 
 [node name="Card4Onhand" unique_id=1562481650 instance=ExtResource("1_olqyp")]
 script = ExtResource("2_hmo3g")
-id = 4
-Affiliation = 2
-Type = 5
 
 [node name="TextureButton" parent="." index="0" unique_id=282656276]
 texture_normal = ExtResource("2_kqdxd")

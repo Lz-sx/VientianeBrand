@@ -6,12 +6,9 @@
 
 [node name="Card2" unique_id=361188102 instance=ExtResource("1_8foe2")]
 script = ExtResource("2_m5jue")
-speed = 5
 id = 2
 damage = 5
 deployment_range = 1
-Affiliation = 2
-Type = 2
 
 [node name="Sprite2D" parent="." index="0" unique_id=1858826433]
 texture = ExtResource("3_8foe2")

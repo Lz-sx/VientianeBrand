@@ -76,7 +76,8 @@ func find_deploy_range(selected_unit_faction:Data.Faction, selected_unit_type:Da
 				temp_set[pos] = true
 	# 把唯一的key转回数组
 	for pos in temp_set.keys():
-		if game_grid.grid_data[pos]["obstacle"] == game_grid.Obstacle.NULL:
+		if game_grid.grid_data[pos]["obstacle"] == game_grid.Obstacle.NULL\
+		 and game_grid.grid_data[pos]["unit"] == null:
 			deploy_range.append(pos)
 	
 		

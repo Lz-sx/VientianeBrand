@@ -60,6 +60,14 @@ func get_cell_data(cell_position:Vector2i) -> Dictionary:
 func get_all_cell_data() -> Dictionary:
 	return grid_data
 
+
+func get_unit_string(unit_val:CardBaseOnmap) -> String:
+	if unit_val != null:
+		return Data.card_data[unit_val.id]["name"]
+	else:
+		return "empty"
+	
+
 ## 获取地形类型的字符串表示（小写）
 func get_board_string(board_val: int) -> String:
 	var key = Board.find_key(board_val)
@@ -83,9 +91,9 @@ func add_unit(unit:CardBaseOnmap, cell_position:Vector2i) -> bool:
 	if not is_usable(cell_position):
 		push_warning("错误：此网格坐标不可用")
 		return false
-		
-	grid_data[cell_position]["unit"] = unit
-	grid_changed.emit()
+	if grid_data[cell_position]["unit"] == null:
+		grid_data[cell_position]["unit"] = unit
+		grid_changed.emit()
 	return true
 
 func is_usable(cell_position:Vector2i) -> bool:

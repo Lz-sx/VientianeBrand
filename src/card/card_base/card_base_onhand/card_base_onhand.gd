@@ -4,9 +4,9 @@ class_name CardBaseOnhand
 @onready var texture_button: TextureButton = $TextureButton
 @onready var line_2d: Line2D = $TextureButton/Line2D
 
-@export var id:int
-@export var Affiliation:Data.Affiliation
-@export var Type:Data.Type
+var id:int
+var Affiliation:Data.Affiliation = Data.Affiliation.MORTAL
+var Type:Data.Type = Data.Type.CHARACTER
 
 var tween:Tween
 var is_ready:bool = false

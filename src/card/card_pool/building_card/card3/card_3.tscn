@@ -9,8 +9,6 @@ script = ExtResource("2_wknmx")
 id = 3
 hp = 30
 attack_range = 6
-Affiliation = 2
-Type = 3
 
 [node name="Sprite2D" parent="." index="0" unique_id=1858826433]
 texture = ExtResource("3_vw8mo")

@@ -14,8 +14,8 @@ const HP_PLAYER_2 = preload("uid://dvodbnjdpsjfw")
 var shield:int = 0
 
 var Faction:Data.Faction = Data.Faction.PLAYER1
-@export var Affiliation:Data.Affiliation = Data.Affiliation.MORTAL
-@export var Type:Data.Type = Data.Type.CHARACTER
+var Affiliation:Data.Affiliation = Data.Affiliation.MORTAL
+var Type:Data.Type = Data.Type.CHARACTER
 
 
 # Called when the node enters the scene tree for the first time.
@@ -33,6 +33,7 @@ func _init_Faction(Faction_:int):
 			hp_line.texture_progress = HP_PLAYER_2
 		_:
 			print("错误：阵营匹配")
+
 
 func shield_on():
 	shield_texture.visible = true
