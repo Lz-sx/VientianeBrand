@@ -4,146 +4,261 @@ class_name Occupancy
 @export var unit_spawner: UnitSpawner
 @export var movement: Movement
 @export var map: Map
+@export var grid_range: GridRange
 
-#@export var y_offset:Vector2i = Vector2i(0,-5)
-const  OCCUPY_OFFSET_RIGHT:Vector2i = Vector2i(5,-13)
-const  OCCUPY_OFFSET_LEFT:Vector2i = Vector2i(-5,-13)
-const  ROTATION_RIGHT:int = 30
-const  ROTATION_LEFT:int = -30
 
+
+enum OccupyResult {
+	CHARACTER_TO_VEHICLE = 0,
+	VEHICLE_TO_BUILDING = 1,
+	CHARACTER_TO_BUILDING = 2,
+	VEHICLE_REPLACE_BUILDING_CHAR = 3,
+	CHARACTER_TO_BUILDING_VEHICLE = 4,
+	BUILDING_REPLACE_VEHICLE = 5,
+	BUILDING_REPLACE_CHARACTER = 6,
+	VEHICLE_REPLACE_CHARACTER = 7,
+	FAILED = -1
+}
 
 func remove_node(selected_unit:CardBaseOnmap):
 	if selected_unit.get_parent() != null:
 		selected_unit.get_parent().remove_child(selected_unit)
-	game_grid.remove_unit_by_unit(selected_unit)
+	var pos = grid_range.active_unit_map.find_key(selected_unit)
+	if not pos == null:
+		game_grid.remove_unit_by_pos(pos)
 
-func occupy_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap) -> int:
-	if selected_unit.Faction == target_unit.Faction:
-		if target_unit.Type == Data.Type.VEHICLE:
-			target_unit = target_unit as VehicleCardBase
-			if target_unit.capacity > 0 and selected_unit.Type == Data.Type.CHARACTER:
-				remove_node(selected_unit)
-				target_unit.get_node("Passenger").add_child(selected_unit)
-				target_unit.capacity-=1
-				return 0
+func _occupy_character_to_vehicle(selected:CardBaseOnmap, vehicle:VehicleCardBase) -> OccupyResult:
+	if vehicle.capacity > 0:
+		remove_node(selected)
+		vehicle.get_node("Passenger").add_child(selected)
+		vehicle.capacity -= 1
+		return OccupyResult.CHARACTER_TO_VEHICLE
+	return OccupyResult.FAILED
+
+func _occupy_building_replace_vehicle(selected:BuildingCardBase, vehicle:VehicleCardBase) -> OccupyResult:
+	var pos = grid_range.occupy_cell_map.find_key(vehicle)
+	if pos == null:
+		return OccupyResult.FAILED
+	remove_node(vehicle)
+	
+	if selected.get_parent() != null:
+		selected.get_parent().remove_child(selected)
+	
+	game_grid.add_unit(selected, pos)
+	selected.position = map.get_global_from_tile(pos)
+	unit_spawner.container.add_child(selected)
+	
+	selected.capacity -= 1
+	var garrison = selected.get_node_or_null("Garrison")
+	if garrison == null:
+		return OccupyResult.FAILED
+	garrison.add_child(vehicle)
+	return OccupyResult.BUILDING_REPLACE_VEHICLE
+
+func _occupy_vehicle_to_building(selected:VehicleCardBase, building:BuildingCardBase) -> OccupyResult:
+	if building.capacity > 0:
+		remove_node(selected)
+		building.get_node("Garrison").add_child(selected)
+		building.capacity -= 1
+		return OccupyResult.VEHICLE_TO_BUILDING
+	return OccupyResult.FAILED
+
+func _occupy_character_to_building(selected:CardBaseOnmap, building:BuildingCardBase) -> OccupyResult:
+	if building.capacity > 0:
+		remove_node(selected)
+		building.get_node("Garrison").add_child(selected)
+		building.capacity -= 1
+		return OccupyResult.CHARACTER_TO_BUILDING
+	return OccupyResult.FAILED
+
+func _occupy_vehicle_replace_building_char(selected:VehicleCardBase, building:BuildingCardBase) -> OccupyResult:
+	var garrison = building.get_node_or_null("Garrison")
+	var passenger = selected.get_node_or_null("Passenger")
+	if garrison == null or passenger == null:
+		return OccupyResult.FAILED
+	
+	if garrison.get_child_count() == 0:
+		return OccupyResult.FAILED
+	
+	var child:CardBaseOnmap = garrison.get_child(0)
+	if child.Type == Data.Type.CHARACTER:
+		remove_node(selected)
+		remove_node(child)
+		passenger.add_child(child)
+		selected.capacity -= 1
+		garrison.add_child(selected)
+		return OccupyResult.VEHICLE_REPLACE_BUILDING_CHAR
+	return OccupyResult.FAILED
+
+func _occupy_character_to_building_vehicle(selected:CardBaseOnmap, building:BuildingCardBase) -> OccupyResult:
+	var garrison = building.get_node_or_null("Garrison")
+	if garrison == null or garrison.get_child_count() == 0:
+		return OccupyResult.FAILED
+	
+	var child:CardBaseOnmap = garrison.get_child(0)
+	if child.Type == Data.Type.VEHICLE:
+		var vehicle_child = child as VehicleCardBase
+		var passenger = vehicle_child.get_node_or_null("Passenger")
+		if passenger == null:
+			return OccupyResult.FAILED
+		if vehicle_child.capacity > 0:
+			remove_node(selected)
+			passenger.add_child(selected)
+			vehicle_child.capacity -= 1
+			return OccupyResult.CHARACTER_TO_BUILDING_VEHICLE
+	return OccupyResult.FAILED
+
+func _occupy_building_replace_character(selected:BuildingCardBase, character:CardBaseOnmap) -> OccupyResult:
+	var pos = grid_range.occupy_cell_map.find_key(character)
+	if pos == null:
+		return OccupyResult.FAILED
+	
+	remove_node(character)
+	
+	if selected.get_parent() != null:
+		selected.get_parent().remove_child(selected)
+	
+	game_grid.add_unit(selected, pos)
+	selected.position = map.get_global_from_tile(pos)
+	unit_spawner.container.add_child(selected)
+	
+	selected.capacity -= 1
+	var garrison = selected.get_node_or_null("Garrison")
+	if garrison == null:
+		return OccupyResult.FAILED
+	garrison.add_child(character)
+	return OccupyResult.BUILDING_REPLACE_CHARACTER
+
+func _occupy_vehicle_replace_character(selected:VehicleCardBase, character:CardBaseOnmap) -> OccupyResult:
+	var pos = grid_range.occupy_cell_map.find_key(character)
+	if pos == null:
+		return OccupyResult.FAILED
+	
+	remove_node(character)
+	
+	if selected.get_parent() != null:
+		selected.get_parent().remove_child(selected)
+	
+	game_grid.add_unit(selected, pos)
+	selected.position = map.get_global_from_tile(pos)
+	unit_spawner.container.add_child(selected)
+	
+	selected.capacity -= 1
+	var passenger = selected.get_node_or_null("Passenger")
+	if passenger == null:
+		return OccupyResult.FAILED
+	passenger.add_child(character)
+	return OccupyResult.VEHICLE_REPLACE_CHARACTER
+
+func occupy_unit(selected_unit:CardBaseOnmap, target_unit:CardBaseOnmap) -> OccupyResult:
+	if selected_unit.Faction != target_unit.Faction:
+		return OccupyResult.FAILED
+	
+	match target_unit.Type:
+		Data.Type.VEHICLE:
+			var vehicle = target_unit as VehicleCardBase
+			if selected_unit.Type == Data.Type.CHARACTER:
+				return _occupy_character_to_vehicle(selected_unit, vehicle)
+			elif selected_unit.Type == Data.Type.BUILDING:
+				return _occupy_building_replace_vehicle(selected_unit as BuildingCardBase, vehicle)
+		
+		Data.Type.BUILDING:
+			var building = target_unit as BuildingCardBase
+			if selected_unit.Type == Data.Type.VEHICLE:
+				if building.capacity > 0:
+					return _occupy_vehicle_to_building(selected_unit as VehicleCardBase, building)
+				else:
+					return _try_occupy_full_building(selected_unit, building)
+			elif selected_unit.Type == Data.Type.CHARACTER:
+				if building.capacity > 0:
+					return _occupy_character_to_building(selected_unit, building)
+				else:
+					return _try_occupy_full_building(selected_unit, building)
+		
+		Data.Type.CHARACTER:
 			if selected_unit.Type == Data.Type.BUILDING:
-				selected_unit = selected_unit as BuildingCardBase
-				var pos_raw = game_grid.grid_data.find_key(target_unit)
-				if pos_raw == null:
-					return -1
-				# 复制一份独立坐标，不受字典删除影响
-				var pos:Vector2i = pos_raw.duplicate()
-				remove_node(target_unit)
-				game_grid.add_unit(selected_unit,pos)
-				selected_unit.position = map.get_global_from_tile(pos)
-				selected_unit.capacity -= 1
-				selected_unit.get_node("Garrison").add_child(target_unit)
-				return 5
-		elif target_unit.Type == Data.Type.BUILDING:
-			target_unit = target_unit as BuildingCardBase
-			if target_unit.capacity > 0 and selected_unit.Type == Data.Type.VEHICLE:
-				remove_node(selected_unit)
-				target_unit.get_node("Garrison").add_child(selected_unit)
-				target_unit.capacity-=1
-				return 1
-			if target_unit.capacity > 0 and selected_unit.Type == Data.Type.CHARACTER:
-				remove_node(selected_unit)
-				target_unit.get_node("Garrison").add_child(selected_unit)
-				target_unit.capacity-=1
-				return 2
-			if target_unit.capacity==0:
-				var child:CardBaseOnmap = target_unit.get_node("Garrison").get_child(0)
-				if child.Type == Data.Type.CHARACTER and selected_unit.Type == Data.Type.VEHICLE:
-					selected_unit = selected_unit as VehicleCardBase
-					remove_node(selected_unit)
-					remove_node(child)
-					selected_unit.get_node("Passenger").add_child(child)
-					selected_unit.capacity-=1
-					target_unit.get_node("Garrison").add_child(selected_unit)
-					return 3
-				child = child as VehicleCardBase
-				if child.Type==Data.Type.VEHICLE and child.capacity > 0 and selected_unit.Type==Data.Type.CHARACTER:
-					remove_node(selected_unit)
-					child.get_node("Passenger").add_child(child)
-					child.capacity-=1
-					return 4
-		elif target_unit.Type == Data.Type.CHARACTER:
-			if selected_unit.Type == Data.Type.BUILDING:
-				selected_unit = selected_unit as BuildingCardBase
-				var pos = game_grid.grid_data.find_key(target_unit)
-				remove_node(target_unit)
-				game_grid.add_unit(selected_unit,pos)
-				selected_unit.capacity -= 1
-				selected_unit.get_node("Garrison").add_child(target_unit)
-				return 6
+				return _occupy_building_replace_character(selected_unit as BuildingCardBase, target_unit)
 			elif selected_unit.Type == Data.Type.VEHICLE:
-				selected_unit = selected_unit as VehicleCardBase
-				var pos = game_grid.grid_data.find_key(target_unit)
-				remove_node(target_unit)
-				game_grid.add_unit(selected_unit,pos)
-				selected_unit.capacity -= 1
-				selected_unit.get_node("Passenger").add_child(target_unit)
-				return 7
-	return -1
-			
-func vacate_unit(selected_unit:CardBaseOnmap,tile_position:Vector2i):
-	if selected_unit.Type!=Data.Type.BUILDING:
+				return _occupy_vehicle_replace_character(selected_unit as VehicleCardBase, target_unit)
+	
+	return OccupyResult.FAILED
+
+func _try_occupy_full_building(selected:CardBaseOnmap, building:BuildingCardBase) -> OccupyResult:
+	var garrison = building.get_node_or_null("Garrison")
+	if garrison == null or garrison.get_child_count() == 0:
+		return OccupyResult.FAILED
+	
+	var child = garrison.get_child(0)
+	if selected.Type == Data.Type.VEHICLE and child.Type == Data.Type.CHARACTER:
+		return _occupy_vehicle_replace_building_char(selected as VehicleCardBase, building)
+	elif selected.Type == Data.Type.CHARACTER and child.Type == Data.Type.VEHICLE:
+		return _occupy_character_to_building_vehicle(selected, building)
+	
+	return OccupyResult.FAILED
+
+func vacate_unit(selected_unit:CardBaseOnmap, tile_position:Vector2i):
+	if selected_unit.Type != Data.Type.BUILDING:
 		if selected_unit.get_parent() != null:
-			selected_unit.get_parent().get_parent().capacity+=1
+			selected_unit.get_parent().get_parent().capacity += 1
 			selected_unit.get_parent().remove_child(selected_unit)
 		unit_spawner.container.add_child(selected_unit)
+		game_grid.add_unit(selected_unit, tile_position)
 
-func rotate(unit:CardBaseOnmap,position:Vector2i,rotation:int):
-	unit.get_node("Sprite2D").scale += Vector2(0.4,0.4)
-	var tween:Tween = create_tween()
-	# 同时平滑移动位置 + 旋转
-	tween.tween_property(unit, "position", position, 0.4)
-	tween.tween_property(unit, "rotation_degrees", rotation, 0.4)
-	# 缓动曲线，流畅自然
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.set_ease(Tween.EASE_OUT)
 
-func occupy(selected_unit:CardBaseOnmap,tile_position:Vector2i):
+
+func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 	var target_unit = game_grid.get_cell_data(tile_position)["unit"]
-	print(selected_unit.id)
-	print(target_unit.id)
-	print("占据")
-	movement.move(selected_unit,tile_position)
+	if target_unit == null:
+		return
 	selected_unit.shield_and_hp_off()
-	match occupy_unit(selected_unit,target_unit):
-		0:
-			await rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-			await rotate(target_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
-		1:
+	match occupy_unit(selected_unit, target_unit):
+		OccupyResult.CHARACTER_TO_VEHICLE:
+			target_unit = target_unit as VehicleCardBase
+			target_unit.char_icon.visible = true
+			selected_unit.visible = false
+		OccupyResult.VEHICLE_TO_BUILDING:
+			target_unit = target_unit as BuildingCardBase
+			target_unit.veh_icon.visible = true
+			selected_unit.visible = false
+		OccupyResult.CHARACTER_TO_BUILDING:
+			target_unit = target_unit as BuildingCardBase
+			target_unit.char_icon.visible = true
+			selected_unit.visible = false
+		OccupyResult.VEHICLE_REPLACE_BUILDING_CHAR:
+			target_unit = target_unit as BuildingCardBase
+			target_unit.veh_icon.visible = true
+			selected_unit.visible = false
+		OccupyResult.CHARACTER_TO_BUILDING_VEHICLE:
+			target_unit = target_unit as BuildingCardBase
+			target_unit.char_icon.visible = true
+			selected_unit.visible = false
+		OccupyResult.BUILDING_REPLACE_VEHICLE:
+			target_unit = target_unit as VehicleCardBase
+			selected_unit = selected_unit as BuildingCardBase
+			if target_unit.capacity != Data.card_data[target_unit.id]["capacity"]:
+				selected_unit.char_icon.visible == true
+			target_unit.visible = false
+			selected_unit.veh_icon.visible = true
+		OccupyResult.BUILDING_REPLACE_CHARACTER:
+			selected_unit = selected_unit as BuildingCardBase
+			target_unit.visible = false
+			selected_unit.char_icon.visible = true
+		OccupyResult.VEHICLE_REPLACE_CHARACTER:
 			selected_unit = selected_unit as VehicleCardBase
-			if selected_unit.capacity == Data.card_data[selected_unit.id]["capacity"]:
-				await rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
-		2:
-			await rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-		3:
-			await rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
-		4:
-			await rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-		5:
-			await rotate(target_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
-		6:
-			await rotate(target_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-		7:
-			await rotate(target_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-			await rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
-		_:
+			target_unit.visible = false
+			selected_unit.char_icon.visible = true
+		OccupyResult.FAILED:
 			push_warning("错误：occupy函数判断链")
-	
-func vacate(selected_unit:CardBaseOnmap,tile_position:Vector2i):
-	if selected_unit.Type == Data.Type.CHARACTER:
-		rotate(selected_unit,OCCUPY_OFFSET_LEFT,ROTATION_LEFT)
-	elif selected_unit.Type == Data.Type.VEHICLE:
-		selected_unit = selected_unit as VehicleCardBase
-		if selected_unit.capacity == Data.card_data[selected_unit.id]["capacity"]:
-			rotate(selected_unit,OCCUPY_OFFSET_RIGHT,ROTATION_RIGHT)
-	selected_unit.shield_and_hp_on()
-	movement.move(selected_unit,tile_position)
 
-# Called when the node enters the scene tree for the first time.
+func vacate(selected_unit:CardBaseOnmap, tile_position:Vector2i):
+	if selected_unit.Type == Data.Type.CHARACTER:
+		pass
+	elif selected_unit.Type == Data.Type.VEHICLE:
+		var vehicle = selected_unit as VehicleCardBase
+		if vehicle.capacity == Data.card_data[selected_unit.id]["capacity"]:
+			pass
+	vacate_unit(selected_unit, tile_position)
+	movement.move(selected_unit, tile_position)
+
 func _ready() -> void:
-	pass # Replace with function body.
+	pass

@@ -55,12 +55,13 @@ script = ExtResource("3_rtaji")
 game_grid = NodePath("../Map/GameGrid")
 map = NodePath("../Map")
 
-[node name="Occupancy" type="Node" parent="." unique_id=2046096653 node_paths=PackedStringArray("game_grid", "unit_spawner", "movement", "map")]
+[node name="Occupancy" type="Node" parent="." unique_id=2046096653 node_paths=PackedStringArray("game_grid", "unit_spawner", "movement", "map", "grid_range")]
 script = ExtResource("3_blgo5")
 game_grid = NodePath("../Map/GameGrid")
 unit_spawner = NodePath("../UnitSpawner")
 movement = NodePath("../Movement")
 map = NodePath("../Map")
+grid_range = NodePath("../GridRange")
 
 [node name="DealCards" type="Node" parent="." unique_id=72600965 node_paths=PackedStringArray("main_game", "hand_root")]
 script = ExtResource("2_13ca8")

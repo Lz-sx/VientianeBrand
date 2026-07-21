@@ -15,9 +15,9 @@ func _input(event: InputEvent) -> void:
 		match event.button_index:
 			MOUSE_BUTTON_WHEEL_UP:
 				if(zoom.x<=2.5 && zoom.y<=2.5):
-					self.zoom.x+=0.2
-					self.zoom.y+=0.2
+					self.zoom.x+=0.25
+					self.zoom.y+=0.25
 			MOUSE_BUTTON_WHEEL_DOWN:
 				if(zoom.x>=1.5 && zoom.y>=1.5):
-					self.zoom.x-=0.2
-					self.zoom.y-=0.2
+					self.zoom.x-=0.25
+					self.zoom.y-=0.25

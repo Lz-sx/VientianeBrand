@@ -2,10 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base/card_base_onmap/card_base_onmap.tscn" id="1_4nfwh"]
 [ext_resource type="Script" uid="uid://2v0le4js82ni" path="res://src/card/card_base/vehicle_card_base/vehicle_card_base.gd" id="2_ygcvc"]
+[ext_resource type="Texture2D" uid="uid://c3mdvql7a7wsq" path="res://assets/card/blue_char.png" id="3_j5brc"]
 
 [node name="VehicleCardBase" unique_id=361188102 instance=ExtResource("1_4nfwh")]
 script = ExtResource("2_ygcvc")
-speed = 3
-capacity = 1
 
 [node name="Passenger" type="Node2D" parent="." index="2" unique_id=37573752]
+
+[node name="CharIcon" type="Sprite2D" parent="." index="5" unique_id=727915841]
+visible = false
+position = Vector2(-8.571429, -20.000002)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("3_j5brc")

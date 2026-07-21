@@ -108,8 +108,3 @@ func remove_unit_by_pos(cell_position:Vector2i) -> bool:
 	grid_data[cell_position]["unit"] = null
 	grid_changed.emit()
 	return true
-
-func remove_unit_by_unit(unit:CardBaseOnmap) -> bool:
-	if grid_data.find_key(unit) == null:
-		return false
-	return remove_unit_by_pos(grid_data.find_key(unit))

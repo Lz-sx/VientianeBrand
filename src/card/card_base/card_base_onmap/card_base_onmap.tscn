@@ -25,12 +25,12 @@ value = 100.0
 texture_under = ExtResource("3_vapjq")
 texture_progress = ExtResource("4_8v0n4")
 
-[node name="Shield_texture" type="Sprite2D" parent="." unique_id=763605269]
+[node name="ShieldTexture" type="Sprite2D" parent="." unique_id=763605269]
 visible = false
 position = Vector2(-11.428572, -24.285715)
 texture = ExtResource("5_a8hmf")
 
-[node name="Shield_value" type="Label" parent="." unique_id=2032587725]
+[node name="ShieldValue" type="Label" parent="." unique_id=2032587725]
 visible = false
 texture_filter = 1
 offset_left = -14.285714

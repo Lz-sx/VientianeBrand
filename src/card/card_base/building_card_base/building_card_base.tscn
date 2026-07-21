@@ -2,9 +2,22 @@
 
 [ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base/card_base_onmap/card_base_onmap.tscn" id="1_2d14l"]
 [ext_resource type="Script" uid="uid://b0ti4oduuwwmg" path="res://src/card/card_base/building_card_base/building_card_base.gd" id="2_ctea8"]
+[ext_resource type="Texture2D" uid="uid://cx43ticdlgo2s" path="res://assets/card/blue_veh.png" id="3_ittbx"]
+[ext_resource type="Texture2D" uid="uid://c3mdvql7a7wsq" path="res://assets/card/blue_char.png" id="4_460sg"]
 
 [node name="BuildingCardBase" unique_id=361188102 instance=ExtResource("1_2d14l")]
 script = ExtResource("2_ctea8")
-capacity = 1
 
 [node name="Garrison" type="Node2D" parent="." index="2" unique_id=771749926]
+
+[node name="VehIcon" type="Sprite2D" parent="." index="5" unique_id=603417402]
+visible = false
+position = Vector2(8.571428, -20.000002)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("3_ittbx")
+
+[node name="CharIcon" type="Sprite2D" parent="." index="6" unique_id=640775993]
+visible = false
+position = Vector2(-8.571428, -20.000002)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("4_460sg")

@@ -1,8 +1,8 @@
 extends Node2D
 class_name CardBaseOnmap
 @onready var hp_line: TextureProgressBar = $Hp
-@onready var shield_texture: Sprite2D = $Shield_texture
-@onready var shield_value: Label = $Shield_value
+@onready var shield_texture: Sprite2D = $ShieldTexture
+@onready var shield_value: Label = $ShieldValue
 const HP_PLAYER_1 = preload("uid://f5fldqfgynru")
 const HP_PLAYER_2 = preload("uid://dvodbnjdpsjfw")
 

@@ -7,6 +7,7 @@ class_name  GridRange
 var start_range:Array[Vector2i]
 
 var active_unit_map:Dictionary
+
 var deploy_range:Array[Vector2i]
 #位置
 var attack_range:Array[Vector2i]
@@ -152,30 +153,61 @@ position:Vector2i):
 	if selected_unit.Faction != target_unit.Faction:
 		attack_target_map[position]=target_unit
 		
-func find_occupy_cell_map(selected_unit_faction:Data.Faction,selected_unit_type:Data.Type,\
-target_unit:CardBaseOnmap,position:Vector2i):
-	if selected_unit_faction == target_unit.Faction:
-		if target_unit.Type == Data.Type.VEHICLE:
-			target_unit = target_unit as VehicleCardBase
-			if target_unit.capacity > 0 and selected_unit_type!=Data.Type.VEHICLE:
-				occupy_cell_map[position]=target_unit
-				return
-		elif target_unit.Type == Data.Type.BUILDING:
-			target_unit = target_unit as BuildingCardBase
-			if target_unit.capacity > 0 and selected_unit_type != Data.Type.BUILDING:
-				occupy_cell_map[position]=target_unit
-				return
-			if target_unit.capacity==0:
-				for child in target_unit.get_node("Garrison").get_children():
-					if child.Type == Data.Type.CHARACTER and selected_unit_type ==\
-					 Data.Type.VEHICLE:
-						occupy_cell_map[position]=target_unit
-						return
-					child = child as VehicleCardBase
-					if child.Type==Data.Type.VEHICLE and child.capacity > 0 and\
-					 selected_unit_type==Data.Type.CHARACTER:
-						occupy_cell_map[position]=target_unit
-						return
+func find_occupy_cell_map(selected_unit_faction:Data.Faction, selected_unit_type:Data.Type,
+		target_unit:CardBaseOnmap, position:Vector2i) -> bool:
+	if selected_unit_faction != target_unit.Faction:
+		return false
+	if selected_unit_type == Data.Type.BUILDING and target_unit.Type != Data.Type.BUILDING:
+		occupy_cell_map[position] = target_unit
+		return true
+	match target_unit.Type:
+		Data.Type.VEHICLE:
+			return _can_occupy_vehicle(selected_unit_type, target_unit as VehicleCardBase, position)
+		Data.Type.BUILDING:
+			return _can_occupy_building(selected_unit_type, target_unit as BuildingCardBase, position)
+		Data.Type.CHARACTER:
+			return _can_occupy_character(selected_unit_type, target_unit, position)
+	
+	return false
+
+func _can_occupy_character(selected_unit_type:Data.Type, target_unit:CardBaseOnmap, position:Vector2i) -> bool:
+	if selected_unit_type == Data.Type.VEHICLE or selected_unit_type == Data.Type.BUILDING:
+		occupy_cell_map[position] = target_unit
+		return true
+	return false
+
+func _can_occupy_vehicle(selected_unit_type:Data.Type, vehicle:VehicleCardBase, position:Vector2i) -> bool:
+	if vehicle.capacity > 0 and selected_unit_type != Data.Type.VEHICLE:
+		occupy_cell_map[position] = vehicle
+		return true
+	return false
+
+func _can_occupy_building(selected_unit_type:Data.Type, building:BuildingCardBase, position:Vector2i) -> bool:
+	if building.capacity > 0 and selected_unit_type != Data.Type.BUILDING:
+		occupy_cell_map[position] = building
+		return true
+	
+	if building.capacity == 0:
+		return _can_occupy_full_building(selected_unit_type, building, position)
+	
+	return false
+
+func _can_occupy_full_building(selected_unit_type:Data.Type, building:BuildingCardBase, position:Vector2i) -> bool:
+	var garrison = building.get_node_or_null("Garrison")
+	if garrison == null:
+		return false
+	
+	for child in garrison.get_children():
+		if child.Type == Data.Type.CHARACTER and selected_unit_type == Data.Type.VEHICLE:
+			occupy_cell_map[position] = building
+			return true
+		elif child.Type == Data.Type.VEHICLE:
+			var vehicle_child = child as VehicleCardBase
+			if vehicle_child.capacity > 0 and selected_unit_type == Data.Type.CHARACTER:
+				occupy_cell_map[position] = building
+				return true
+	
+	return false
 		
 func find_arm_slot_map(selected_unit_faction:Data.Faction, selected_unit_type:Data.Type):
 	if selected_unit_type != Data.Type.WEAPON and selected_unit_type != Data.Type.ARMOR:

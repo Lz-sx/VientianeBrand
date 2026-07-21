@@ -2,11 +2,23 @@
 
 [ext_resource type="PackedScene" uid="uid://bacw3c6mite5s" path="res://src/card/card_base/card_base_onmap/card_base_onmap.tscn" id="1_qabvn"]
 [ext_resource type="Script" uid="uid://dw7x2f2y6mmir" path="res://src/card/card_base/character_card_base/character_card_base.gd" id="2_a2jum"]
+[ext_resource type="Texture2D" uid="uid://bjjkahmumjfmf" path="res://assets/card/blue_wea.png" id="3_mhkmf"]
+[ext_resource type="Texture2D" uid="uid://dc1rncoks3x7h" path="res://assets/card/blue_arm.png" id="4_cx46m"]
 
 [node name="CharacterCardBase" unique_id=361188102 instance=ExtResource("1_qabvn")]
 script = ExtResource("2_a2jum")
-speed = 2
 
 [node name="Weapon" type="Node2D" parent="." index="2" unique_id=783382387]
 
 [node name="Armor" type="Node2D" parent="." index="3" unique_id=1304509886]
+
+[node name="WeaIcon" type="Sprite2D" parent="." index="6" unique_id=333726162]
+visible = false
+position = Vector2(-8.571428, -20)
+texture = ExtResource("3_mhkmf")
+
+[node name="ArmIcon" type="Sprite2D" parent="." index="7" unique_id=1708489441]
+visible = false
+position = Vector2(8.571428, -20)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("4_cx46m")
