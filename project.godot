@@ -22,6 +22,10 @@ Data="*uid://4cyqiycrdk0w"
 
 window/stretch/mode="viewport"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+
 [gui]
 
 theme/custom_font="uid://dqt8pu81tp24x"
