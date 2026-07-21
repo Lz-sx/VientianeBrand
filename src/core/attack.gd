@@ -65,7 +65,7 @@ func attack(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
 	attack_tween.tween_property(selected_unit, "scale", Vector2(0.7, 0.7), 0.15)
 	attack_tween.finished.connect(func():
 		hit_animation(target_unit)
-		attack_unit(target_unit, target_unit)
+		attack_unit(selected_unit, target_unit)
 		attack_finished.emit(selected_unit, target_unit)
 	)
 	
