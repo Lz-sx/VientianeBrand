@@ -6,7 +6,7 @@ func _on_enter() -> void:
 	main_game.grid_range.find_start_range(Data.Faction.PLAYER1)
 	main_game.draw_high_light_area.draw_start_highlight()
 	main_game.hand_card_info.show_hand_panel(main_game.hand_card_be_selected.id)
-
+ 
 ## 退出状态时触发
 func _on_exit() -> void:
 	Events.hand_card_selected_changed.disconnect(_on_hand_card_selected_changed)
