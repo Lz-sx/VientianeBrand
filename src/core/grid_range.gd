@@ -35,6 +35,7 @@ func clear():
 	units_in_move.clear()
 	attack_target_map.clear()
 	occupy_cell_map.clear()
+	arm_slot_map.clear()
 
 func find_start_range(selected_unit_faction:Data.Faction):
 	start_range.clear()
@@ -210,15 +211,38 @@ func _can_occupy_full_building(selected_unit_type:Data.Type, building:BuildingCa
 	return false
 		
 func find_arm_slot_map(selected_unit_faction:Data.Faction, selected_unit_type:Data.Type):
+	arm_slot_map.clear()
 	if selected_unit_type != Data.Type.WEAPON and selected_unit_type != Data.Type.ARMOR:
 		return
-	arm_slot_map.clear()
 	find_active_unit_map()
 	for pos in active_unit_map:
-		if active_unit_map[pos].Type == Data.Type.CHARACTER and \
-		active_unit_map[pos].Faction == selected_unit_faction:
-			var unit = active_unit_map[pos] as CharacterCardBase
-			if not unit.get_node("Weapon").get_children() and selected_unit_type == Data.Type.WEAPON:
-				arm_slot_map[pos] = unit
-			if not unit.get_node("Armor").get_children() and selected_unit_type == Data.Type.ARMOR:
-				arm_slot_map[pos] = unit
+		_check_unit_for_arm_slot(active_unit_map[pos], pos, selected_unit_faction, selected_unit_type)
+
+func _check_unit_for_arm_slot(unit:CardBaseOnmap, pos:Vector2i, faction:Data.Faction, arm_type:Data.Type):
+	if unit.Faction != faction:
+		return
+	
+	if unit.Type == Data.Type.CHARACTER:
+		var character = unit as CharacterCardBase
+		if arm_type == Data.Type.WEAPON:
+			var weapon_node = character.get_node_or_null("Weapon")
+			if weapon_node != null and weapon_node.get_child_count() == 0:
+				arm_slot_map[pos] = character
+		elif arm_type == Data.Type.ARMOR:
+			var armor_node = character.get_node_or_null("Armor")
+			if armor_node != null and armor_node.get_child_count() == 0:
+				arm_slot_map[pos] = character
+	
+	elif unit.Type == Data.Type.VEHICLE:
+		var vehicle = unit as VehicleCardBase
+		var passenger = vehicle.get_node_or_null("Passenger")
+		if passenger != null:
+			for child in passenger.get_children():
+				_check_unit_for_arm_slot(child, pos, faction, arm_type)
+	
+	elif unit.Type == Data.Type.BUILDING:
+		var building = unit as BuildingCardBase
+		var garrison = building.get_node_or_null("Garrison")
+		if garrison != null:
+			for child in garrison.get_children():
+				_check_unit_for_arm_slot(child, pos, faction, arm_type)

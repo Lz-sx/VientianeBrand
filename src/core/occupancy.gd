@@ -210,7 +210,6 @@ func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 	var target_unit = game_grid.get_cell_data(tile_position)["unit"]
 	if target_unit == null:
 		return
-	selected_unit.shield_and_hp_off()
 	match occupy_unit(selected_unit, target_unit):
 		OccupyResult.CHARACTER_TO_VEHICLE:
 			target_unit = target_unit as VehicleCardBase
@@ -233,10 +232,13 @@ func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 			target_unit.char_icon.visible = true
 			selected_unit.visible = false
 		OccupyResult.BUILDING_REPLACE_VEHICLE:
+			print(1)
 			target_unit = target_unit as VehicleCardBase
 			selected_unit = selected_unit as BuildingCardBase
+			print(target_unit.capacity)
+			print(Data.card_data[target_unit.id]["capacity"])
 			if target_unit.capacity != Data.card_data[target_unit.id]["capacity"]:
-				selected_unit.char_icon.visible == true
+				selected_unit.char_icon.visible = true
 			target_unit.visible = false
 			selected_unit.veh_icon.visible = true
 		OccupyResult.BUILDING_REPLACE_CHARACTER:

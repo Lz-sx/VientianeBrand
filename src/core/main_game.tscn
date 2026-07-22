@@ -74,8 +74,9 @@ container = NodePath("../Map/Obstacle")
 map = NodePath("../Map")
 game_grid = NodePath("../Map/GameGrid")
 
-[node name="Arm" type="Node" parent="." unique_id=245049500]
+[node name="Arm" type="Node" parent="." unique_id=245049500 node_paths=PackedStringArray("grid_range")]
 script = ExtResource("8_bdmve")
+grid_range = NodePath("../GridRange")
 
 [node name="System" type="Node" parent="." unique_id=2005422184]
 

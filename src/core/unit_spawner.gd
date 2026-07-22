@@ -7,7 +7,6 @@ class_name UnitSpawner
 
 func spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction) -> CardBaseOnmap:
 	var world_position = map.get_global_from_tile(cell_position)
-	# 1. 校验卡牌ID是否存在
 	if not Data.card_data.has(id):
 		print("错误：不存在卡牌ID ", id)
 		return null
@@ -15,16 +14,23 @@ func spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction) -> CardBase
 	if unit_scene == null:
 		print("错误：卡牌场景资源为空 ID ", id)
 		return null
-	# 实例化
 	var unit_instance:CardBaseOnmap = unit_scene.instantiate()
-	unit_instance._init_Faction(faction)
 	unit_instance.position = world_position
-	# 校验容器
 	if container == null:
 		print("错误：卡牌容器为空")
 		unit_instance.queue_free()
 		return null
 	container.add_child(unit_instance)
+	unit_instance._init_Faction(faction)
+	if unit_instance.Type == Data.Type.CHARACTER:
+		unit_instance = unit_instance as CharacterCardBase
+		unit_instance._init_wea_arm_icon(faction)
+	elif unit_instance.Type == Data.Type.VEHICLE:
+		unit_instance = unit_instance as VehicleCardBase
+		unit_instance._init_char_icon(faction)
+	elif unit_instance.Type == Data.Type.BUILDING:
+		unit_instance = unit_instance as BuildingCardBase
+		unit_instance._init_veh_char_icon(faction)
 	game_grid.add_unit(unit_instance, cell_position)
 	# 类型校验，防止场景挂载脚本错误
 	if unit_instance is CardBaseOnmap:
@@ -43,16 +49,23 @@ func spawn_card(id:int,faction:Data.Faction) -> CardBaseOnmap:
 	if unit_scene == null:
 		print("错误：卡牌场景资源为空 ID ", id)
 		return null
-	# 实例化
 	var unit_instance:CardBaseOnmap = unit_scene.instantiate()
-	unit_instance._init_Faction(faction)
 	unit_instance.position = Vector2(0,0)
-	# 校验容器
 	if container == null:
 		print("错误：卡牌容器为空")
 		unit_instance.queue_free()
 		return null
 	container.add_child(unit_instance)
+	unit_instance._init_Faction(faction)
+	if unit_instance.Type == Data.Type.CHARACTER:
+		unit_instance = unit_instance as CharacterCardBase
+		unit_instance._init_wea_arm_icon(faction)
+	elif unit_instance.Type == Data.Type.VEHICLE:
+		unit_instance = unit_instance as VehicleCardBase
+		unit_instance._init_char_icon(faction)
+	elif unit_instance.Type == Data.Type.BUILDING:
+		unit_instance = unit_instance as BuildingCardBase
+		unit_instance._init_veh_char_icon(faction)
 	# 类型校验，防止场景挂载脚本错误
 	if unit_instance is CardBaseOnmap:
 		return unit_instance

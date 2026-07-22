@@ -3,8 +3,8 @@ extends Node2D
 class_name WeaponCardBase
 
 var id:int
-var damage = 5
-var attack_range = 2
+var damage_bonus = 5
+var attack_range_bonus = 2
 
 var Affiliation:Data.Affiliation = Data.Affiliation.MORTAL
 var Type:Data.Type = Data.Type.WEAPON

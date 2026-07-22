@@ -25,7 +25,6 @@ func _ready() -> void:
 	
 func _init_Faction(Faction_:int):
 	Faction = Faction_
-	hp_line = $Hp
 	match Faction:
 		Data.Faction.PLAYER1:
 			hp_line.texture_progress = HP_PLAYER_1
@@ -60,10 +59,3 @@ func update_hp():
 		hp = 0
 		hp_line.value=0
 		
-func shield_and_hp_on():
-	shield_on()
-	hp_line.visible = true
-	
-func shield_and_hp_off():
-	shield_off()
-	hp_line.visible = false

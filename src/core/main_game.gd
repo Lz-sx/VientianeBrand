@@ -13,6 +13,8 @@ class_name MainGame
 @onready var draw_high_light_area: DrawHighLightArea = $Map/DrawHighLightArea
 @onready var map: Map = $Map
 @onready var game_grid: GameGrid = $Map/GameGrid
+@onready var arm: ARM = $Arm
+
 
 var start_player = 0
 

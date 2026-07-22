@@ -10,7 +10,7 @@ const RED_CHAR = preload("res://assets/card/red_char.png")
 func _ready() -> void:
 	super._ready()
 
-func _init_wea_arm_icon(faction:Data.Faction):
+func _init_char_icon(faction:Data.Faction):
 	if faction == Data.Faction.PLAYER1:
 		char_icon.texture = BLUE_CHAR
 	elif faction == Data.Faction.PLAYER2:

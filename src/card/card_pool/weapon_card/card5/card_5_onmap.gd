@@ -7,5 +7,5 @@ func _ready() -> void:
 	id = 5
 	Affiliation = Data.Affiliation.MORTAL
 	Type = Data.Type.WEAPON
-	damage = 5
-	attack_range = 6
+	damage_bonus = 5
+	attack_range_bonus = 6
