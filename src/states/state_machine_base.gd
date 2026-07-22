@@ -1,8 +1,7 @@
 extends StateBase
 class_name StateMachineBase
 
-## 状态发生改变时发出信号
-signal state_changed(from_state: StateBase, to_state: StateBase)
+
 
 ## 当前活跃的状态
 var current_state: StateBase = null
@@ -73,4 +72,4 @@ func change_state(state_name: StringName) -> void:
 	print(state_name)
 	current_state._on_enter()
 	
-	state_changed.emit(previous, current_state)
+	Events.state_changed.emit(previous, current_state)

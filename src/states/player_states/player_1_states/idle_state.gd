@@ -1,7 +1,7 @@
 extends StateBase
 
 func _on_enter() -> void:
-	main_game.hand_root.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
+	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
 	main_game.draw_high_light_area.clear_highlight()
 	main_game.grid_range.clear()
 	if not main_game.hand_card_be_selected == null:
@@ -9,7 +9,7 @@ func _on_enter() -> void:
 	
 ## 退出状态时触发
 func _on_exit() -> void:
-	main_game.hand_root.hand_card_selected_changed.disconnect(_on_hand_card_selected_changed)
+	Events.hand_card_selected_changed.disconnect(_on_hand_card_selected_changed)
 
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:

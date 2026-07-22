@@ -4,7 +4,7 @@ class_name GameGrid
 enum Board {LAND=1, RIVER, NULL}
 enum Obstacle {ROCK=1, WOOD, NULL}
 
-signal grid_changed
+
 
 @export var board:TileMapLayer
 @export var obstacle:TileMapLayer
@@ -93,7 +93,7 @@ func add_unit(unit:CardBaseOnmap, cell_position:Vector2i) -> bool:
 		return false
 	if grid_data[cell_position]["unit"] == null:
 		grid_data[cell_position]["unit"] = unit
-		grid_changed.emit()
+		Events.grid_changed.emit()
 	return true
 
 func is_usable(cell_position:Vector2i) -> bool:
@@ -106,5 +106,5 @@ func remove_unit_by_pos(cell_position:Vector2i) -> bool:
 		push_warning("错误：没有此网格坐标")
 		return false
 	grid_data[cell_position]["unit"] = null
-	grid_changed.emit()
+	Events.grid_changed.emit()
 	return true

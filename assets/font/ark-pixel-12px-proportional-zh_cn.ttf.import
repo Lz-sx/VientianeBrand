@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dqt8pu81tp24x"
-path="res://.godot/imported/ZhengGeDianHei-16.ttf-37ca13d41570f3d29673b87d978fe84b.fontdata"
+uid="uid://c3gviqdq27ecq"
+path="res://.godot/imported/ark-pixel-12px-proportional-zh_cn.ttf-2360f1a3a01f812eedcc546a2cd8905b.fontdata"
 
 [deps]
 
-source_file="res://assets/font/ZhengGeDianHei-16.ttf"
-dest_files=["res://.godot/imported/ZhengGeDianHei-16.ttf-37ca13d41570f3d29673b87d978fe84b.fontdata"]
+source_file="res://assets/font/ark-pixel-12px-proportional-zh_cn.ttf"
+dest_files=["res://.godot/imported/ark-pixel-12px-proportional-zh_cn.ttf-2360f1a3a01f812eedcc546a2cd8905b.fontdata"]
 
 [params]
 

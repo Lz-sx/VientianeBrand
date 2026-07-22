@@ -5,9 +5,6 @@ class_name Attack
 @export var game_grid: GameGrid
 @export var occupancy: Occupancy
 
-signal attack_finished(attacker:CardBaseOnmap,defender:CardBaseOnmap)
-signal unit_died(unit:CardBaseOnmap)
-
 func die(unit:CardBaseOnmap):
 	var parent_node = unit.get_parent()
 	if parent_node.name == "Obstacle":
@@ -38,7 +35,7 @@ func die(unit:CardBaseOnmap):
 				occupancy.remove_node(child)
 				parent_node.add_child(child)
 				game_grid.add_unit(child,position)
-	unit_died.emit(unit)
+	Events.events.unit_died.emit(unit)
 	unit.queue_free()
 		
 func attack_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
@@ -66,7 +63,7 @@ func attack(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
 	attack_tween.finished.connect(func():
 		hit_animation(target_unit)
 		attack_unit(selected_unit, target_unit)
-		attack_finished.emit(selected_unit, target_unit)
+		Events.events.attack_finished.emit(selected_unit, target_unit)
 	)
 	
 # 目标受击动画：红闪+左右抖动

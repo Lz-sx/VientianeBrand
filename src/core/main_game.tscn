@@ -36,6 +36,7 @@
 [ext_resource type="Script" uid="uid://cwu8xefr8ifky" path="res://src/states/player_states/player_1_states/move_state.gd" id="17_ucad4"]
 [ext_resource type="Script" uid="uid://cijkw0h4svf4g" path="res://src/states/player_states/player_1_states/attack_state.gd" id="18_ovyt5"]
 [ext_resource type="Script" uid="uid://dqilacepxcl78" path="res://src/states/player_states/player_1_states/end_turn_state.gd" id="19_md0c5"]
+[ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
@@ -216,9 +217,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -576.0
-offset_top = -648.0
-offset_right = 576.0
+offset_left = -325.5
+offset_top = -142.0
+offset_right = 325.5
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("9_h37xf")
@@ -227,18 +228,54 @@ script = ExtResource("9_h37xf")
 
 [node name="InfoRoot" type="Control" parent="InfoLayer" unique_id=1898787209]
 layout_mode = 3
-anchors_preset = 0
-offset_top = 84.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -209.0
 offset_right = 214.0
-offset_bottom = 502.0
+offset_bottom = 209.0
+grow_vertical = 2
 script = ExtResource("11_13ca8")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/InfoRoot" unique_id=1307714942]
-layout_mode = 0
+[node name="HandCardInfo" type="Control" parent="InfoLayer/InfoRoot" unique_id=1308325933 node_paths=PackedStringArray("rich_text_label")]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -209.0
 offset_right = 214.0
-offset_bottom = 418.0
+offset_bottom = 209.0
+grow_vertical = 2
+script = ExtResource("37_yh6i4")
+rich_text_label = NodePath("RichTextLabel")
 
-[node name="Panel" type="Panel" parent="InfoLayer/InfoRoot" unique_id=240711814]
-layout_mode = 0
+[node name="Panel" type="Panel" parent="InfoLayer/InfoRoot/HandCardInfo" unique_id=240711814]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -209.0
 offset_right = 214.0
-offset_bottom = 418.0
+offset_bottom = 209.0
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/InfoRoot/HandCardInfo" unique_id=1977698916]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -209.0
+offset_right = 214.0
+offset_bottom = 209.0
+grow_vertical = 2
+text = "名字
+
+凡间		人物卡
+生命值			10
+伤害			10
+攻击距离		10
+速度			10
+技能与描述			
+
+"

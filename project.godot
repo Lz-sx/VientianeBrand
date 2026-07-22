@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 [autoload]
 
 Data="*uid://4cyqiycrdk0w"
+Events="*uid://y3c3t0ufcy2k"
 
 [display]
 
@@ -28,7 +29,7 @@ enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
 
 [gui]
 
-theme/custom_font="uid://dqt8pu81tp24x"
+theme/custom_font="uid://c3gviqdq27ecq"
 
 [input]
 

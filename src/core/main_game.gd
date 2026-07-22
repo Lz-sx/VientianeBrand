@@ -14,6 +14,8 @@ class_name MainGame
 @onready var map: Map = $Map
 @onready var game_grid: GameGrid = $Map/GameGrid
 @onready var arm: ARM = $Arm
+@onready var hand_card_info: HandCardInfo = $InfoLayer/InfoRoot/HandCardInfo
+
 
 
 var start_player = 0

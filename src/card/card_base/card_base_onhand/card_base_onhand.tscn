@@ -7,16 +7,20 @@
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
-offset_right = 39.999996
-offset_bottom = 55.999996
+offset_left = 30.000004
+offset_top = 42.000004
+offset_right = 70.0
+offset_bottom = 98.0
 scale = Vector2(2.5, 2.5)
+pivot_offset = Vector2(20, 28)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_vebrn")
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=282656276]
 texture_filter = 1
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 56.0
 texture_normal = ExtResource("2_vebrn")
