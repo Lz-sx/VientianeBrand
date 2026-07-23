@@ -38,6 +38,7 @@
 [ext_resource type="Script" uid="uid://dqilacepxcl78" path="res://src/states/player_states/player_1_states/end_turn_state.gd" id="19_md0c5"]
 [ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 [ext_resource type="Script" uid="uid://bbd0pw6bxudui" path="res://src/ui/info/map_card_info.gd" id="38_3gpy6"]
+[ext_resource type="Script" uid="uid://dv5c4oxkil4rj" path="res://src/ui/info/map_card_operate.gd" id="39_0ppfa"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
@@ -262,6 +263,7 @@ offset_bottom = 209.0
 grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/InfoRoot/HandCardInfo" unique_id=1977698916]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -274,7 +276,7 @@ text = "名字
 
 凡间		人物卡
 生命值			10
-伤害			10
+攻击力			10
 攻击距离		10
 速度			10
 技能与描述			
@@ -282,6 +284,7 @@ text = "名字
 "
 
 [node name="MapCardInfo" type="Control" parent="InfoLayer/InfoRoot" unique_id=1111672936]
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -297,25 +300,157 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -209.0
+offset_top = -169.0
 offset_right = 214.0
 offset_bottom = 209.0
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/InfoRoot/MapCardInfo" unique_id=1248512402]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -209.0
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/InfoRoot/MapCardInfo" unique_id=1940457676]
+layout_mode = 0
+offset_top = 40.0
 offset_right = 214.0
-offset_bottom = 209.0
-grow_vertical = 2
+offset_bottom = 418.0
 text = "名字
 
-凡间		人物卡
 生命值			10
-伤害			10
-技能与描述			
+攻击力			10
+
+技能与描述
 
 "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InfoLayer/InfoRoot/MapCardInfo" unique_id=92587656]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Building" type="Button" parent="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer" unique_id=2091037066]
+visible = false
+layout_mode = 2
+text = "建筑"
+
+[node name="Vehicle" type="Button" parent="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer" unique_id=449538931]
+visible = false
+layout_mode = 2
+text = "载具"
+
+[node name="Character" type="Button" parent="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer" unique_id=882385535]
+visible = false
+layout_mode = 2
+text = "人物"
+
+[node name="Weapon" type="Button" parent="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer" unique_id=253838259]
+visible = false
+layout_mode = 2
+text = "武器"
+
+[node name="Armor" type="Button" parent="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer" unique_id=1883828187]
+visible = false
+layout_mode = 2
+text = "防具"
+
+[node name="MapCardOperate" type="Control" parent="InfoLayer" unique_id=1824855808]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 974.0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("39_0ppfa")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InfoLayer/MapCardOperate" unique_id=1064032651]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -164.0
+offset_top = -215.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Building" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=1589168183]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Building" unique_id=1402567221]
+layout_mode = 2
+text = "名字"
+
+[node name="Attack" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Building" unique_id=1102999242]
+layout_mode = 2
+text = "攻击"
+
+[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Building" unique_id=993129615]
+layout_mode = 2
+text = "技能
+"
+
+[node name="Vehicle" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=921050773]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=66091431]
+layout_mode = 2
+text = "名字"
+
+[node name="Attack" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=236676533]
+layout_mode = 2
+text = "攻击"
+
+[node name="Move" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=1134842106]
+layout_mode = 2
+text = "移动"
+
+[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=959131516]
+layout_mode = 2
+text = "技能
+"
+
+[node name="Character" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=536006961]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=1379819248]
+layout_mode = 2
+text = "名字"
+
+[node name="Attack" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=1284975]
+layout_mode = 2
+text = "攻击"
+
+[node name="Move" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=1645852240]
+layout_mode = 2
+text = "移动"
+
+[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=888692958]
+layout_mode = 2
+text = "技能
+"
+
+[node name="Weapon" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=1287911229]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=802910758]
+layout_mode = 2
+text = "名字"
+
+[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=401331817]
+layout_mode = 2
+text = "技能
+"
+
+[node name="Armor" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=541143235]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Armor" unique_id=943050937]
+layout_mode = 2
+text = "名字"
+
+[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Armor" unique_id=1687869706]
+layout_mode = 2
+text = "技能
+"
+
+[connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Building" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_building_pressed"]
+[connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Vehicle" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_vehicle_pressed"]
+[connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Character" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_character_pressed"]
+[connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Weapon" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_weapon_pressed"]
+[connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Armor" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_armor_pressed"]

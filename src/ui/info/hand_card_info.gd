@@ -29,16 +29,16 @@ func show_hand_panel(id:int):
 		Data.Affiliation.CELESTIAL: "天界",
 	}
 	var affiliation_name = aff_map.get(card.affiliation, "未知")
-	text += "阵营：			%s\n" % affiliation_name
+	text += "属性：			%s\n" % affiliation_name
 	
 	if card.has("hp"):
-		text += "血量：			%d\n" % card["hp"]
+		text += "生命值：			%d\n" % card["hp"]
 	
 	if card.has("damage"):
-		text += "伤害：			%d\n" % card["damage"]
+		text += "攻击力：			%d\n" % card["damage"]
 	
 	if card.has("attack_range"):
-		text += "攻击范围：			%d\n" % card["attack_range"]
+		text += "攻击范围：		%d\n" % card["attack_range"]
 	
 	if card.has("speed"):
 		text += "速度：			%d\n" % card["speed"]
@@ -58,3 +58,4 @@ func show_hand_panel(id:int):
 func hide_hand_panel():
 	rich_text_label.clear()
 	visible = false
+	
