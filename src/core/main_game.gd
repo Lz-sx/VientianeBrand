@@ -15,6 +15,8 @@ class_name MainGame
 @onready var game_grid: GameGrid = $Map/GameGrid
 @onready var arm: ARM = $Arm
 @onready var hand_card_info: HandCardInfo = $InfoLayer/InfoRoot/HandCardInfo
+@onready var map_card_info: MapCardInfo = $InfoLayer/InfoRoot/MapCardInfo
+@onready var map_card_operate: MapCardOperate = $OperateLayer/MapCardOperate
 
 
 
@@ -30,6 +32,7 @@ var player1_hand:Array[int]=[]
 var player2_hand:Array[int]=[]
 
 var hand_card_be_selected:CardBaseOnhand = null
+var map_card_be_selected:CardBaseOnmap = null
 
 #var active_units:Array[CardBaseOnmap]
 

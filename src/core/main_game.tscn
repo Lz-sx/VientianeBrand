@@ -349,7 +349,10 @@ visible = false
 layout_mode = 2
 text = "防具"
 
-[node name="MapCardOperate" type="Control" parent="InfoLayer" unique_id=1824855808]
+[node name="OperateLayer" type="CanvasLayer" parent="." unique_id=2038540440]
+
+[node name="MapCardOperate" type="Control" parent="OperateLayer" unique_id=1824855808]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 974.0
@@ -357,7 +360,7 @@ offset_right = 1152.0
 offset_bottom = 648.0
 script = ExtResource("39_0ppfa")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="InfoLayer/MapCardOperate" unique_id=1064032651]
+[node name="VBoxContainer" type="VBoxContainer" parent="OperateLayer/MapCardOperate" unique_id=1064032651]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -369,82 +372,92 @@ offset_top = -215.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Building" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=1589168183]
+[node name="Building" type="HBoxContainer" parent="OperateLayer/MapCardOperate/VBoxContainer" unique_id=1589168183]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Building" unique_id=1402567221]
+[node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Building" unique_id=1402567221]
 layout_mode = 2
 text = "名字"
 
-[node name="Attack" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Building" unique_id=1102999242]
+[node name="Attack" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Building" unique_id=1102999242]
+visible = false
 layout_mode = 2
 text = "攻击"
 
-[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Building" unique_id=993129615]
+[node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Building" unique_id=993129615]
+visible = false
 layout_mode = 2
 text = "技能
 "
 
-[node name="Vehicle" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=921050773]
+[node name="Vehicle" type="HBoxContainer" parent="OperateLayer/MapCardOperate/VBoxContainer" unique_id=921050773]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=66091431]
+[node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=66091431]
 layout_mode = 2
 text = "名字"
 
-[node name="Attack" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=236676533]
+[node name="Attack" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=236676533]
+visible = false
 layout_mode = 2
 text = "攻击"
 
-[node name="Move" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=1134842106]
+[node name="Move" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=1134842106]
+visible = false
 layout_mode = 2
 text = "移动"
 
-[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=959131516]
+[node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=959131516]
+visible = false
 layout_mode = 2
 text = "技能
 "
 
-[node name="Character" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=536006961]
+[node name="Character" type="HBoxContainer" parent="OperateLayer/MapCardOperate/VBoxContainer" unique_id=536006961]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=1379819248]
+[node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=1379819248]
 layout_mode = 2
 text = "名字"
 
-[node name="Attack" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=1284975]
+[node name="Attack" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=1284975]
+visible = false
 layout_mode = 2
 text = "攻击"
 
-[node name="Move" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=1645852240]
+[node name="Move" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=1645852240]
+visible = false
 layout_mode = 2
 text = "移动"
 
-[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Character" unique_id=888692958]
+[node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=888692958]
+visible = false
 layout_mode = 2
 text = "技能
 "
 
-[node name="Weapon" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=1287911229]
+[node name="Weapon" type="HBoxContainer" parent="OperateLayer/MapCardOperate/VBoxContainer" unique_id=1287911229]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=802910758]
+[node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=802910758]
 layout_mode = 2
 text = "名字"
 
-[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=401331817]
+[node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=401331817]
+visible = false
 layout_mode = 2
 text = "技能
 "
 
-[node name="Armor" type="HBoxContainer" parent="InfoLayer/MapCardOperate/VBoxContainer" unique_id=541143235]
+[node name="Armor" type="HBoxContainer" parent="OperateLayer/MapCardOperate/VBoxContainer" unique_id=541143235]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="InfoLayer/MapCardOperate/VBoxContainer/Armor" unique_id=943050937]
+[node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Armor" unique_id=943050937]
 layout_mode = 2
 text = "名字"
 
-[node name="Skill" type="Button" parent="InfoLayer/MapCardOperate/VBoxContainer/Armor" unique_id=1687869706]
+[node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Armor" unique_id=1687869706]
+visible = false
 layout_mode = 2
 text = "技能
 "

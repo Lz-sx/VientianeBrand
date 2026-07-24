@@ -22,6 +22,10 @@ func _state_input(_event: InputEvent) -> void:
 		var target_pos = main_game.map.get_hovered_tile()
 		if main_game.grid_range.start_range.has(target_pos):
 			parent_fsm.change_state("DeployState")
-
+	if _event.is_action_pressed("mouse_right"):
+		main_game.hand_card_be_selected.deselect()
+		main_game.hand_card_be_selected = null
+		parent_fsm.change_state("IdleState")
+		
 func _on_hand_card_selected_changed():
 	parent_fsm.change_state("IdleState")

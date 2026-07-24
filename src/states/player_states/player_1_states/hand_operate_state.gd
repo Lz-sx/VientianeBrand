@@ -22,6 +22,8 @@ func _state_input(_event: InputEvent) -> void:
 		main_game.grid_range.occupy_cell_map.has(target_pos) or \
 		main_game.grid_range.arm_slot_map.has(target_pos):
 			parent_fsm.change_state("DeployState")
+	if _event.is_action_pressed("mouse_right"):
+		main_game.hand_root.hand_card_selected_change(null)
 		
 func _on_hand_card_selected_changed():
 	parent_fsm.change_state("IdleState")
