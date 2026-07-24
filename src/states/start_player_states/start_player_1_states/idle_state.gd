@@ -2,7 +2,8 @@ extends StateBase
 
 func _on_enter() -> void:
 	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
-	
+	main_game.draw_high_light_area.clear_highlight()
+	main_game.grid_range.clear()
 	if not main_game.hand_card_be_selected == null:
 		parent_fsm.change_state("HandOperateState")
 ## 退出状态时触发

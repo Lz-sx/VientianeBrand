@@ -1,7 +1,10 @@
 extends StateBase
 
 func _on_enter() -> void:
-	pass
+	if main_game.grid_range.move_range.has(main_game.clicked_position):
+		await main_game.movement.move(main_game.map_action_card,main_game.clicked_position)
+	elif main_game.grid_range.occupy_cell_map.has(main_game.clicked_position):
+		await main_game.occupancy.occupy(main_game.map_action_card,main_game.clicked_position)
 	
 ## 退出状态时触发
 func _on_exit() -> void:

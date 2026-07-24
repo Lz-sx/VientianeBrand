@@ -56,6 +56,5 @@ func show_hand_panel(id:int):
 	visible = true
 
 func hide_hand_panel():
-	rich_text_label.clear()
 	visible = false
 	

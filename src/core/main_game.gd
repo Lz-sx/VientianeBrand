@@ -33,7 +33,8 @@ var player2_hand:Array[int]=[]
 
 var hand_card_be_selected:CardBaseOnhand = null
 var map_card_be_selected:CardBaseOnmap = null
-
+var map_action_card:CardBaseOnmap = null
+var clicked_position:Vector2i
 #var active_units:Array[CardBaseOnmap]
 
 #备份

@@ -8,6 +8,7 @@ script = ExtResource("2_npmbj")
 
 [node name="Label1" type="Label" parent="." index="0" unique_id=1518919147]
 z_index = 2
+texture_filter = 1
 offset_left = -16.0
 offset_top = 8.0
 offset_right = 24.0
@@ -16,6 +17,7 @@ text = "(0,0)"
 
 [node name="Label2" type="Label" parent="." index="1" unique_id=1882516912]
 z_index = 2
+texture_filter = 1
 offset_left = -16.0
 offset_top = -32.0
 offset_right = 24.0
@@ -24,6 +26,7 @@ text = "LAND"
 
 [node name="Label3" type="Label" parent="." index="2" unique_id=1648793991]
 z_index = 2
+texture_filter = 1
 offset_left = -16.0
 offset_top = -48.0
 offset_right = 24.0

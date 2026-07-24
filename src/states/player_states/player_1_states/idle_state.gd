@@ -4,7 +4,8 @@ func _on_enter() -> void:
 	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
 	main_game.draw_high_light_area.clear_highlight()
 	main_game.grid_range.clear()
-	main_game
+	if not main_game.hand_card_be_selected == null and not main_game.hand_card_be_selected == null:
+		push_warning("错误：同时选择两张卡")
 	if not main_game.hand_card_be_selected == null:
 		parent_fsm.change_state("HandOperateState")
 	if not main_game.map_card_be_selected == null:

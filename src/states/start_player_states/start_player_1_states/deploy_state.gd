@@ -1,7 +1,7 @@
 extends StateBase
 
 func _on_enter() -> void:
-	main_game.unit_spawner.spawn_unit(0,main_game.map.get_hovered_tile(),Data.Faction.PLAYER1)
+	main_game.unit_spawner.spawn_unit(0,main_game.clicked_position,Data.Faction.PLAYER1)
 	parent_fsm.change_state("EndTurnState")
 	
 ## 退出状态时触发

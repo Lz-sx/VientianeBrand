@@ -36,6 +36,8 @@
 [ext_resource type="Script" uid="uid://cwu8xefr8ifky" path="res://src/states/player_states/player_1_states/move_state.gd" id="17_ucad4"]
 [ext_resource type="Script" uid="uid://cijkw0h4svf4g" path="res://src/states/player_states/player_1_states/attack_state.gd" id="18_ovyt5"]
 [ext_resource type="Script" uid="uid://dqilacepxcl78" path="res://src/states/player_states/player_1_states/end_turn_state.gd" id="19_md0c5"]
+[ext_resource type="Script" uid="uid://dkp422gemp4rn" path="res://src/states/player_states/player_1_states/pre_move_state.gd" id="24_hgjc7"]
+[ext_resource type="Script" uid="uid://b4ry784l3ulda" path="res://src/states/player_states/player_1_states/pre_attack_state.gd" id="26_tnqjm"]
 [ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 [ext_resource type="Script" uid="uid://bbd0pw6bxudui" path="res://src/ui/info/map_card_info.gd" id="38_3gpy6"]
 [ext_resource type="Script" uid="uid://dv5c4oxkil4rj" path="res://src/ui/info/map_card_operate.gd" id="39_0ppfa"]
@@ -138,8 +140,14 @@ script = ExtResource("14_7dxeu")
 [node name="UnitSelectedState" type="Node" parent="MainStateMachine/Player1State" unique_id=875920611]
 script = ExtResource("16_g0oku")
 
+[node name="PreMoveState" type="Node" parent="MainStateMachine/Player1State" unique_id=413759341]
+script = ExtResource("24_hgjc7")
+
 [node name="MoveState" type="Node" parent="MainStateMachine/Player1State" unique_id=877545444]
 script = ExtResource("17_ucad4")
+
+[node name="PreAttackState" type="Node" parent="MainStateMachine/Player1State" unique_id=4999882]
+script = ExtResource("26_tnqjm")
 
 [node name="AttackState" type="Node" parent="MainStateMachine/Player1State" unique_id=2052111140]
 script = ExtResource("18_ovyt5")
@@ -355,7 +363,7 @@ text = "防具"
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 974.0
+offset_left = 948.0
 offset_right = 1152.0
 offset_bottom = 648.0
 script = ExtResource("39_0ppfa")
@@ -367,8 +375,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -164.0
-offset_top = -215.0
+offset_left = -179.0
+offset_top = -196.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -377,15 +385,13 @@ layout_mode = 2
 
 [node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Building" unique_id=1402567221]
 layout_mode = 2
-text = "名字"
+text = "名字   "
 
 [node name="Attack" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Building" unique_id=1102999242]
-visible = false
 layout_mode = 2
 text = "攻击"
 
 [node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Building" unique_id=993129615]
-visible = false
 layout_mode = 2
 text = "技能
 "
@@ -395,20 +401,17 @@ layout_mode = 2
 
 [node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=66091431]
 layout_mode = 2
-text = "名字"
+text = "名字   "
 
 [node name="Attack" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=236676533]
-visible = false
 layout_mode = 2
 text = "攻击"
 
 [node name="Move" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=1134842106]
-visible = false
 layout_mode = 2
 text = "移动"
 
 [node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Vehicle" unique_id=959131516]
-visible = false
 layout_mode = 2
 text = "技能
 "
@@ -418,20 +421,17 @@ layout_mode = 2
 
 [node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=1379819248]
 layout_mode = 2
-text = "名字"
+text = "名字   "
 
 [node name="Attack" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=1284975]
-visible = false
 layout_mode = 2
 text = "攻击"
 
 [node name="Move" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=1645852240]
-visible = false
 layout_mode = 2
 text = "移动"
 
 [node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Character" unique_id=888692958]
-visible = false
 layout_mode = 2
 text = "技能
 "
@@ -441,10 +441,9 @@ layout_mode = 2
 
 [node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=802910758]
 layout_mode = 2
-text = "名字"
+text = "名字   "
 
 [node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Weapon" unique_id=401331817]
-visible = false
 layout_mode = 2
 text = "技能
 "
@@ -454,10 +453,9 @@ layout_mode = 2
 
 [node name="Name" type="Label" parent="OperateLayer/MapCardOperate/VBoxContainer/Armor" unique_id=943050937]
 layout_mode = 2
-text = "名字"
+text = "名字   "
 
 [node name="Skill" type="Button" parent="OperateLayer/MapCardOperate/VBoxContainer/Armor" unique_id=1687869706]
-visible = false
 layout_mode = 2
 text = "技能
 "
@@ -467,3 +465,13 @@ text = "技能
 [connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Character" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_character_pressed"]
 [connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Weapon" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_weapon_pressed"]
 [connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Armor" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_armor_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Building/Attack" to="OperateLayer/MapCardOperate" method="_on_building_attack_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Building/Skill" to="OperateLayer/MapCardOperate" method="_on_building_skill_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Vehicle/Attack" to="OperateLayer/MapCardOperate" method="_on_vehicle_attack_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Vehicle/Move" to="OperateLayer/MapCardOperate" method="_on_vehicle_move_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Vehicle/Skill" to="OperateLayer/MapCardOperate" method="_on_vehicle_skill_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Character/Attack" to="OperateLayer/MapCardOperate" method="_on_character_attack_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Character/Move" to="OperateLayer/MapCardOperate" method="_on_character_move_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Character/Skill" to="OperateLayer/MapCardOperate" method="_on_character_skill_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Weapon/Skill" to="OperateLayer/MapCardOperate" method="_on_weapon_skill_pressed"]
+[connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Armor/Skill" to="OperateLayer/MapCardOperate" method="_on_armor_skill_pressed"]

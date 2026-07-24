@@ -102,7 +102,7 @@ const DIRS: Array[Vector2i] = [
 	Vector2i.RIGHT,
 ]
 
-func find_move_range(center: Vector2i, selected_unit:CardBaseOnmap, speed: int) -> void:
+func find_move_range(center: Vector2i, selected_unit:CardBaseOnmap) -> void:
 	move_range.clear()
 	units_in_move.clear()
 	occupy_cell_map.clear()
@@ -116,7 +116,7 @@ func find_move_range(center: Vector2i, selected_unit:CardBaseOnmap, speed: int) 
 		var steps: int = current[1]
 		move_range.append(pos)  # 可达格子加入结果
 		# 步数到上限就不再扩展
-		if steps >= speed:
+		if steps >= selected_unit.speed:
 			continue
 		# 扩展四个方向
 		for dir in DIRS:
@@ -127,7 +127,7 @@ func find_move_range(center: Vector2i, selected_unit:CardBaseOnmap, speed: int) 
 			if not game_grid.grid_data.has(next_pos):
 				continue
 			# 判断障碍物：有单位就不能走
-			if game_grid.grid_data[next_pos]["obstacle"] == game_grid.Obstacle.ROCK:
+			if game_grid.grid_data[next_pos]["obstacle"] != game_grid.Obstacle.NULL:
 				continue
 			if game_grid.grid_data[next_pos]["unit"] != null:
 				units_in_move.append(game_grid.grid_data[next_pos]["unit"])

@@ -29,6 +29,8 @@ func update_text(map_card_be_selected:CardBaseOnmap):
 	_collect_card_data(map_card_be_selected)
 
 func _collect_card_data(card:CardBaseOnmap):
+	if card == null:
+		return
 	if not Data.card_data.has(card.id):
 		return
 	

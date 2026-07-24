@@ -17,10 +17,10 @@ func _state_process(_delta: float) -> void:
 ## 状态处理输入事件
 func _state_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("mouse_left") and main_game.map.is_click_on_map():
-		var target_pos = main_game.map.get_hovered_tile()
-		if main_game.grid_range.deploy_range.has(target_pos) or \
-		main_game.grid_range.occupy_cell_map.has(target_pos) or \
-		main_game.grid_range.arm_slot_map.has(target_pos):
+		main_game.clicked_position = main_game.map.get_hovered_tile()
+		if main_game.grid_range.deploy_range.has(main_game.clicked_position) or \
+		main_game.grid_range.occupy_cell_map.has(main_game.clicked_position) or \
+		main_game.grid_range.arm_slot_map.has(main_game.clicked_position):
 			parent_fsm.change_state("DeployState")
 	if _event.is_action_pressed("mouse_right"):
 		main_game.hand_root.hand_card_selected_change(null)

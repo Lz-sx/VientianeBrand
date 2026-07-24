@@ -5,6 +5,7 @@ class_name  MapCardOperate
 @onready var character: HBoxContainer = $VBoxContainer/Character
 @onready var weapon: HBoxContainer = $VBoxContainer/Weapon
 @onready var armor: HBoxContainer = $VBoxContainer/Armor
+const default_name_size = 3
 
 func update_button(map_card_be_selected:CardBaseOnmap):
 	building.visible = false
@@ -21,6 +22,10 @@ func show_button(card:CardBaseOnmap):
 	
 	var data = Data.card_data[card.id]
 	var name = data["name"]
+	var none_space = default_name_size - name.length()
+	if none_space > 0:
+		for i in range(none_space*2):
+			name += " "
 	
 	match card.Type:
 		Data.Type.BUILDING:
@@ -68,3 +73,33 @@ func show_button(card:CardBaseOnmap):
 			armor.visible = true
 			armor.get_node("Name").text = name
 			armor.get_node("Skill").visible = true
+
+func _on_building_attack_pressed():
+	Events.building_attack.emit()
+
+func _on_building_skill_pressed():
+	Events.building_skill.emit()
+
+func _on_vehicle_attack_pressed():
+	Events.vehicle_attack.emit()
+	
+func _on_vehicle_move_pressed():
+	Events.vehicle_move.emit()
+	
+func _on_vehicle_skill_pressed():
+	Events.vehicle_skill.emit()
+	
+func _on_character_attack_pressed():
+	Events.character_attack.emit()
+	
+func _on_character_move_pressed():
+	Events.character_move.emit()
+	
+func _on_character_skill_pressed():
+	Events.character_skill.emit()
+
+func _on_weapon_skill_pressed():
+	Events.weapon_skill.emit()
+	
+func _on_armor_skill_pressed():
+	Events.armor_skill.emit()

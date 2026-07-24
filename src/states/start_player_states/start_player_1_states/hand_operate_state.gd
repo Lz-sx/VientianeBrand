@@ -19,13 +19,12 @@ func _state_process(_delta: float) -> void:
 ## 状态处理输入事件
 func _state_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("mouse_left") and main_game.map.is_click_on_map():
-		var target_pos = main_game.map.get_hovered_tile()
-		if main_game.grid_range.start_range.has(target_pos):
+		main_game.clicked_position = main_game.map.get_hovered_tile()
+		if main_game.grid_range.start_range.has(main_game.clicked_position):
 			parent_fsm.change_state("DeployState")
 	if _event.is_action_pressed("mouse_right"):
-		main_game.hand_card_be_selected.deselect()
-		main_game.hand_card_be_selected = null
-		parent_fsm.change_state("IdleState")
+		main_game.hand_root.hand_card_selected_change(null)
+
 		
 func _on_hand_card_selected_changed():
 	parent_fsm.change_state("IdleState")
