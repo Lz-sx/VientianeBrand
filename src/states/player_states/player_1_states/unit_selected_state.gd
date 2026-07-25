@@ -18,6 +18,8 @@ func _on_enter() -> void:
 	main_game.map_card_operate.update_button(main_game.map_card_be_selected)
 	main_game.map_card_operate.visible = true
 	
+
+	
 ## 退出状态时触发
 func _on_exit() -> void:
 	Events.hand_card_selected_changed.disconnect(_on_hand_card_selected_changed)
@@ -63,7 +65,23 @@ func find_vehicle(card_be_selected:CardBaseOnmap) -> VehicleCardBase:
 	elif card_be_selected is VehicleCardBase:
 		return card_be_selected
 	return null
-	
+
+func find_character(card_be_selected:CardBaseOnmap) -> CharacterCardBase:
+	if card_be_selected is BuildingCardBase:
+		card_be_selected = card_be_selected as BuildingCardBase
+		for card in card_be_selected.get_node("Garrison").get_children():
+			if card is VehicleCardBase:
+				for card2 in card_be_selected.get_node("Passenger").get_children():
+					if card2 is CharacterCardBase:
+						return card2
+	elif card_be_selected is VehicleCardBase:
+		for card2 in card_be_selected.get_node("Passenger").get_children():
+			if card2 is CharacterCardBase:
+				return card2
+	elif card_be_selected is CharacterCardBase:
+		return card_be_selected
+	return null
+
 func _on_building_attack():
 	parent_fsm.change_state("PreAttackState")
 
@@ -82,9 +100,12 @@ func _on_vehicle_skill():
 	pass
 
 func _on_character_attack():
+	main_game.map_action_card = find_character(main_game.map_card_be_selected)
 	parent_fsm.change_state("PreAttackState")
 	
 func _on_character_move():
+	main_game.map_action_card = find_character(main_game.map_card_be_selected)
+	print(main_game.map_action_card)
 	parent_fsm.change_state("PreMoveState")
 	
 func _on_character_skill():

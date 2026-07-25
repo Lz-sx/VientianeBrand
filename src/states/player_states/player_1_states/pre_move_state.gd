@@ -7,7 +7,7 @@ func _on_enter() -> void:
 	main_game.draw_high_light_area.draw_move_highlight()
 ## 退出状态时触发
 func _on_exit() -> void:
-	pass
+	main_game.draw_high_light_area.clear_highlight()
 
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:
@@ -21,4 +21,4 @@ func _state_input(_event: InputEvent) -> void:
 		main_game.grid_range.occupy_cell_map.has(main_game.clicked_position):
 			parent_fsm.change_state("MoveState")
 	if _event.is_action_pressed("mouse_right"):
-		pass
+		parent_fsm.change_state("UnitSelectedState")

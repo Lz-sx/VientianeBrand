@@ -196,14 +196,12 @@ func _try_occupy_full_building(selected:CardBaseOnmap, building:BuildingCardBase
 	
 	return OccupyResult.FAILED
 
-func vacate_unit(selected_unit:CardBaseOnmap, tile_position:Vector2i):
+func vacate_unit(selected_unit:CardBaseOnmap):
 	if selected_unit.Type != Data.Type.BUILDING:
 		if selected_unit.get_parent() != null:
 			selected_unit.get_parent().get_parent().capacity += 1
 			selected_unit.get_parent().remove_child(selected_unit)
 		unit_spawner.container.add_child(selected_unit)
-		game_grid.add_unit(selected_unit, tile_position)
-
 
 
 func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
@@ -232,11 +230,8 @@ func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 			target_unit.char_icon.visible = true
 			selected_unit.visible = false
 		OccupyResult.BUILDING_REPLACE_VEHICLE:
-			print(1)
 			target_unit = target_unit as VehicleCardBase
 			selected_unit = selected_unit as BuildingCardBase
-			print(target_unit.capacity)
-			print(Data.card_data[target_unit.id]["capacity"])
 			if target_unit.capacity != Data.card_data[target_unit.id]["capacity"]:
 				selected_unit.char_icon.visible = true
 			target_unit.visible = false
@@ -252,15 +247,28 @@ func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 		OccupyResult.FAILED:
 			push_warning("错误：occupy函数判断链")
 
-func vacate(selected_unit:CardBaseOnmap, tile_position:Vector2i):
-	if selected_unit.Type == Data.Type.CHARACTER:
-		pass
-	elif selected_unit.Type == Data.Type.VEHICLE:
-		var vehicle = selected_unit as VehicleCardBase
-		if vehicle.capacity == Data.card_data[selected_unit.id]["capacity"]:
-			pass
-	vacate_unit(selected_unit, tile_position)
-	movement.move(selected_unit, tile_position)
+func vacate(selected_unit:CardBaseOnmap):
+	var parent_node = selected_unit.get_parent()
+	if parent_node == null:
+		return
+	vacate_unit(selected_unit)
+	selected_unit.visible = true
+	var grand_parent:CardBaseOnmap = parent_node.get_parent()
+	if grand_parent is CardBaseOnmap:
+		grand_parent.capacity += 1
+		match grand_parent.Type:
+			Data.Type.BUILDING:
+				var building = grand_parent as BuildingCardBase
+				if selected_unit.Type == Data.Type.VEHICLE:
+					if not building.capacity < Data.card_data[building.id]["capacity"]:
+						building.veh_icon.visible = false
+				else:
+					if not building.capacity < Data.card_data[building.id]["capacity"]:
+						building.char_icon.visible = false
+			Data.Type.VEHICLE:
+				var vehicle = grand_parent as VehicleCardBase
+				if not vehicle.capacity < Data.card_data[vehicle.id]["capacity"]:
+						vehicle.char_icon.visible = false
 
 func _ready() -> void:
 	pass

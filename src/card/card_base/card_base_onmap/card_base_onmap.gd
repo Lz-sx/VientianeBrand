@@ -22,6 +22,7 @@ var Type:Data.Type = Data.Type.CHARACTER
 func _ready() -> void:
 	hp_line.max_value=hp;
 	hp_line.value=hp;
+
 	
 func _init_Faction(Faction_:int):
 	Faction = Faction_
@@ -58,4 +59,3 @@ func update_hp():
 	else:
 		hp = 0
 		hp_line.value=0
-		
