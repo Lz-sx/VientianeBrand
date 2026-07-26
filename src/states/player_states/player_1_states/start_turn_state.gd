@@ -5,6 +5,10 @@ func _on_enter() -> void:
 	main_game.player1_draw_count_delta)
 	parent_fsm.change_state("IdleState")
 	
+	main_game.current_player1_action_point += main_game.DEFALUT_ACTION_POINT
+	if main_game.current_player1_action_point > main_game.MAX_ACTION_POINT:
+		main_game.current_player1_action_point = main_game.MAX_ACTION_POINT
+	main_game.action_point.update_point(main_game.current_player1_action_point)
 ## 退出状态时触发
 func _on_exit() -> void:
 	pass

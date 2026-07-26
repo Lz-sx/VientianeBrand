@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b5pittk6esjaf"]
+
+[ext_resource type="Script" uid="uid://bdrgqxeq3ynli" path="res://src/effects/damage_label.gd" id="1_80b3c"]
+
+[node name="DamageLabel" type="Label" unique_id=524140043]
+offset_left = -25.0
+offset_top = -45.0
+offset_right = 25.0
+offset_bottom = -15.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(25, 15)
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_80b3c")

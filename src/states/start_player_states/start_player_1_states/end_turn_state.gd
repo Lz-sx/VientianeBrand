@@ -6,6 +6,7 @@ func _on_enter() -> void:
 		parent_fsm.parent_fsm.change_state("StartPlayer2State")
 	else:
 		parent_fsm.parent_fsm.change_state("Player2State")
+		main_game.action_point._init_turn(Data.Faction.PLAYER2)
 ## 退出状态时触发
 func _on_exit() -> void:
 	pass

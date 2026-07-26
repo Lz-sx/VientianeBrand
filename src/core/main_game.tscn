@@ -41,6 +41,8 @@
 [ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 [ext_resource type="Script" uid="uid://bbd0pw6bxudui" path="res://src/ui/info/map_card_info.gd" id="38_3gpy6"]
 [ext_resource type="Script" uid="uid://dv5c4oxkil4rj" path="res://src/ui/info/map_card_operate.gd" id="39_0ppfa"]
+[ext_resource type="Script" uid="uid://l6i0f5myd62l" path="res://assets/ui/action_point.gd" id="42_528hv"]
+[ext_resource type="SpriteFrames" uid="uid://byk8k5nqknoub" path="res://assets/ui/action_point.tres" id="42_lecds"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
@@ -457,6 +459,55 @@ text = "名字   "
 layout_mode = 2
 text = "技能
 "
+
+[node name="GameStatusLayer" type="CanvasLayer" parent="." unique_id=1272263769]
+
+[node name="ActionPoint" type="Control" parent="GameStatusLayer" unique_id=1815482790 node_paths=PackedStringArray("main_game")]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -106.0
+offset_right = 53.6
+offset_bottom = -63.599976
+grow_vertical = 0
+scale = Vector2(2.5, 2.5)
+script = ExtResource("42_528hv")
+main_game = NodePath("../..")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameStatusLayer/ActionPoint" unique_id=716421364]
+position = Vector2(21.599998, 22.8)
+scale = Vector2(2.5, 2.5)
+sprite_frames = ExtResource("42_lecds")
+animation = &"turn_change_2to1"
+frame = 4
+frame_progress = 1.0
+
+[node name="Label" type="Label" parent="GameStatusLayer/ActionPoint" unique_id=1922437338]
+texture_filter = 1
+layout_mode = 0
+offset_left = 6.8
+offset_top = 6.8
+offset_right = 36.8
+offset_bottom = 36.8
+pivot_offset = Vector2(15, 15)
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnCountdown" type="Control" parent="GameStatusLayer" unique_id=1962381111]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Corruption" type="Control" parent="GameStatusLayer" unique_id=1603536403]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Building" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_building_pressed"]
 [connection signal="pressed" from="InfoLayer/InfoRoot/MapCardInfo/HBoxContainer/Vehicle" to="InfoLayer/InfoRoot/MapCardInfo" method="_on_vehicle_pressed"]

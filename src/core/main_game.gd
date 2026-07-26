@@ -17,13 +17,16 @@ class_name MainGame
 @onready var hand_card_info: HandCardInfo = $InfoLayer/InfoRoot/HandCardInfo
 @onready var map_card_info: MapCardInfo = $InfoLayer/InfoRoot/MapCardInfo
 @onready var map_card_operate: MapCardOperate = $OperateLayer/MapCardOperate
+@onready var action_point: ActionPoint = $GameStatusLayer/ActionPoint
 
 
 
 var start_player = 0
 
-var player1_action_point:int = 3
-var player2_action_point:int = 3
+var DEFALUT_ACTION_POINT:int = 10
+var MAX_ACTION_POINT:int = 10
+var current_player1_action_point:int = 0
+var current_player2_action_point:int = 0
 
 var player1_draw_count_delta = 0
 var player2_draw_count_delta = 0

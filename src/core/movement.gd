@@ -26,7 +26,6 @@ func move(selected_unit: CardBaseOnmap, tile_position: Vector2i):
 	tween.tween_property(selected_unit, "scale", Vector2(1.2, 1.2), 0.1)
 	tween.tween_property(selected_unit, "position", local_target, 0.3)  # 动画 position
 	tween.tween_property(selected_unit, "scale", original_scale, 0.1)
-
 	tween.finished.connect(func():
 		selected_unit.z_index = 0
 		game_grid.add_unit(selected_unit, tile_position)

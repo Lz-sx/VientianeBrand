@@ -15,8 +15,9 @@ func _on_enter() -> void:
 
 	main_game.map_card_info.update_text(main_game.map_card_be_selected)
 	main_game.map_card_info.visible = true
-	main_game.map_card_operate.update_button(main_game.map_card_be_selected)
-	main_game.map_card_operate.visible = true
+	if main_game.map_card_be_selected.Faction == Data.Faction.PLAYER1:
+		main_game.map_card_operate.update_button(main_game.map_card_be_selected)
+		main_game.map_card_operate.visible = true
 	
 
 	
@@ -84,7 +85,24 @@ func find_character(card_be_selected:CardBaseOnmap) -> CharacterCardBase:
 		return card_be_selected
 	return null
 
+func _can_action(faction:Data.Faction) -> bool:
+	if faction == Data.Faction.PLAYER1:
+		if main_game.current_player1_action_point > 0:
+			return true
+		else:
+			print("体力用尽")
+			return false
+	elif faction == Data.Faction.PLAYER2:
+		if main_game.current_player2_action_point > 0:
+			return true
+		else:
+			print("体力用尽")
+			return false
+	return false
+	
 func _on_building_attack():
+	if not _can_action(Data.Faction.PLAYER1):
+		return
 	main_game.map_action_card = main_game.map_card_be_selected
 	parent_fsm.change_state("PreAttackState")
 
@@ -92,10 +110,14 @@ func _on_building_skill():
 	pass
 	
 func _on_vehicle_attack():
+	if not _can_action(Data.Faction.PLAYER1):
+		return
 	main_game.map_action_card = find_vehicle(main_game.map_card_be_selected)
 	parent_fsm.change_state("PreAttackState")
 	
 func _on_vehicle_move():
+	if not _can_action(Data.Faction.PLAYER1):
+		return
 	main_game.map_action_card = find_vehicle(main_game.map_card_be_selected)
 	parent_fsm.change_state("PreMoveState")
 	
@@ -103,10 +125,14 @@ func _on_vehicle_skill():
 	pass
 
 func _on_character_attack():
+	if not _can_action(Data.Faction.PLAYER1):
+		return
 	main_game.map_action_card = find_character(main_game.map_card_be_selected)
 	parent_fsm.change_state("PreAttackState")
 	
 func _on_character_move():
+	if not _can_action(Data.Faction.PLAYER1):
+		return
 	main_game.map_action_card = find_character(main_game.map_card_be_selected)
 	print(main_game.map_action_card)
 	parent_fsm.change_state("PreMoveState")
