@@ -27,7 +27,6 @@ var START_Y = 1
 
 func clear():
 	start_range.clear()
-	active_unit_map.clear()
 	deploy_range.clear()
 	attack_range.clear()
 	move_range.clear()
@@ -36,6 +35,7 @@ func clear():
 	attack_target_map.clear()
 	occupy_cell_map.clear()
 	arm_slot_map.clear()
+	
 
 func find_start_range(selected_unit_faction:Data.Faction):
 	start_range.clear()
@@ -138,11 +138,11 @@ func find_move_range(center: Vector2i, selected_unit:CardBaseOnmap) -> void:
 			visited[next_pos] = true
 			queue.append([next_pos, steps + 1])
 
-func find_attack_range(center: Vector2i, selected_unit:CardBaseOnmap,range: int):
+func find_attack_range(center: Vector2i, selected_unit:CardBaseOnmap):
 	attack_range.clear()
 	units_in_attack.clear()
 	attack_target_map.clear()
-	attack_range = get_cells_in_range(center,range)
+	attack_range = get_cells_in_range(center,selected_unit.attack_range)
 	for position in attack_range:
 		if game_grid.grid_data[position]["unit"] != null:
 			units_in_attack.append(game_grid.grid_data[position]["unit"])

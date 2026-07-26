@@ -1,6 +1,7 @@
 extends StateBase
 
 func _on_enter() -> void:
+	main_game.unit_spawner.spawn_unit(0,Vector2i(0,0),Data.Faction.PLAYER2)
 	if main_game.start_player == 2:
 		main_game.start_player = 0
 		parent_fsm.change_state("StartPlayer1State")

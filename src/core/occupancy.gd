@@ -217,6 +217,9 @@ func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 			target_unit = target_unit as BuildingCardBase
 			target_unit.veh_icon.visible = true
 			selected_unit.visible = false
+			selected_unit = selected_unit as VehicleCardBase
+			if selected_unit.capacity < Data.card_data[selected_unit.id]["capacity"]:
+				target_unit.char_icon.visible = true
 		OccupyResult.CHARACTER_TO_BUILDING:
 			target_unit = target_unit as BuildingCardBase
 			target_unit.char_icon.visible = true
@@ -225,14 +228,18 @@ func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
 			target_unit = target_unit as BuildingCardBase
 			target_unit.veh_icon.visible = true
 			selected_unit.visible = false
+			selected_unit = selected_unit as VehicleCardBase
+			selected_unit.char_icon.visible = true
 		OccupyResult.CHARACTER_TO_BUILDING_VEHICLE:
 			target_unit = target_unit as BuildingCardBase
 			target_unit.char_icon.visible = true
 			selected_unit.visible = false
+			var veh_unit = selected_unit.get_parent().get_parent() as VehicleCardBase
+			veh_unit.char_icon.visible = true
 		OccupyResult.BUILDING_REPLACE_VEHICLE:
 			target_unit = target_unit as VehicleCardBase
 			selected_unit = selected_unit as BuildingCardBase
-			if target_unit.capacity != Data.card_data[target_unit.id]["capacity"]:
+			if target_unit.capacity < Data.card_data[target_unit.id]["capacity"]:
 				selected_unit.char_icon.visible = true
 			target_unit.visible = false
 			selected_unit.veh_icon.visible = true
@@ -255,13 +262,13 @@ func vacate(selected_unit:CardBaseOnmap):
 	selected_unit.visible = true
 	var grand_parent:CardBaseOnmap = parent_node.get_parent()
 	if grand_parent is CardBaseOnmap:
-		grand_parent.capacity += 1
 		match grand_parent.Type:
 			Data.Type.BUILDING:
 				var building = grand_parent as BuildingCardBase
 				if selected_unit.Type == Data.Type.VEHICLE:
 					if not building.capacity < Data.card_data[building.id]["capacity"]:
 						building.veh_icon.visible = false
+						building.char_icon.visible = false
 				else:
 					if not building.capacity < Data.card_data[building.id]["capacity"]:
 						building.char_icon.visible = false

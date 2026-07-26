@@ -49,11 +49,9 @@ script = ExtResource("1_bsx2m")
 script = ExtResource("2_rvmly")
 hand_layer = NodePath("../HandLayer")
 
-[node name="Combat" type="Node" parent="." unique_id=833544139 node_paths=PackedStringArray("grid_range", "game_grid", "occupancy")]
+[node name="Combat" type="Node" parent="." unique_id=833544139 node_paths=PackedStringArray("main_game")]
 script = ExtResource("2_blgo5")
-grid_range = NodePath("../GridRange")
-game_grid = NodePath("../Map/GameGrid")
-occupancy = NodePath("../Occupancy")
+main_game = NodePath("..")
 
 [node name="Movement" type="Node" parent="." unique_id=166321598 node_paths=PackedStringArray("game_grid", "map")]
 script = ExtResource("3_rtaji")

@@ -71,9 +71,11 @@ func find_character(card_be_selected:CardBaseOnmap) -> CharacterCardBase:
 		card_be_selected = card_be_selected as BuildingCardBase
 		for card in card_be_selected.get_node("Garrison").get_children():
 			if card is VehicleCardBase:
-				for card2 in card_be_selected.get_node("Passenger").get_children():
+				for card2 in card.get_node("Passenger").get_children():
 					if card2 is CharacterCardBase:
 						return card2
+			if card is CharacterCardBase:
+				return card
 	elif card_be_selected is VehicleCardBase:
 		for card2 in card_be_selected.get_node("Passenger").get_children():
 			if card2 is CharacterCardBase:
@@ -83,6 +85,7 @@ func find_character(card_be_selected:CardBaseOnmap) -> CharacterCardBase:
 	return null
 
 func _on_building_attack():
+	main_game.map_action_card = main_game.map_card_be_selected
 	parent_fsm.change_state("PreAttackState")
 
 func _on_building_skill():
