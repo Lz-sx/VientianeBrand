@@ -36,4 +36,4 @@ func _init_turn(faction:Data.Faction):
 		animated_sprite_2d.animation = "turn_player2"
 		animated_sprite_2d.play()
 	var tween:Tween = create_tween()
-	tween.tween_property(self,"visible",true,0.5)
+	tween.tween_property(self,"visible",true,1).set_delay(0.3)

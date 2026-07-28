@@ -51,7 +51,6 @@ func _ready() -> void:
 	main_state_machine._on_enter()
 	game_grid._init_grid()
 
-
 func _process(delta: float) -> void:
 	main_state_machine._state_process(delta)
 

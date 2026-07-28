@@ -18,7 +18,6 @@ func _on_enter() -> void:
 	if main_game.map_card_be_selected.Faction == Data.Faction.PLAYER1:
 		main_game.map_card_operate.update_button(main_game.map_card_be_selected)
 		main_game.map_card_operate.visible = true
-	
 
 	
 ## 退出状态时触发
