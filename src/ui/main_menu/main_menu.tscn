@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dcgi8o4618x2i"]
+
+[ext_resource type="Script" uid="uid://c6h7dff5djxuf" path="res://src/ui/main_menu/main_menu.gd" id="1_2hyyg"]
+
+[node name="MainMenu" type="Control" unique_id=1494837597]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2hyyg")
+
+[node name="Label" type="Label" parent="." unique_id=634930746]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -176.0
+offset_right = 22.0
+offset_bottom = -153.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "万象牌"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1336005193]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = -20.0
+offset_right = 149.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SinglePlayerButton" type="Button" parent="VBoxContainer" unique_id=873606734]
+layout_mode = 2
+text = "单人游戏"
+
+[node name="OnlineLobbyButton" type="Button" parent="VBoxContainer" unique_id=757222484]
+layout_mode = 2
+text = "联机对战"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer" unique_id=1927952350]
+layout_mode = 2
+text = "设置"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1540686405]
+layout_mode = 2
+text = "退出游戏"
+
+[node name="Label2" type="Label" parent="." unique_id=567403033]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+text = "版本：0.0"
+
+[connection signal="pressed" from="VBoxContainer/OnlineLobbyButton" to="." method="_on_online_lobby_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

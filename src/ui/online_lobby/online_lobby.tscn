@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://b4742gyg2flia"]
+
+[ext_resource type="Script" uid="uid://qe03b3dgmu30" path="res://src/ui/online_lobby/online_lobby.gd" id="1_jj45r"]
+
+[node name="OnlineLobby" type="Control" unique_id=1195364795]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jj45r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1087520866]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -52.0
+offset_right = 36.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="VBoxContainer" unique_id=376296683]
+layout_mode = 2
+text = "建立房间"
+
+[node name="JoinButton" type="Button" parent="VBoxContainer" unique_id=166722818]
+layout_mode = 2
+text = "加入房间
+"
+
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=1597295929]
+layout_mode = 2
+text = "开始游戏"
+
+[connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="VientianeBrand"
-run/main_scene="uid://tdb8d8mdvj61"
+run/main_scene="uid://dcgi8o4618x2i"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [autoload]
@@ -19,7 +19,8 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 Data="*uid://4cyqiycrdk0w"
 Events="*uid://y3c3t0ufcy2k"
 EffectsLoad="*uid://2oden3dt13je"
-Networking="*uid://byuacbk1sto4q"
+Networking="uid://byuacbk1sto4q"
+LanNetwork="*uid://dhw1nxv02ryca"
 
 [display]
 
@@ -31,7 +32,7 @@ enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/god
 
 [gui]
 
-theme/custom_font="uid://hccjgpan87bk"
+theme/custom_font="uid://dqt8pu81tp24x"
 
 [input]
 
