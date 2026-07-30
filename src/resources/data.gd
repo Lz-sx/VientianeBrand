@@ -5,7 +5,8 @@ const DRAW_COUNT_PER_TURN:int = 6
 
 enum Faction{
 	PLAYER1=1, 
-	PLAYER2
+	PLAYER2,
+	NULL
 }
 
 enum Affiliation{

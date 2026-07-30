@@ -11,33 +11,101 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jj45r")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1087520866]
+[node name="PanelConnect" type="VBoxContainer" parent="." unique_id=923971613]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -36.0
+offset_left = -131.5
 offset_top = -52.0
-offset_right = 36.0
+offset_right = 131.5
 offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HostButton" type="Button" parent="VBoxContainer" unique_id=376296683]
+[node name="CreateServer" type="HBoxContainer" parent="PanelConnect" unique_id=561774783]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelConnect/CreateServer" unique_id=1205166923]
+layout_mode = 2
+text = "端口："
+
+[node name="LineEdit" type="LineEdit" parent="PanelConnect/CreateServer" unique_id=95764078]
+layout_mode = 2
+text = "7000"
+placeholder_text = "请输入"
+
+[node name="HostButton" type="Button" parent="PanelConnect/CreateServer" unique_id=376296683]
 layout_mode = 2
 text = "建立房间"
 
-[node name="JoinButton" type="Button" parent="VBoxContainer" unique_id=166722818]
+[node name="JoinServer" type="HBoxContainer" parent="PanelConnect" unique_id=1103949200]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelConnect/JoinServer" unique_id=808122459]
+layout_mode = 2
+text = "服务器ip："
+
+[node name="LineEdit" type="LineEdit" parent="PanelConnect/JoinServer" unique_id=465516517]
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "请输入"
+expand_to_text_length = true
+
+[node name="JoinButton" type="Button" parent="PanelConnect/JoinServer" unique_id=166722818]
 layout_mode = 2
 text = "加入房间
 "
 
-[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=1597295929]
+[node name="BackButton" type="Button" parent="PanelConnect" unique_id=160869397]
+layout_mode = 2
+text = "返回菜单"
+
+[node name="PanelRoom" type="VBoxContainer" parent="." unique_id=1020379463]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -36.0
+offset_right = 100.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerList" type="VBoxContainer" parent="PanelRoom" unique_id=1107657993]
+layout_mode = 2
+
+[node name="ReadyButton" type="Button" parent="PanelRoom" unique_id=511113893]
+layout_mode = 2
+text = "准备游戏"
+
+[node name="StartButton" type="Button" parent="PanelRoom" unique_id=1597295929]
+visible = false
 layout_mode = 2
 text = "开始游戏"
 
-[connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[node name="LeaveRoomButton" type="Button" parent="PanelRoom" unique_id=257948342]
+layout_mode = 2
+text = "离开房间"
+
+[node name="LabelStatus" type="Label" parent="." unique_id=1358974036]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -391.0
+offset_right = 391.0
+offset_bottom = 71.0
+grow_horizontal = 2
+
+[connection signal="pressed" from="PanelConnect/CreateServer/HostButton" to="." method="_on_button_create_server_pressed"]
+[connection signal="pressed" from="PanelConnect/JoinServer/JoinButton" to="." method="_on_button_join_server_pressed"]
+[connection signal="pressed" from="PanelConnect/BackButton" to="." method="_on_button_back_pressed"]
+[connection signal="pressed" from="PanelRoom/ReadyButton" to="." method="_on_button_toggle_ready_pressed"]
+[connection signal="pressed" from="PanelRoom/StartButton" to="." method="_on_button_start_game_pressed"]

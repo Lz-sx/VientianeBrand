@@ -19,7 +19,7 @@ class_name MainGame
 @onready var map_card_operate: MapCardOperate = $OperateLayer/MapCardOperate
 @onready var action_point: ActionPoint = $GameStatusLayer/ActionPoint
 
-
+var my_faction:Data.Faction = Data.Faction.NULL
 
 var start_player = 0
 
@@ -46,13 +46,26 @@ func backup_game_state():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	main_state_machine.initialize(self)
-	await get_tree().process_frame
-	main_state_machine._on_enter()
-	game_grid._init_grid()
+	if LanNetwork.is_host():
+		my_faction = Data.Faction.PLAYER1
+		# 房主加载完成后，同步初始对局数据
+		rpc("sync_battle_init")
+	else:
+		my_faction = Data.Faction.PLAYER2
 
 func _process(delta: float) -> void:
 	main_state_machine._state_process(delta)
 
 func _input(event: InputEvent) -> void:
 	main_state_machine._state_input(event)
+
+@rpc("any_peer", "call_local", "reliable")
+func sync_battle_init() -> void:
+	# 初始化棋盘、单位、回合等
+	main_state_machine.initialize(self)
+	await get_tree().process_frame
+	main_state_machine._on_enter()
+	game_grid._init_grid()
+	randomize()
+	await get_tree().process_frame
+	print("对局初始化完成")
