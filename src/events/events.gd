@@ -3,8 +3,12 @@ extends Node
 signal attack_finished(attacker:CardBaseOnmap, defender:CardBaseOnmap)
 signal unit_died(unit:CardBaseOnmap)
 signal grid_changed()
-signal hand_card_selected_changed()
+signal hand_card_selected_changed(current_selected:CardBaseOnhand)
+signal cancel_hand_card_selected()
 signal state_changed(from_state: StateBase, to_state: StateBase)
+signal deploy_range_found(current_selected:CardBaseOnhand)
+signal deploy_range_clear()
+
 signal building_attack()
 signal building_skill()
 signal vehicle_attack()

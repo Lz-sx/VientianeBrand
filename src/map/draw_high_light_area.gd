@@ -3,6 +3,7 @@ class_name DrawHighLightArea
 
 @export var grid_range: GridRange
 @export var high_light_area: TileMapLayer
+@onready var main_game: MainGame = $"../.."
 
 # 高亮瓦片的来源ID和坐标
 const HIGHLIGHT_SOURCE: int = 0
@@ -11,6 +12,19 @@ const HIGHLIGHT_RED_COORDS: Vector2i = Vector2i(1, 0)
 const HIGHLIGHT_YELLOW_COORDS: Vector2i = Vector2i(0, 1)
 const HIGHLIGHT_GREEN_COORDS: Vector2i = Vector2i(1, 1)
 
+
+func _ready() -> void:
+	Events.deploy_range_found.connect(_on_deploy_range_found)
+	Events.deploy_range_clear.connect(_on_deploy_range_clear)
+	
+func _on_deploy_range_found(new_card:CardBaseOnhand):
+	if main_game.is_my_turn():
+		if new_card.id == 0:
+			draw_start_highlight()
+
+func _on_deploy_range_clear():
+	clear_highlight()
+	
 # 根据 move_grid 画高亮
 func draw_start_highlight():
 	clear_highlight()
@@ -45,8 +59,3 @@ func draw_deploy_highlight():
 # 清除所有高亮
 func clear_highlight() -> void:
 	high_light_area.clear()
-
-
-func _ready() -> void:
-	
-	pass # Replace with function body.

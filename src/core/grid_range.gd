@@ -2,6 +2,7 @@ extends Node
 class_name  GridRange
 
 @export var game_grid: GameGrid
+@onready var main_game: MainGame = $".."
 
 
 var start_range:Array[Vector2i]
@@ -24,6 +25,20 @@ var CENTER_POSITION:Vector2i = Vector2i(-1,0)
 var X_LENGTH = 20
 var Y_LENGTH = 20
 var START_Y = 1
+
+func _ready() -> void:
+	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
+	Events.cancel_hand_card_selected.connect(_on_cancel_hand_card_selected)
+
+func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
+	if main_game.is_my_turn():
+		if new_card.id == 0:
+			find_start_range(main_game.my_faction)
+		Events.deploy_range_found.emit(new_card)
+	
+func _on_cancel_hand_card_selected():
+	clear()
+	Events.deploy_range_clear.emit()
 
 func clear():
 	start_range.clear()

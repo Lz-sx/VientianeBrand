@@ -8,18 +8,20 @@ var start_position = Vector2(DisplayServer.window_get_size().x/2.0, 800)
 var base_position = Vector2(DisplayServer.window_get_size().x/2.0, DisplayServer.window_get_size().y - offset_y)
 var card_size:int = 0
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("mouse_right"):
+		main_game.hand_card_be_selected.deselect()
+
 func hand_card_selected_change(current_selected:CardBaseOnhand):
 	if not main_game.hand_card_be_selected == current_selected:
-		if  not main_game.hand_card_be_selected == null:
-			cancel_hand_card_selected()
 		main_game.hand_card_be_selected = current_selected
-		Events.hand_card_selected_changed.emit()
+		Events.hand_card_selected_changed.emit(current_selected)
 		
 	
 func cancel_hand_card_selected():
 	if  not main_game.hand_card_be_selected == null:
-		main_game.hand_card_be_selected.deselect()
 		main_game.hand_card_be_selected = null
+		Events.cancel_hand_card_selected.emit()
 
 func remove_card(card:CardBaseOnhand):
 	if not card == null:

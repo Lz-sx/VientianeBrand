@@ -28,7 +28,6 @@
 [ext_resource type="Script" uid="uid://ddmkhgluby28m" path="res://src/states/start_player_states/start_player_1_states/idle_state.gd" id="13_md0c5"]
 [ext_resource type="Script" uid="uid://dsb0n8680awkj" path="res://src/states/player_states/player_1_states/deploy_state.gd" id="14_7dxeu"]
 [ext_resource type="Script" uid="uid://s2blpo1f2e7d" path="res://src/states/player_states/player_1_states/hand_operate_state.gd" id="14_cg7r0"]
-[ext_resource type="Script" uid="uid://cmlpkocn56e5c" path="res://src/states/start_player_states/start_player_1_states/hand_operate_state.gd" id="14_rmmrs"]
 [ext_resource type="Script" uid="uid://40y5mo73p231" path="res://src/states/start_player_states/start_player_1_states/deploy_state.gd" id="15_bdmve"]
 [ext_resource type="Script" uid="uid://c82rldgy3yjwt" path="res://src/states/player_states/player_1_states/unit_selected_state.gd" id="16_g0oku"]
 [ext_resource type="Script" uid="uid://c1ey2sjaoqitg" path="res://src/states/start_player_states/start_player_1_states/end_turn_state.gd" id="16_rmmrs"]
@@ -109,9 +108,6 @@ script = ExtResource("12_g0oku")
 [node name="IdleState" type="Node" parent="MainStateMachine/StartPlayer1State" unique_id=603166801]
 script = ExtResource("13_md0c5")
 
-[node name="HandOperateState" type="Node" parent="MainStateMachine/StartPlayer1State" unique_id=1051104362]
-script = ExtResource("14_rmmrs")
-
 [node name="DeployState" type="Node" parent="MainStateMachine/StartPlayer1State" unique_id=836102123]
 script = ExtResource("15_bdmve")
 
@@ -120,6 +116,18 @@ script = ExtResource("16_rmmrs")
 
 [node name="StartPlayer2State" type="Node" parent="MainStateMachine" unique_id=644589718]
 script = ExtResource("17_bdmve")
+
+[node name="StartTurnState" type="Node" parent="MainStateMachine/StartPlayer2State" unique_id=360130425]
+script = ExtResource("12_g0oku")
+
+[node name="IdleState" type="Node" parent="MainStateMachine/StartPlayer2State" unique_id=626933646]
+script = ExtResource("13_md0c5")
+
+[node name="DeployState" type="Node" parent="MainStateMachine/StartPlayer2State" unique_id=815730134]
+script = ExtResource("15_bdmve")
+
+[node name="EndTurnState" type="Node" parent="MainStateMachine/StartPlayer2State" unique_id=949039134]
+script = ExtResource("16_rmmrs")
 
 [node name="Player1State" type="Node" parent="MainStateMachine" unique_id=351586193]
 script = ExtResource("8_xas7x")
@@ -215,8 +223,6 @@ script = ExtResource("2_ike8k")
 [node name="Environment" type="Node2D" parent="." unique_id=1351633581]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1326735060]
-
-[node name="CanvasModulate" type="CanvasModulate" parent="Environment" unique_id=1745191833]
 
 [node name="HandLayer" type="CanvasLayer" parent="." unique_id=1914673235]
 

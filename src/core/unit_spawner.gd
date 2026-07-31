@@ -5,7 +5,11 @@ class_name UnitSpawner
 @export var map: Map
 @export var game_grid: GameGrid
 
-func spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction) -> CardBaseOnmap:
+func _ready() -> void:
+	NetRelay.sync_spawn_unit.connect(_on_sync_spawn_unit)
+	
+
+func _on_sync_spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction):
 	var world_position = map.get_global_from_tile(cell_position)
 	if not Data.card_data.has(id):
 		print("错误：不存在卡牌ID ", id)
@@ -39,6 +43,9 @@ func spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction) -> CardBase
 		unit_instance.queue_free()
 		print("错误：实例不是 CardBaseOnmap")
 		return null
+
+func spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction):
+	NetRelay.rpc("net_sync_spawn_unit",id,cell_position,faction)
 		
 		
 func spawn_card(id:int,faction:Data.Faction) -> CardBaseOnmap:
@@ -73,7 +80,3 @@ func spawn_card(id:int,faction:Data.Faction) -> CardBaseOnmap:
 		unit_instance.queue_free()
 		print("错误：实例不是 CardBaseOnmap")
 		return null
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.

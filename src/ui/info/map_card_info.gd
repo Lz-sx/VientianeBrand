@@ -13,6 +13,8 @@ var character_text:String
 var weapon_text:String
 var armor_text:String
 
+
+
 func update_text(map_card_be_selected:CardBaseOnmap):
 	building_text = ""
 	vehicle_text = ""

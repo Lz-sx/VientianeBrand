@@ -37,4 +37,5 @@ func selected() -> void:
 	
 func deselect() -> void:
 	line_2d.visible = false
+	get_parent().cancel_hand_card_selected()
 	

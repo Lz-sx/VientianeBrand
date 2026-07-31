@@ -1,6 +1,19 @@
 extends Control
 class_name HandCardInfo
 @export var rich_text_label: RichTextLabel
+@onready var main_game: MainGame = $"../../.."
+
+
+func _ready() -> void:
+	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
+	Events.cancel_hand_card_selected.connect(_on_cancel_hand_card_selected)
+	
+func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
+	if new_card != null:
+		show_hand_panel(new_card.id)
+
+func _on_cancel_hand_card_selected():
+	hide_hand_panel()
 
 func show_hand_panel(id:int):
 	if not Data.card_data.has(id):

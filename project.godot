@@ -21,6 +21,7 @@ Events="*uid://y3c3t0ufcy2k"
 EffectsLoad="*uid://2oden3dt13je"
 Networking="uid://byuacbk1sto4q"
 LanNetwork="*uid://dhw1nxv02ryca"
+NetRelay="*uid://bs2t2g7xk1jvd"
 
 [display]
 

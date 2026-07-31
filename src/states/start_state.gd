@@ -1,7 +1,8 @@
 extends StateBase
 
 func _on_enter() -> void:
-	var faction = await main_game.turn_judge_manager.start_judge()
+	var faction = main_game.turn_judge_manager.start_judge_authority()
+	await get_tree().create_timer(4).timeout
 	if faction == Data.Faction.PLAYER1:
 		main_game.start_player = 1
 		parent_fsm.change_state("StartPlayer1State")

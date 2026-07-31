@@ -57,3 +57,4 @@ func sync_start_coin_flip(rand_res:int):
 	
 	coin.fade_out()
 	coin.queue_free()
+	
