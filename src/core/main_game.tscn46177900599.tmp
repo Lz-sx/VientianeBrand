@@ -92,7 +92,7 @@ grid_range = NodePath("../GridRange")
 script = ExtResource("5_e2aou")
 game_grid = NodePath("../Map/GameGrid")
 
-[node name="RequestHandler" type="Node" parent="." unique_id=42803816]
+[node name="Listener" type="Node" parent="." unique_id=42803816]
 script = ExtResource("10_528hv")
 
 [node name="MainStateMachine" type="Node" parent="." unique_id=2120945107]

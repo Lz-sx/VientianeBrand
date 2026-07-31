@@ -36,11 +36,12 @@ var player1_hand:Array[int]=[]
 var player2_hand:Array[int]=[]
 
 var hand_card_be_selected:CardBaseOnhand = null
+var player2_hand_card_selected_id:int = -1
 var map_card_be_selected:CardBaseOnmap = null
 var map_action_card:CardBaseOnmap = null
 var clicked_position:Vector2i
-#var active_units:Array[CardBaseOnmap]
-
+var player2_clicked_position:Vector2i
+var id_map_card_map:Dictionary
 
 #备份
 func backup_game_state():
@@ -50,6 +51,7 @@ func backup_game_state():
 func _ready() -> void:
 	NetRelay.sync_main_init.connect(_on_sync_main_init)
 	NetRelay.sync_action_point.connect(_on_sync_action_point)
+	NetRelay.sync_turn_change.connect(_on_sync_turn_change)
 	if LanNetwork.is_host():
 		my_faction = Data.Faction.PLAYER1
 		# 房主加载完成后，同步初始对局数据
@@ -79,6 +81,10 @@ func _on_sync_action_point(player:Data.Faction, value:int):
 		current_player1_action_point = value
 	else:
 		current_player2_action_point = value
+
+func _on_sync_turn_change(faction:Data.Faction):
+	current_action_player = faction
+
 
 func is_my_turn() -> bool:
 	return my_faction == current_action_player

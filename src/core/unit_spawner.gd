@@ -4,6 +4,7 @@ class_name UnitSpawner
 @export var container:Node
 @export var map: Map
 @export var game_grid: GameGrid
+@onready var main_game: MainGame = $".."
 
 func _ready() -> void:
 	NetRelay.sync_spawn_unit.connect(_on_sync_spawn_unit)
@@ -36,6 +37,9 @@ func _on_sync_spawn_unit(id:int, cell_position:Vector2i,faction:Data.Faction):
 		unit_instance = unit_instance as BuildingCardBase
 		unit_instance._init_veh_char_icon(faction)
 	game_grid.add_unit(unit_instance, cell_position)
+	
+	main_game.id_map_card_map[id] = unit_instance
+	
 	# 类型校验，防止场景挂载脚本错误
 	if unit_instance is CardBaseOnmap:
 		return unit_instance

@@ -36,6 +36,9 @@ func _on_deal_cards(faction:Data.Faction, card_id:int):
 		hand_root.add_card(card_id)
 		await get_tree().create_timer(0.25).timeout
 
+
+
+#未修改
 func deal_card_to_hand(faction:Data.Faction,draw_count_delta:int = 0):
 	for ii in range(Data.DRAW_COUNT_PER_TURN+draw_count_delta):
 		if i < id_size:

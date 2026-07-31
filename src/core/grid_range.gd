@@ -61,7 +61,7 @@ func find_start_range(selected_unit_faction:Data.Faction):
 					if game_grid.grid_data[Vector2i(x,y)]["obstacle"] == game_grid.Obstacle.NULL:
 						start_range.append(Vector2i(x,y))
 		if selected_unit_faction == Data.Faction.PLAYER2:
-			for y in range(-START_Y, -Y_LENGTH/2):
+			for y in range(-Y_LENGTH/2, -START_Y):
 				if game_grid.grid_data.has(Vector2i(x,y)):
 					if game_grid.grid_data[Vector2i(x,y)]["obstacle"] == game_grid.Obstacle.NULL:
 						start_range.append(Vector2i(x,y))

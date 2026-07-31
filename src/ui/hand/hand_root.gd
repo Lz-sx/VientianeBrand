@@ -10,8 +10,16 @@ var card_size:int = 0
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("mouse_right"):
-		main_game.hand_card_be_selected.deselect()
+		if main_game.hand_card_be_selected != null:
+			main_game.hand_card_be_selected.deselect()
 
+func get_card(id:int) -> CardBaseOnhand:
+	for child in self.get_children():
+		if child.id == id:
+			return child
+	return null
+	
+	
 func hand_card_selected_change(current_selected:CardBaseOnhand):
 	if not main_game.hand_card_be_selected == current_selected:
 		main_game.hand_card_be_selected = current_selected

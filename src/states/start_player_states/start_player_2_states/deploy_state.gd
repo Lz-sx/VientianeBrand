@@ -1,18 +1,13 @@
 extends StateBase
 
 func _on_enter() -> void:
+	main_game.unit_spawner.spawn_unit(0,main_game.player2_clicked_position,Data.Faction.PLAYER2)
+	parent_fsm.change_state("EndTurnState")
 	
-	if main_game.start_player == 2:
-		main_game.start_player = 0
-		parent_fsm.change_state("StartPlayer1State")
-	else:
-		parent_fsm.change_state("Player1State")
-		main_game.action_point._init_turn(Data.Faction.PLAYER1)
-		
 ## 退出状态时触发
 func _on_exit() -> void:
-	pass
-
+	NetRelay.rpc("net_reply_release_hand_card")
+	
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:
 	pass
@@ -20,3 +15,5 @@ func _state_process(_delta: float) -> void:
 ## 状态处理输入事件
 func _state_input(_event: InputEvent) -> void:
 	pass
+
+	
