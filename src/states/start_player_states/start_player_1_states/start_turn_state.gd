@@ -1,8 +1,8 @@
 extends StateBase
 
 func _on_enter() -> void:
-	await main_game.deal_cards.start_deal_card(Data.Faction.PLAYER1)
 	NetRelay.rpc("net_sync_turn_change", Data.Faction.PLAYER1)
+	await main_game.deal_cards.start_deal_card(Data.Faction.PLAYER1)
 	parent_fsm.change_state("IdleState")
 	
 ## 退出状态时触发
