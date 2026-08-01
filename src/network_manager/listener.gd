@@ -12,18 +12,19 @@ func _ready() -> void:
 #手卡选择监听
 func _on_hand_card_selected_changed(card:CardBaseOnhand):
 	if main_game.my_faction == Data.Faction.PLAYER2:
-		NetRelay.rpc("net_request_select_card", card.id)
+		NetRelay.rpc( "net_request_select_card", card.id)
 
 func _on_request_select_card(id:int):
-	if main_game.my_faction == Data.Faction.PLAYER2:
-		main_game.player2_hand_card_selected_id = id
+	main_game.player2_hand_card_selected_id = id
 
 func _on_cancel_hand_card_selected():
 	if main_game.my_faction == Data.Faction.PLAYER2:
-		NetRelay.rpc("net_request_select_card", -1)
+		NetRelay.rpc( "net_request_select_card", -1)
 
 func _on_reply_release_hand_card(id:int):
+	print(1)
 	if main_game.my_faction == Data.Faction.PLAYER2:
+		print(2)
 		var hand_card_be_selected:CardBaseOnhand = main_game.hand_root.get_card(id)
 		main_game.hand_root.remove_card(hand_card_be_selected)
 		main_game.hand_root.cancel_hand_card_selected()
@@ -39,7 +40,5 @@ func _input(event: InputEvent) -> void:
 			main_game.grid_range.arm_slot_map.has(main_game.clicked_position) or\
 			main_game.grid_range.start_range.has(main_game.clicked_position):
 				NetRelay.rpc("net_request_deploy", main_game.clicked_position)
-				
-				
 				
 				

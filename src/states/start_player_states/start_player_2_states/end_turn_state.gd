@@ -1,7 +1,7 @@
 extends StateBase
 
 func _on_enter() -> void:
-	if main_game.start_player == 1:
+	if main_game.start_player == 2:
 		main_game.start_player = 0
 		parent_fsm.parent_fsm.change_state("StartPlayer1State")
 	else:

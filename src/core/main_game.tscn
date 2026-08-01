@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://s3jvtbx6ucn8" path="res://src/ui/hand/hand_root.gd" id="9_h37xf"]
 [ext_resource type="Script" uid="uid://byh2spy4e75x3" path="res://src/map/draw_high_light_area.gd" id="9_os0rc"]
 [ext_resource type="Script" uid="uid://dpu8igy4h3fbq" path="res://src/network_manager/listener.gd" id="10_528hv"]
+[ext_resource type="Script" uid="uid://duj2x3mhaah6h" path="res://src/core/board_interaction.gd" id="10_ii8ov"]
 [ext_resource type="Script" uid="uid://bhwutfh336qi7" path="res://src/states/start_state.gd" id="10_n6123"]
 [ext_resource type="Script" uid="uid://buuvu7vqjj0w8" path="res://src/ui/info/info_root.gd" id="11_13ca8"]
 [ext_resource type="TileSet" uid="uid://g318klpm4oqt" path="res://assets/map/high_light_area.tres" id="11_os0rc"]
@@ -91,6 +92,9 @@ grid_range = NodePath("../GridRange")
 [node name="GridRange" type="Node" parent="." unique_id=1058967385 node_paths=PackedStringArray("game_grid")]
 script = ExtResource("5_e2aou")
 game_grid = NodePath("../Map/GameGrid")
+
+[node name="BoardInteraction" type="Node" parent="." unique_id=1719598729]
+script = ExtResource("10_ii8ov")
 
 [node name="RequestHandler" type="Node" parent="." unique_id=42803816]
 script = ExtResource("10_528hv")

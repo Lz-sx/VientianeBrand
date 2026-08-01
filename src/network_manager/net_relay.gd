@@ -43,17 +43,15 @@ func net_deal_cards(player:Data.Faction, card_id:int):
 	emit_signal("deal_cards", player, card_id)
 
 @rpc("call_remote", "reliable")
-func _net_reply_release_hand_card(id:int):
+func net_reply_release_hand_card(id:int):
 	emit_signal("reply_release_hand_card",id)
 
 
 
-@rpc("authority", "reliable")
+@rpc("any_peer", "call_remote", "reliable")
 func net_request_select_card(id:int):
-	print(5656)
 	emit_signal("request_select_card", id)
 	
-@rpc("authority", "reliable")
+@rpc("any_peer", "call_remote", "reliable")
 func net_request_deploy(position:Vector2i):
-	print(1234)
 	emit_signal("request_deploy", position)

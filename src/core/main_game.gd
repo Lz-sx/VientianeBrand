@@ -21,6 +21,11 @@ class_name MainGame
 
 var my_faction:Data.Faction = Data.Faction.NULL
 
+#只有服务端有两者id
+var player1_id:int
+var player2_id:int
+
+
 var start_player = 0
 var current_action_player:Data.Faction = Data.Faction.NULL
 
@@ -72,6 +77,11 @@ func _on_sync_main_init() ->void:
 	await get_tree().process_frame
 	if my_faction == Data.Faction.PLAYER1:
 		main_state_machine._on_enter()
+		player1_id = multiplayer.get_unique_id()
+		for id in LanNetwork.players.keys():
+			if id != player1_id:
+				player2_id = id
+				break
 	randomize()
 	await get_tree().process_frame
 	print("对局初始化完成")

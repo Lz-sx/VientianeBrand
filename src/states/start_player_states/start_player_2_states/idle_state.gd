@@ -4,7 +4,7 @@ func _on_enter() -> void:
 	NetRelay.request_deploy.connect(_on_request_deploy)
 	main_game.draw_high_light_area.clear_highlight()
 	main_game.grid_range.clear()
-
+	
 ## 退出状态时触发
 func _on_exit() -> void:
 	pass

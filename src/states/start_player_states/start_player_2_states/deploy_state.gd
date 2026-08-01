@@ -6,7 +6,7 @@ func _on_enter() -> void:
 	
 ## 退出状态时触发
 func _on_exit() -> void:
-	NetRelay.rpc("net_reply_release_hand_card")
+	NetRelay.rpc("net_reply_release_hand_card",main_game.player2_hand_card_selected_id)
 	
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:

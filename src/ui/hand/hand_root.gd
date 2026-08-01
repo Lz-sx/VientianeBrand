@@ -22,6 +22,7 @@ func get_card(id:int) -> CardBaseOnhand:
 	
 func hand_card_selected_change(current_selected:CardBaseOnhand):
 	if not main_game.hand_card_be_selected == current_selected:
+		print("点击处：",current_selected)
 		main_game.hand_card_be_selected = current_selected
 		Events.hand_card_selected_changed.emit(current_selected)
 		
