@@ -33,7 +33,12 @@ func _ready() -> void:
 func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():
 		if new_card.id == 0:
+			clear()
 			find_start_range(main_game.my_faction)
+		else:
+			clear()
+			find_deploy_range(main_game.my_faction,new_card.Type)
+			find_arm_slot_map(main_game.my_faction,new_card.Type)
 		Events.deploy_range_found.emit(new_card)
 	
 func _on_cancel_hand_card_selected():

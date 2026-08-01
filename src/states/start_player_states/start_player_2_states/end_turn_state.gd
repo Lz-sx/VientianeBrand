@@ -6,7 +6,7 @@ func _on_enter() -> void:
 		parent_fsm.parent_fsm.change_state("StartPlayer1State")
 	else:
 		parent_fsm.parent_fsm.change_state("Player1State")
-		main_game.action_point._init_turn(Data.Faction.PLAYER1)
+		NetRelay.rpc("net_sync_init_turn", Data.Faction.PLAYER1)
 ## 退出状态时触发
 func _on_exit() -> void:
 	pass

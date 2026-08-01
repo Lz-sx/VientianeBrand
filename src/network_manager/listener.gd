@@ -22,9 +22,7 @@ func _on_cancel_hand_card_selected():
 		NetRelay.rpc( "net_request_select_card", -1)
 
 func _on_reply_release_hand_card(id:int):
-	print(1)
 	if main_game.my_faction == Data.Faction.PLAYER2:
-		print(2)
 		var hand_card_be_selected:CardBaseOnhand = main_game.hand_root.get_card(id)
 		main_game.hand_root.remove_card(hand_card_be_selected)
 		main_game.hand_root.cancel_hand_card_selected()

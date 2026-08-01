@@ -5,8 +5,23 @@ class_name ActionPoint
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var label: Label = $Label
 
-func update_point(point:int):
+func _ready() -> void:
+	NetRelay.sync_action_point.connect(_on_sync_action_point)
+	NetRelay.sync_init_turn.connect(_on_sync_init_turn)
+
+func _on_sync_action_point(point:int):
 	label.text = str(point)
+	
+func _on_sync_init_turn(faction:Data.Faction):
+	label.text = ""
+	if faction == Data.Faction.PLAYER1:
+		animated_sprite_2d.animation = "turn_player1"
+		animated_sprite_2d.play()
+	elif faction == Data.Faction.PLAYER2:
+		animated_sprite_2d.animation = "turn_player2"
+		animated_sprite_2d.play()
+	var tween:Tween = create_tween()
+	tween.tween_property(self,"visible",true,1).set_delay(0.3)
 
 func turn_changed_1to2():
 	label.text = str(main_game.current_player1_action_point)
@@ -27,13 +42,4 @@ func turn_changed_2to1():
 	label.text = str(main_game.current_player1_action_point)
 	label.visible = true
 	
-func _init_turn(faction:Data.Faction):
-	label.text = ""
-	if faction == Data.Faction.PLAYER1:
-		animated_sprite_2d.animation = "turn_player1"
-		animated_sprite_2d.play()
-	elif faction == Data.Faction.PLAYER2:
-		animated_sprite_2d.animation = "turn_player2"
-		animated_sprite_2d.play()
-	var tween:Tween = create_tween()
-	tween.tween_property(self,"visible",true,1).set_delay(0.3)
+	

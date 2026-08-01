@@ -10,7 +10,9 @@ signal request_select_card(id:int)
 signal request_deploy(position:Vector2i)
 signal reply_release_hand_card(id:int)
 signal sync_turn_change(faction:Data.Faction)
-
+signal sync_init_turn(faction:Data.Faction)
+signal sync_occupy(id:int, position:Vector2i)
+signal sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i)
 
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
@@ -35,8 +37,25 @@ func net_sync_spawn_unit(id:int, cell_position:Vector2i, faction:Data.Faction):
 func net_sync_turn_change(faction:Data.Faction):
 	emit_signal("sync_turn_change", faction)
 
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_update_point(action_point:int):
+	emit_signal("sync_update_point", action_point)
 
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_init_turn(faction:Data.Faction):
+	emit_signal("sync_init_turn", faction)
 
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_occupy(id:int, position:Vector2i):
+	emit_signal("sync_occupy", id, position)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
+	emit_signal("sync_spawn_and_equip_weapon", id, arm_type,pos)
+
+	
+	
+	
 
 @rpc("call_remote", "reliable")
 func net_deal_cards(player:Data.Faction, card_id:int):
@@ -45,6 +64,8 @@ func net_deal_cards(player:Data.Faction, card_id:int):
 @rpc("call_remote", "reliable")
 func net_reply_release_hand_card(id:int):
 	emit_signal("reply_release_hand_card",id)
+
+
 
 
 

@@ -2,7 +2,10 @@ extends Node
 class_name ARM
 @export var grid_range: GridRange
 
-func spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i) -> Node2D:
+func _ready() -> void:
+	NetRelay.sync_spawn_and_equip_weapon.connect(sync_spawn_and_equip_weapon)
+
+func sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
 	if not Data.card_data.has(id):
 		print("错误：不存在卡牌ID ", id)
 		return null
@@ -36,6 +39,11 @@ func spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i) -> Node2D:
 	
 	unit_instance.queue_free()
 	return null
+
+
+func spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i) :
+	NetRelay.rpc("net_sync_spawn_and_equip_weapon", id, arm_type, pos)
+	
 
 func _find_character_at_position(pos:Vector2i) -> CharacterCardBase:
 	if not grid_range.active_unit_map.has(pos):

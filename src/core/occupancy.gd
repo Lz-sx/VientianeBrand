@@ -5,6 +5,7 @@ class_name Occupancy
 @export var movement: Movement
 @export var map: Map
 @export var grid_range: GridRange
+@onready var main_game: MainGame = $".."
 
 
 
@@ -19,6 +20,9 @@ enum OccupyResult {
 	VEHICLE_REPLACE_CHARACTER = 7,
 	FAILED = -1
 }
+
+func _ready() -> void:
+	NetRelay.sync_occupy.connect(_on_sync_occupy)
 
 func remove_node(selected_unit:CardBaseOnmap):
 	if selected_unit.get_parent() != null:
@@ -204,10 +208,14 @@ func vacate_unit(selected_unit:CardBaseOnmap):
 		unit_spawner.container.add_child(selected_unit)
 
 
-func occupy(selected_unit:CardBaseOnmap, tile_position:Vector2i):
+func occupy(card_id:int, tile_position:Vector2i):
+	NetRelay.rpc("net_sync_occupy", card_id, tile_position)
+	
+func _on_sync_occupy(card_id:int, tile_position:Vector2i):
 	var target_unit = game_grid.get_cell_data(tile_position)["unit"]
 	if target_unit == null:
 		return
+	var selected_unit = main_game.id_map_card_map[card_id]
 	match occupy_unit(selected_unit, target_unit):
 		OccupyResult.CHARACTER_TO_VEHICLE:
 			target_unit = target_unit as VehicleCardBase
@@ -276,6 +284,3 @@ func vacate(selected_unit:CardBaseOnmap):
 				var vehicle = grand_parent as VehicleCardBase
 				if not vehicle.capacity < Data.card_data[vehicle.id]["capacity"]:
 						vehicle.char_icon.visible = false
-
-func _ready() -> void:
-	pass

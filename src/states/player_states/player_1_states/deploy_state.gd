@@ -5,9 +5,9 @@ func _on_enter() -> void:
 		main_game.unit_spawner.spawn_unit(main_game.hand_card_be_selected.id,\
 		main_game.clicked_position,Data.Faction.PLAYER1)
 	elif main_game.grid_range.occupy_cell_map.has(main_game.clicked_position):
-		var card_on_map:CardBaseOnmap = main_game.unit_spawner.spawn_unit(main_game.hand_card_be_selected.id,\
-		main_game.clicked_position,Data.Faction.PLAYER1)
-		main_game.occupancy.occupy(card_on_map,main_game.clicked_position)
+		var id = main_game.hand_card_be_selected.id
+		main_game.unit_spawner.spawn_unit(id,main_game.clicked_position,Data.Faction.PLAYER1)
+		main_game.occupancy.occupy(id,main_game.clicked_position)
 	elif main_game.grid_range.arm_slot_map.has(main_game.clicked_position):
 		main_game.arm.spawn_and_equip_weapon(main_game.hand_card_be_selected.id,\
 		main_game.hand_card_be_selected.Type,main_game.clicked_position)
@@ -15,8 +15,6 @@ func _on_enter() -> void:
 	
 ## 退出状态时触发
 func _on_exit() -> void:
-	main_game.draw_high_light_area.clear_highlight()
-	main_game.grid_range.clear()
 	main_game.hand_root.remove_card(main_game.hand_card_be_selected)
 	main_game.hand_root.cancel_hand_card_selected()
 

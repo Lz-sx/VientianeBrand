@@ -14,7 +14,7 @@ func _on_enter() -> void:
 	elif main_game.grid_range.occupy_cell_map.has(main_game.clicked_position):
 		main_game.movement.move(main_game.map_action_card,main_game.clicked_position)
 		await get_tree().create_timer(0.5).timeout
-		main_game.occupancy.occupy(main_game.map_action_card,main_game.clicked_position)
+		main_game.occupancy.occupy(main_game.map_action_card.id,main_game.clicked_position)
 		main_game.map_card_be_selected = null
 		parent_fsm.change_state("IdleState")
 ## 退出状态时触发

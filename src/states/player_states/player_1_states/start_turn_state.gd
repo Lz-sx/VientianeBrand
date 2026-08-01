@@ -2,13 +2,13 @@ extends StateBase
 
 func _on_enter() -> void:
 	await main_game.deal_cards.deal_card_to_hand(Data.Faction.PLAYER1,\
-	main_game.player1_draw_count_delta)
-	#parent_fsm.change_state("IdleState")
-	
+	main_game.player1_draw_count_delta)	
 	main_game.current_player1_action_point += main_game.DEFALUT_ACTION_POINT
 	if main_game.current_player1_action_point > main_game.MAX_ACTION_POINT:
 		main_game.current_player1_action_point = main_game.MAX_ACTION_POINT
-	main_game.action_point.update_point(main_game.current_player1_action_point)
+	NetRelay.rpc("_on_sync_action_point", main_game.current_player1_action_point)
+	parent_fsm.change_state("IdleState")
+
 ## 退出状态时触发
 func _on_exit() -> void:
 	pass

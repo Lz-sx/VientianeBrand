@@ -42,10 +42,10 @@ func _on_deal_cards(faction:Data.Faction, card_id:int):
 func deal_card_to_hand(faction:Data.Faction,draw_count_delta:int = 0):
 	for ii in range(Data.DRAW_COUNT_PER_TURN+draw_count_delta):
 		if i < id_size:
-			NetRelay.rpc("net_sync_add_hand_cards", faction, 0)
+			NetRelay.rpc("net_sync_add_hand_cards", faction, id_queue[i])
 			if faction == main_game.my_faction:
-				_on_deal_cards(faction, 0)
+				_on_deal_cards(faction, id_queue[i])
 			else:
-				NetRelay.rpc("net_deal_cards", faction, 0)
+				NetRelay.rpc("net_deal_cards", faction, id_queue[i])
 			i+=1
 		await get_tree().create_timer(0.25).timeout

@@ -21,6 +21,9 @@ func get_card(id:int) -> CardBaseOnhand:
 	
 	
 func hand_card_selected_change(current_selected:CardBaseOnhand):
+	#cancel_hand_card_selected()
+	main_game.map_card_be_selected = null
+	main_game.map_card_info.visible = false
 	if not main_game.hand_card_be_selected == current_selected:
 		if main_game.hand_card_be_selected != null:
 			main_game.hand_card_be_selected.line_2d.visible = false

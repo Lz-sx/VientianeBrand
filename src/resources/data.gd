@@ -1,7 +1,7 @@
 extends Node
 
 const Action_Point:int = 3
-const DRAW_COUNT_PER_TURN:int = 6
+const DRAW_COUNT_PER_TURN:int = 3
 
 enum Faction{
 	PLAYER1=1, 
