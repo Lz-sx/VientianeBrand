@@ -20,3 +20,4 @@ func _state_input(_event: InputEvent) -> void:
 			main_game.grid_range.occupy_cell_map.has(main_game.clicked_position) or \
 			main_game.grid_range.arm_slot_map.has(main_game.clicked_position):
 				parent_fsm.change_state("DeployState")
+		

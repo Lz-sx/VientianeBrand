@@ -7,6 +7,7 @@ func _on_enter() -> void:
 	if main_game.current_player1_action_point > main_game.MAX_ACTION_POINT:
 		main_game.current_player1_action_point = main_game.MAX_ACTION_POINT
 	NetRelay.rpc("_on_sync_action_point", main_game.current_player1_action_point)
+	NetRelay.rpc("net_sync_turn_change", Data.Faction.PLAYER1)
 	parent_fsm.change_state("IdleState")
 
 ## 退出状态时触发
