@@ -30,14 +30,14 @@ var card_data:Dictionary = {
 		"map_uid":preload("uid://bix7xf80pa2x8"),
 		"affiliation":Affiliation.MORTAL,"type":Type.BUILDING,
 		"hp":30,"damage":10,"attack_range":7,"capacity":0,"deployment_range":4,
-		"text":"不要爆了就行"
+		"text":"我方"
 	},
 	1:{
-		"name":"大本营","hand_uid":preload("uid://bsfevywtjtfko"),
-		"map_uid":preload("uid://bix7xf80pa2x8"),
+		"name":"大本营","hand_uid":preload("uid://ivjk888d5vx8"),
+		"map_uid":preload("uid://j56dt1ghwid7"),
 		"affiliation":Affiliation.MORTAL,"type":Type.BUILDING,
 		"hp":30,"damage":10,"attack_range":7,"capacity":0,"deployment_range":4,
-		"text":"不要爆了就行"
+		"text":"敌方"
 	},
 	7:{
 		"name":"武士","hand_uid":preload("uid://va7mf6bcwcax"),

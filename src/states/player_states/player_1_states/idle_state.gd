@@ -1,7 +1,8 @@
 extends StateBase
 
 func _on_enter() -> void:
-	pass
+	main_game.draw_high_light_area.clear_highlight()
+	main_game.grid_range.clear()
 	
 ## 退出状态时触发
 func _on_exit() -> void:

@@ -22,7 +22,7 @@ func _ready() -> void:
 	
 func _on_deploy_range_found(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():
-		if new_card.id == 0:
+		if new_card.id == 0 or new_card.id == 1:
 			draw_start_highlight()
 		else:
 			draw_deploy_highlight()

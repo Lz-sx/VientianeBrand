@@ -5,7 +5,6 @@ func _on_enter() -> void:
 		main_game.unit_spawner.spawn_unit(main_game.hand_card_be_selected.id,\
 		main_game.clicked_position,Data.Faction.PLAYER1)
 	elif main_game.grid_range.occupy_cell_map.has(main_game.clicked_position):
-		print("进入进入")
 		var id = main_game.hand_card_be_selected.id
 		main_game.unit_spawner.spawn_unit(id,main_game.clicked_position,Data.Faction.PLAYER1)
 		main_game.occupancy.occupy(id,main_game.clicked_position)

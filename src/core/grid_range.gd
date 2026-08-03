@@ -45,7 +45,7 @@ func _ready() -> void:
 
 func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():
-		if new_card.id == 0:
+		if new_card.id == 0 or new_card.id == 1:
 			clear()
 			find_start_range(main_game.my_faction)
 		else:

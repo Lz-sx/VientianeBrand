@@ -10,8 +10,6 @@ func _on_enter() -> void:
 ## 退出状态时触发
 func _on_exit() -> void:
 	main_game.map_action_card = null
-	main_game.grid_range.clear()
-	main_game.grid_range.find_active_unit_map()
 
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:
