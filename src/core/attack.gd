@@ -3,6 +3,23 @@ class_name Attack
 
 @export var main_game: MainGame
 
+
+func _ready() -> void:
+	NetRelay.sync_attack.connect(_on_sync_attack)
+
+func _on_sync_attack(selected_id:int, target_id:int):
+	var selected_unit = main_game.id_map_card_map[selected_id]
+	var target_unit = main_game.id_map_card_map[target_id]
+	# 攻击单位抬手动画：轻微向前弹出再复位
+	var attack_tween:Tween = selected_unit.create_tween()
+	attack_tween.set_trans(Tween.TRANS_SINE)
+	attack_tween.set_ease(Tween.EASE_OUT)
+	attack_tween.tween_property(selected_unit, "scale", Vector2(1, 1), 0.1)
+	attack_tween.tween_property(selected_unit, "scale", Vector2(0.7, 0.7), 0.15)
+	hit_animation(target_unit)
+	attack_unit(selected_unit, target_unit)
+	Events.attack_finished.emit(selected_unit, target_unit)
+	
 func show_damage_number(pos:Vector2i,damage:int):
 	var damage_label = EffectsLoad.DAMAGE_LABEL.instantiate() as Label
 	damage_label.text = str(damage)
@@ -63,15 +80,8 @@ func attack_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
 			die(target_unit)
 
 func attack(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
-	# 攻击单位抬手动画：轻微向前弹出再复位
-	var attack_tween:Tween = selected_unit.create_tween()
-	attack_tween.set_trans(Tween.TRANS_SINE)
-	attack_tween.set_ease(Tween.EASE_OUT)
-	attack_tween.tween_property(selected_unit, "scale", Vector2(1, 1), 0.1)
-	attack_tween.tween_property(selected_unit, "scale", Vector2(0.7, 0.7), 0.15)
-	hit_animation(target_unit)
-	attack_unit(selected_unit, target_unit)
-	Events.attack_finished.emit(selected_unit, target_unit)
+	NetRelay.rpc("net_sync_attack",selected_unit.id, target_unit.id)
+	
 	
 # 目标受击动画：红闪+左右抖动
 func hit_animation(target: CardBaseOnmap) -> Tween:
@@ -89,7 +99,3 @@ func hit_animation(target: CardBaseOnmap) -> Tween:
 	hit_tween.tween_property(target, "position", origin_pos, 0.04)
 	hit_tween.tween_property(target, "modulate", origin_color, 0.1)
 	return hit_tween
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.

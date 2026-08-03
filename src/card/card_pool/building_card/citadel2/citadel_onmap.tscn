@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://j56dt1ghwid7"]
+
+[ext_resource type="PackedScene" uid="uid://bg5lukcd8tetl" path="res://src/card/card_base/building_card_base/building_card_base.tscn" id="1_bxx5n"]
+[ext_resource type="Script" uid="uid://bgqhqkemi22m1" path="res://src/card/card_pool/building_card/citadel2/citadel_onmap.gd" id="2_koce6"]
+[ext_resource type="Texture2D" uid="uid://bje0e0ot0uhfy" path="res://assets/card/building_card/citadel/citadel_on_map.png" id="3_4bkih"]
+
+[node name="CitadelOnmap" unique_id=361188102 instance=ExtResource("1_bxx5n")]
+script = ExtResource("2_koce6")
+hp = 30
+attack_range = 7
+deployment_range = 4
+
+[node name="Sprite2D" parent="." index="0" unique_id=1858826433]
+texture = ExtResource("3_4bkih")

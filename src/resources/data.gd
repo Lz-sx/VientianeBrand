@@ -33,6 +33,13 @@ var card_data:Dictionary = {
 		"text":"不要爆了就行"
 	},
 	1:{
+		"name":"大本营","hand_uid":preload("uid://bsfevywtjtfko"),
+		"map_uid":preload("uid://bix7xf80pa2x8"),
+		"affiliation":Affiliation.MORTAL,"type":Type.BUILDING,
+		"hp":30,"damage":10,"attack_range":7,"capacity":0,"deployment_range":4,
+		"text":"不要爆了就行"
+	},
+	7:{
 		"name":"武士","hand_uid":preload("uid://va7mf6bcwcax"),
 		"map_uid":preload("uid://bqurcqpdries"),
 		"affiliation":Affiliation.MORTAL,"type":Type.CHARACTER,

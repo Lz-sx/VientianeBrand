@@ -19,12 +19,20 @@ func _ready() -> void:
 	id_size = id_queue.size()
 
 func start_deal_card(faction:Data.Faction):
-	NetRelay.rpc("net_sync_add_hand_cards", faction, 0)
-	if faction == main_game.my_faction:
-		_on_deal_cards(faction, 0)
-	else:
-		NetRelay.rpc("net_deal_cards", faction, 0)
-
+	if faction == Data.Faction.PLAYER1:
+		NetRelay.rpc("net_sync_add_hand_cards", faction, 0)
+		if faction == main_game.my_faction:
+			_on_deal_cards(faction, 0)
+		else:
+			NetRelay.rpc("net_deal_cards", faction, 0)
+	elif faction == Data.Faction.PLAYER2:
+		NetRelay.rpc("net_sync_add_hand_cards", faction, 1)
+		if faction == main_game.my_faction:
+			_on_deal_cards(faction, 1)
+		else:
+			NetRelay.rpc("net_deal_cards", faction, 1)
+			
+			 
 func _on_sync_add_hand_cards(faction:Data.Faction, card_id:int):
 	if faction == Data.Faction.PLAYER1:
 		main_game.player1_hand.append(card_id)

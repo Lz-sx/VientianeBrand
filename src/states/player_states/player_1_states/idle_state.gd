@@ -20,4 +20,13 @@ func _state_input(_event: InputEvent) -> void:
 			main_game.grid_range.occupy_cell_map.has(main_game.clicked_position) or \
 			main_game.grid_range.arm_slot_map.has(main_game.clicked_position):
 				parent_fsm.change_state("DeployState")
-		
+	if main_game.map_card_be_selected != null and main_game.map_action_card != null:
+		if _event.is_action_pressed("mouse_left") and main_game.map.is_click_on_map():
+			main_game.clicked_position = main_game.map.get_hovered_tile()
+			if main_game.clicked_position in main_game.grid_range.attack_target_map.keys():
+				parent_fsm.change_state("AttackState")
+				
+				
+				
+				
+				

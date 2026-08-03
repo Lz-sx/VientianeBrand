@@ -8,8 +8,6 @@
 script = ExtResource("2_6vorc")
 id = 1
 deployment_range = 1
-Affiliation = 2
-Type = 1
 
 [node name="Sprite2D" parent="." index="0" unique_id=1858826433]
 texture = ExtResource("3_2mmpu")
