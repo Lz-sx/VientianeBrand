@@ -14,6 +14,7 @@ var grid_data:Dictionary = {}
 func _ready() -> void:
 	pass
 	
+	
 func _init_grid() -> void:
 	grid_data.clear()
 	if not board:
@@ -52,6 +53,12 @@ func _init_grid() -> void:
 				return
 		grid_data[cell_position]["obstacle"] = obstacle_type
 		
+func get_position_by_map_card(card:CardBaseOnmap) -> Vector2i:
+	for pos in grid_data:
+		if grid_data[pos]["unit"] == card:
+			return pos
+	return Vector2i.ZERO
+
 func get_cell_data(cell_position:Vector2i) -> Dictionary:
 	if not grid_data.has(cell_position):
 		return {}

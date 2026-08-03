@@ -29,6 +29,19 @@ var START_Y = 1
 func _ready() -> void:
 	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
 	Events.cancel_hand_card_selected.connect(_on_cancel_hand_card_selected)
+	
+	Events.building_attack.connect(_on_building_attack)
+	Events.building_skill.connect(_on_building_skill)
+	Events.vehicle_attack.connect(_on_vehicle_attack)
+	Events.vehicle_move.connect(_on_vehicle_move)
+	Events.vehicle_skill.connect(_on_vehicle_skill)
+	Events.character_attack.connect(_on_character_attack)
+	Events.character_move.connect(_on_character_move)
+	Events.character_skill.connect(_on_character_skill)
+	Events.weapon_skill.connect(_on_weapon_skill)
+	Events.armor_skill.connect(_on_armor_skill)
+	
+	
 
 func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():
@@ -44,6 +57,99 @@ func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
 func _on_cancel_hand_card_selected():
 	clear()
 	Events.deploy_range_clear.emit()
+
+func _on_building_attack():
+	main_game.grid_range.clear()
+	main_game.draw_high_light_area.clear_highlight()
+	if not main_game.action_point._can_action(main_game.my_faction):
+		return
+	main_game.map_action_card = main_game.map_card_be_selected
+	find_attack_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
+	main_game.map_action_card)
+	Events.attack_range_found.emit()
+
+func _on_building_skill():
+	pass
+	
+func _on_vehicle_attack():
+	main_game.grid_range.clear()
+	main_game.draw_high_light_area.clear_highlight()
+	if not main_game.action_point._can_action(main_game.my_faction):
+		return
+	main_game.map_action_card = find_vehicle(main_game.map_card_be_selected)
+	find_attack_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
+	main_game.map_action_card)
+	Events.attack_range_found.emit()
+	
+func _on_vehicle_move():
+	main_game.grid_range.clear()
+	main_game.draw_high_light_area.clear_highlight()
+	if not main_game.action_point._can_action(main_game.my_faction):
+		return
+	main_game.map_action_card = find_vehicle(main_game.map_card_be_selected)
+	find_move_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
+	main_game.map_action_card)
+	Events.move_range_found.emit()
+	
+func _on_vehicle_skill():
+	pass
+	
+func _on_character_attack():
+	main_game.grid_range.clear()
+	main_game.draw_high_light_area.clear_highlight()
+	if not main_game.action_point._can_action(main_game.my_faction):
+		return
+	main_game.map_action_card = find_character(main_game.map_card_be_selected)
+	find_attack_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
+	main_game.map_action_card)
+	Events.attack_range_found.emit()
+	
+func _on_character_move():
+	main_game.grid_range.clear()
+	main_game.draw_high_light_area.clear_highlight()
+	if not main_game.action_point._can_action(main_game.my_faction):
+		return
+	main_game.map_action_card = find_character(main_game.map_card_be_selected)
+	find_move_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
+	main_game.map_action_card)
+	Events.move_range_found.emit()
+	
+func _on_character_skill():
+	pass
+	
+func _on_weapon_skill():
+	pass
+	
+func _on_armor_skill():
+	pass
+
+func find_vehicle(card_be_selected:CardBaseOnmap) -> VehicleCardBase:
+	if card_be_selected is BuildingCardBase:
+		card_be_selected = card_be_selected as BuildingCardBase
+		for card in card_be_selected.get_node("Garrison").get_children():
+			if card is VehicleCardBase:
+				return card
+	elif card_be_selected is VehicleCardBase:
+		return card_be_selected
+	return null
+
+func find_character(card_be_selected:CardBaseOnmap) -> CharacterCardBase:
+	if card_be_selected is BuildingCardBase:
+		card_be_selected = card_be_selected as BuildingCardBase
+		for card in card_be_selected.get_node("Garrison").get_children():
+			if card is VehicleCardBase:
+				for card2 in card.get_node("Passenger").get_children():
+					if card2 is CharacterCardBase:
+						return card2
+			if card is CharacterCardBase:
+				return card
+	elif card_be_selected is VehicleCardBase:
+		for card2 in card_be_selected.get_node("Passenger").get_children():
+			if card2 is CharacterCardBase:
+				return card2
+	elif card_be_selected is CharacterCardBase:
+		return card_be_selected
+	return null
 
 func clear():
 	start_range.clear()

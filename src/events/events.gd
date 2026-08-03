@@ -19,3 +19,6 @@ signal character_move()
 signal character_skill()
 signal weapon_skill()
 signal armor_skill()
+
+signal attack_range_found()
+signal move_range_found()

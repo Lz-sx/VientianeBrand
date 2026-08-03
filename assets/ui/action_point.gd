@@ -42,4 +42,17 @@ func turn_changed_2to1():
 	label.text = str(main_game.current_player1_action_point)
 	label.visible = true
 	
-	
+func _can_action(faction:Data.Faction) -> bool:
+	if faction == Data.Faction.PLAYER1:
+		if main_game.current_player1_action_point > 0:
+			return true
+		else:
+			print("体力用尽")
+			return false
+	elif faction == Data.Faction.PLAYER2:
+		if main_game.current_player2_action_point > 0:
+			return true
+		else:
+			print("体力用尽")
+			return false
+	return false

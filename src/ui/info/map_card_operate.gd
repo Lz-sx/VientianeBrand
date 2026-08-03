@@ -7,6 +7,13 @@ class_name  MapCardOperate
 @onready var armor: HBoxContainer = $VBoxContainer/Armor
 const default_name_size = 3
 
+func _ready() -> void:
+	#Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
+	pass
+
+#func _on_hand_card_selected_changed():
+	#self.visible = false
+
 func update_button(map_card_be_selected:CardBaseOnmap):
 	building.visible = false
 	vehicle.visible = false

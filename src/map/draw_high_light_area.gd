@@ -17,6 +17,9 @@ func _ready() -> void:
 	Events.deploy_range_found.connect(_on_deploy_range_found)
 	Events.deploy_range_clear.connect(_on_deploy_range_clear)
 	
+	Events.attack_range_found.connect(_on_attack_range_found)
+	Events.move_range_found.connect(_on_move_range_found)
+	
 func _on_deploy_range_found(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():
 		if new_card.id == 0:
@@ -27,6 +30,12 @@ func _on_deploy_range_found(new_card:CardBaseOnhand):
 
 func _on_deploy_range_clear():
 	clear_highlight()
+	
+func _on_attack_range_found():
+	draw_attack_highlight()
+
+func _on_move_range_found():
+	draw_move_highlight()
 	
 # 根据 move_grid 画高亮
 func draw_start_highlight():

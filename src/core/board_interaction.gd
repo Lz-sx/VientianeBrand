@@ -20,6 +20,11 @@ func _input(event: InputEvent) -> void:
 					main_game.map_card_operate.update_button(main_game.map_card_be_selected)
 					main_game.map_card_operate.visible = true
 	if event.is_action_pressed("mouse_right"):
-		main_game.map_card_be_selected = null
-		main_game.map_card_info.visible = false
-		main_game.map_card_operate.visible = false
+		if main_game.map_action_card != null:
+			main_game.map_action_card = null
+			main_game.grid_range.clear()
+			main_game.draw_high_light_area.clear_highlight()
+		else:
+			main_game.map_card_be_selected = null
+			main_game.map_card_info.visible = false
+			main_game.map_card_operate.visible = false
