@@ -4,7 +4,7 @@ func _on_enter() -> void:
 	
 	main_game.current_player1_action_point -= 1
 	NetRelay.rpc("net_sync_action_point", main_game.my_faction, main_game.current_player1_action_point)
-	await main_game.combat.attack(main_game.map_action_card,main_game.grid_range.active_unit_map\
+	await main_game.combat.attack(main_game.map_action_card,main_game.grid_range.attack_target_map\
 	[main_game.clicked_position])
 	parent_fsm.change_state("IdleState")
 ## 退出状态时触发

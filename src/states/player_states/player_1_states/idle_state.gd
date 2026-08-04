@@ -26,7 +26,9 @@ func _state_input(_event: InputEvent) -> void:
 			main_game.clicked_position = main_game.map.get_hovered_tile()
 			if main_game.clicked_position in main_game.grid_range.attack_target_map.keys():
 				parent_fsm.change_state("AttackState")
-				
+			elif main_game.clicked_position in main_game.grid_range.move_range or \
+			main_game.clicked_position in main_game.grid_range.occupy_cell_map.keys():
+				parent_fsm.change_state("MoveState")
 				
 				
 				

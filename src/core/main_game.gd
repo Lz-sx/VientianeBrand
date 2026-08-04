@@ -29,7 +29,7 @@ var player2_id:int
 var start_player = 0
 var current_action_player:Data.Faction = Data.Faction.NULL
 
-var DEFALUT_ACTION_POINT:int = 10
+var DEFALUT_ACTION_POINT:int = 5
 var MAX_ACTION_POINT:int = 10
 var current_player1_action_point:int = 0
 var current_player2_action_point:int = 0

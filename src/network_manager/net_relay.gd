@@ -14,6 +14,8 @@ signal sync_init_turn(faction:Data.Faction)
 signal sync_occupy(id:int, position:Vector2i)
 signal sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i)
 signal sync_attack(selected_unit_id:int,target_unit_id:int)
+signal sync_vacate(selected_unit_id:int)
+signal sync_move(selected_unit_id: int, tile_position: Vector2i)
 
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
@@ -58,8 +60,17 @@ func net_sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
 func net_sync_attack(selected_unit_id:int,target_unit_id:int):
 	emit_signal("sync_attack", selected_unit_id, target_unit_id)
 	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_vacate(selected_unit_id:int):
+	emit_signal("sync_vacate", selected_unit_id)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_move(selected_unit_id: int, tile_position: Vector2i):
+	emit_signal("sync_move", selected_unit_id, tile_position)
 	
 	
+	
+
 
 @rpc("call_remote", "reliable")
 func net_deal_cards(player:Data.Faction, card_id:int):

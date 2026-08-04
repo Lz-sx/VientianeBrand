@@ -23,6 +23,7 @@ enum OccupyResult {
 
 func _ready() -> void:
 	NetRelay.sync_occupy.connect(_on_sync_occupy)
+	NetRelay.sync_vacate.connect(_on_sync_vacate)
 
 func remove_node(selected_unit:CardBaseOnmap):
 	if selected_unit.get_parent() != null:
@@ -203,7 +204,8 @@ func _try_occupy_full_building(selected:CardBaseOnmap, building:BuildingCardBase
 func vacate_unit(selected_unit:CardBaseOnmap):
 	if selected_unit.Type != Data.Type.BUILDING:
 		if selected_unit.get_parent() != null:
-			selected_unit.get_parent().get_parent().capacity += 1
+			if not selected_unit.get_parent() is TileMapLayer:
+				selected_unit.get_parent().get_parent().capacity += 1
 			selected_unit.get_parent().remove_child(selected_unit)
 		unit_spawner.container.add_child(selected_unit)
 
@@ -262,13 +264,14 @@ func _on_sync_occupy(card_id:int, tile_position:Vector2i):
 		OccupyResult.FAILED:
 			push_warning("错误：occupy函数判断链")
 
-func vacate(selected_unit:CardBaseOnmap):
+func _on_sync_vacate(selected_unit_id:int):
+	var selected_unit = main_game.id_map_card_map[selected_unit_id]
 	var parent_node = selected_unit.get_parent()
 	if parent_node == null:
 		return
 	vacate_unit(selected_unit)
 	selected_unit.visible = true
-	var grand_parent:CardBaseOnmap = parent_node.get_parent()
+	var grand_parent = parent_node.get_parent()
 	if grand_parent is CardBaseOnmap:
 		match grand_parent.Type:
 			Data.Type.BUILDING:
@@ -284,3 +287,6 @@ func vacate(selected_unit:CardBaseOnmap):
 				var vehicle = grand_parent as VehicleCardBase
 				if not vehicle.capacity < Data.card_data[vehicle.id]["capacity"]:
 						vehicle.char_icon.visible = false
+
+func vacate(selected_unit:CardBaseOnmap):
+	NetRelay.rpc("net_sync_vacate",selected_unit.id)
