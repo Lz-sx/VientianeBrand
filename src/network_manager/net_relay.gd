@@ -2,7 +2,7 @@ extends Node
 
 # 定义同步信号
 signal sync_main_init
-signal sync_action_point(player:Data.Faction, value:int)
+signal sync_action_point(value:int)
 signal deal_cards(player:Data.Faction, card_id:int)
 signal sync_add_hand_cards(player:Data.Faction, card_id:int)
 signal sync_spawn_unit(id:int, cell_position:Vector2i, faction:Data.Faction)
@@ -16,17 +16,20 @@ signal sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i)
 signal sync_attack(selected_unit_id:int,target_unit_id:int)
 signal sync_vacate(selected_unit_id:int)
 signal sync_move(selected_unit_id: int, tile_position: Vector2i)
+signal sync_end_turn
+signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
 
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
+#两端->两端
 @rpc("any_peer", "call_local", "reliable")
 func net_sync_main_init() -> void:
 	emit_signal("sync_main_init")
 	
 # RPC函数，收到网络消息只发射信号，不访问场景节点
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_action_point(player:Data.Faction, value:int):
-	emit_signal("sync_action_point", player, value)
+func net_sync_action_point(value:int):
+	emit_signal("sync_action_point",value)
 
 @rpc("any_peer", "call_local", "reliable")
 func net_sync_add_hand_cards(player:Data.Faction, card_id:int):
@@ -68,7 +71,15 @@ func net_sync_vacate(selected_unit_id:int):
 func net_sync_move(selected_unit_id: int, tile_position: Vector2i):
 	emit_signal("sync_move", selected_unit_id, tile_position)
 	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_end_turn() -> void:
+	emit_signal("sync_end_turn")
 	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_show_turn_operate(faction:Data.Faction, mode:bool) -> void:
+	emit_signal("sync_show_turn_operate", faction, mode)	
+
+
 	
 
 

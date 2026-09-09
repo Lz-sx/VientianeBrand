@@ -3,7 +3,7 @@ extends StateBase
 func _on_enter() -> void:
 	
 	main_game.current_player1_action_point -= 1
-	NetRelay.rpc("net_sync_action_point", main_game.my_faction, main_game.current_player1_action_point)
+	NetRelay.rpc("net_sync_action_point", main_game.current_player1_action_point)
 	
 	if main_game.map_card_be_selected != main_game.map_action_card:
 		main_game.occupancy.vacate(main_game.map_action_card)

@@ -25,7 +25,6 @@
 [ext_resource type="TileSet" uid="uid://g318klpm4oqt" path="res://assets/map/high_light_area.tres" id="11_os0rc"]
 [ext_resource type="Script" uid="uid://c6w0s04ndnfcs" path="res://src/states/player_states/player_1_states/start_turn_state.gd" id="12_6xjgj"]
 [ext_resource type="Script" uid="uid://dchcgvfvscaxu" path="res://src/states/start_player_states/start_player_1_states/start_turn_state.gd" id="12_g0oku"]
-[ext_resource type="Script" uid="uid://cdpmuhsens7do" path="res://src/states/player_states/player_2_state.gd" id="12_rvmly"]
 [ext_resource type="Script" uid="uid://notame3lk2lj" path="res://src/states/player_states/player_1_states/idle_state.gd" id="13_kdxye"]
 [ext_resource type="Script" uid="uid://ddmkhgluby28m" path="res://src/states/start_player_states/start_player_1_states/idle_state.gd" id="13_md0c5"]
 [ext_resource type="Script" uid="uid://dsb0n8680awkj" path="res://src/states/player_states/player_1_states/deploy_state.gd" id="14_7dxeu"]
@@ -38,11 +37,15 @@
 [ext_resource type="Script" uid="uid://basl6htsovdkg" path="res://src/states/start_player_states/start_player_2_states/idle_state.gd" id="20_s6qvg"]
 [ext_resource type="Script" uid="uid://r4fmcnlaog1g" path="res://src/states/start_player_states/start_player_2_states/deploy_state.gd" id="21_yd8qa"]
 [ext_resource type="Script" uid="uid://l7wq5a6pnc7d" path="res://src/states/start_player_states/start_player_2_states/end_turn_state.gd" id="22_ii8ov"]
+[ext_resource type="Script" uid="uid://bu2gkdvje3ktd" path="res://src/states/player_states/player_2_states/start_turn_state.gd" id="29_y88s1"]
+[ext_resource type="Script" uid="uid://ut2ujxfpvwvr" path="res://src/states/player_states/player_2_states/idle_state.gd" id="30_yd8qa"]
+[ext_resource type="Script" uid="uid://iodd2mkvql5c" path="res://src/states/player_states/player_2_states/end_turn_state.gd" id="31_ii8ov"]
 [ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 [ext_resource type="Script" uid="uid://bbd0pw6bxudui" path="res://src/ui/info/map_card_info.gd" id="38_3gpy6"]
 [ext_resource type="Script" uid="uid://dv5c4oxkil4rj" path="res://src/ui/info/map_card_operate.gd" id="39_0ppfa"]
 [ext_resource type="Script" uid="uid://l6i0f5myd62l" path="res://assets/ui/action_point.gd" id="42_528hv"]
 [ext_resource type="SpriteFrames" uid="uid://byk8k5nqknoub" path="res://assets/ui/action_point.tres" id="42_lecds"]
+[ext_resource type="Script" uid="uid://c20n3x0evp5eb" path="res://src/ui/turn/turn_operate.gd" id="42_y88s1"]
 
 [node name="MainGame" type="Node" unique_id=1065262524]
 script = ExtResource("1_bsx2m")
@@ -159,8 +162,24 @@ script = ExtResource("18_ovyt5")
 [node name="EndTurnState" type="Node" parent="MainStateMachine/Player1State" unique_id=1856392526]
 script = ExtResource("19_md0c5")
 
-[node name="Player2State" type="Node" parent="MainStateMachine" unique_id=1030000427]
-script = ExtResource("12_rvmly")
+[node name="Player2State" type="Node" parent="MainStateMachine" unique_id=1517558743]
+script = ExtResource("8_xas7x")
+metadata/_custom_type_script = "uid://c6i87o45874nk"
+
+[node name="StartTurnState" type="Node" parent="MainStateMachine/Player2State" unique_id=1010973800]
+script = ExtResource("29_y88s1")
+
+[node name="IdleState" type="Node" parent="MainStateMachine/Player2State" unique_id=456509695]
+script = ExtResource("30_yd8qa")
+
+[node name="DeployState" type="Node" parent="MainStateMachine/Player2State" unique_id=195912207]
+
+[node name="MoveState" type="Node" parent="MainStateMachine/Player2State" unique_id=1417987021]
+
+[node name="AttackState" type="Node" parent="MainStateMachine/Player2State" unique_id=1937767757]
+
+[node name="EndTurnState" type="Node" parent="MainStateMachine/Player2State" unique_id=906845358]
+script = ExtResource("31_ii8ov")
 
 [node name="Map" type="TileMapLayer" parent="." unique_id=1950687381 node_paths=PackedStringArray("game_grid")]
 tile_set = ExtResource("2_bsx2m")
@@ -377,8 +396,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -179.0
-offset_top = -196.0
+offset_left = -188.0
+offset_top = -231.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -462,6 +481,27 @@ layout_mode = 2
 text = "技能
 "
 
+[node name="TurnOperate" type="Control" parent="OperateLayer" unique_id=302672173]
+visible = false
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -93.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("42_y88s1")
+
+[node name="EndTurn" type="Button" parent="OperateLayer/TurnOperate" unique_id=926661047]
+layout_mode = 0
+offset_left = -37.0
+offset_right = 72.0
+offset_bottom = 32.0
+text = "结束回合"
+
 [node name="GameStatusLayer" type="CanvasLayer" parent="." unique_id=1272263769]
 
 [node name="ActionPoint" type="Control" parent="GameStatusLayer" unique_id=1815482790 node_paths=PackedStringArray("main_game")]
@@ -526,3 +566,4 @@ offset_bottom = 40.0
 [connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Character/Skill" to="OperateLayer/MapCardOperate" method="_on_character_skill_pressed"]
 [connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Weapon/Skill" to="OperateLayer/MapCardOperate" method="_on_weapon_skill_pressed"]
 [connection signal="pressed" from="OperateLayer/MapCardOperate/VBoxContainer/Armor/Skill" to="OperateLayer/MapCardOperate" method="_on_armor_skill_pressed"]
+[connection signal="pressed" from="OperateLayer/TurnOperate/EndTurn" to="OperateLayer/TurnOperate" method="_on_end_turn_pressed"]

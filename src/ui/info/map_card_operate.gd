@@ -5,6 +5,8 @@ class_name  MapCardOperate
 @onready var character: HBoxContainer = $VBoxContainer/Character
 @onready var weapon: HBoxContainer = $VBoxContainer/Weapon
 @onready var armor: HBoxContainer = $VBoxContainer/Armor
+@onready var end_turn: Button = $VBoxContainer/EndTurn
+
 const default_name_size = 3
 
 func _ready() -> void:

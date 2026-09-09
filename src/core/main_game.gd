@@ -18,6 +18,7 @@ class_name MainGame
 @onready var map_card_info: MapCardInfo = $InfoLayer/InfoRoot/MapCardInfo
 @onready var map_card_operate: MapCardOperate = $OperateLayer/MapCardOperate
 @onready var action_point: ActionPoint = $GameStatusLayer/ActionPoint
+@onready var turn_operate: TurnOperate = $OperateLayer/TurnOperate
 
 var my_faction:Data.Faction = Data.Faction.NULL
 
