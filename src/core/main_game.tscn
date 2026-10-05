@@ -40,6 +40,7 @@
 [ext_resource type="Script" uid="uid://bu2gkdvje3ktd" path="res://src/states/player_states/player_2_states/start_turn_state.gd" id="29_y88s1"]
 [ext_resource type="Script" uid="uid://ut2ujxfpvwvr" path="res://src/states/player_states/player_2_states/idle_state.gd" id="30_yd8qa"]
 [ext_resource type="Script" uid="uid://iodd2mkvql5c" path="res://src/states/player_states/player_2_states/end_turn_state.gd" id="31_ii8ov"]
+[ext_resource type="Script" uid="uid://doob5rv685mwi" path="res://src/states/player_states/player_2_states/deploy_state.gd" id="31_wk1wb"]
 [ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 [ext_resource type="Script" uid="uid://bbd0pw6bxudui" path="res://src/ui/info/map_card_info.gd" id="38_3gpy6"]
 [ext_resource type="Script" uid="uid://dv5c4oxkil4rj" path="res://src/ui/info/map_card_operate.gd" id="39_0ppfa"]
@@ -95,7 +96,7 @@ game_grid = NodePath("../Map/GameGrid")
 [node name="BoardInteraction" type="Node" parent="." unique_id=1719598729]
 script = ExtResource("10_ii8ov")
 
-[node name="RequestHandler" type="Node" parent="." unique_id=42803816]
+[node name="Listener" type="Node" parent="." unique_id=42803816]
 script = ExtResource("10_528hv")
 
 [node name="MainStateMachine" type="Node" parent="." unique_id=2120945107]
@@ -173,6 +174,7 @@ script = ExtResource("29_y88s1")
 script = ExtResource("30_yd8qa")
 
 [node name="DeployState" type="Node" parent="MainStateMachine/Player2State" unique_id=195912207]
+script = ExtResource("31_wk1wb")
 
 [node name="MoveState" type="Node" parent="MainStateMachine/Player2State" unique_id=1417987021]
 

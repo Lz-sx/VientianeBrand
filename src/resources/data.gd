@@ -24,6 +24,15 @@ enum Type{
 	SKILL,
 }
 
+enum State{
+	StartTurnState = 1,
+	IdleState,
+	DeployState,
+	MoveState,
+	AttackState,
+	EndTurnState,
+}
+
 var card_data:Dictionary = {
 	0:{
 		"name":"大本营","hand_uid":preload("uid://bsfevywtjtfko"),

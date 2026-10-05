@@ -48,6 +48,7 @@ var map_action_card:CardBaseOnmap = null
 var clicked_position:Vector2i
 var player2_clicked_position:Vector2i
 var id_map_card_map:Dictionary
+var player2_state:Data.State = Data.State.EndTurnState
 
 #备份
 func backup_game_state():
