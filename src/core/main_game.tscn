@@ -41,6 +41,8 @@
 [ext_resource type="Script" uid="uid://ut2ujxfpvwvr" path="res://src/states/player_states/player_2_states/idle_state.gd" id="30_yd8qa"]
 [ext_resource type="Script" uid="uid://iodd2mkvql5c" path="res://src/states/player_states/player_2_states/end_turn_state.gd" id="31_ii8ov"]
 [ext_resource type="Script" uid="uid://doob5rv685mwi" path="res://src/states/player_states/player_2_states/deploy_state.gd" id="31_wk1wb"]
+[ext_resource type="Script" uid="uid://c57dojtp3l14j" path="res://src/states/player_states/player_2_states/move_state.gd" id="32_wk1wb"]
+[ext_resource type="Script" uid="uid://teahm21fwtur" path="res://src/states/player_states/player_2_states/attack_state.gd" id="33_4v0av"]
 [ext_resource type="Script" uid="uid://b5igi46wq3lj0" path="res://src/ui/info/hand_card_info.gd" id="37_yh6i4"]
 [ext_resource type="Script" uid="uid://bbd0pw6bxudui" path="res://src/ui/info/map_card_info.gd" id="38_3gpy6"]
 [ext_resource type="Script" uid="uid://dv5c4oxkil4rj" path="res://src/ui/info/map_card_operate.gd" id="39_0ppfa"]
@@ -177,8 +179,10 @@ script = ExtResource("30_yd8qa")
 script = ExtResource("31_wk1wb")
 
 [node name="MoveState" type="Node" parent="MainStateMachine/Player2State" unique_id=1417987021]
+script = ExtResource("32_wk1wb")
 
 [node name="AttackState" type="Node" parent="MainStateMachine/Player2State" unique_id=1937767757]
+script = ExtResource("33_4v0av")
 
 [node name="EndTurnState" type="Node" parent="MainStateMachine/Player2State" unique_id=906845358]
 script = ExtResource("31_ii8ov")

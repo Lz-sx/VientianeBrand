@@ -1,15 +1,17 @@
 extends StateBase
 
 func _on_enter() -> void:
-	pass
+	
+	main_game.current_player1_action_point -= 1
+	NetRelay.rpc("net_sync_action_point", main_game.current_player1_action_point)
 	
 ## 退出状态时触发
 func _on_exit() -> void:
-	pass
+	main_game.map_action_card = null
 
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:
-	if (main_game.player2_state == Data.State.IdleState):
+	if(main_game.player2_state == Data.State.IdleState):
 		parent_fsm.change_state("IdleState")
 
 ## 状态处理输入事件

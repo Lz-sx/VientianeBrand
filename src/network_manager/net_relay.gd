@@ -18,7 +18,7 @@ signal sync_vacate(selected_unit_id:int)
 signal sync_move(selected_unit_id: int, tile_position: Vector2i)
 signal sync_end_turn
 signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
-signal sync_set_player2_state(state:Data.State)
+signal sync_change_player2_state(state:Data.State)
 
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
@@ -81,8 +81,8 @@ func net_sync_show_turn_operate(faction:Data.Faction, mode:bool) -> void:
 	emit_signal("sync_show_turn_operate", faction, mode)	
 
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_set_player2_state(state:Data.State) -> void:
-	emit_signal("sync_set_player2_state", state)
+func net_sync_change_player2_state(state:Data.State) -> void:
+	emit_signal("sync_change_player2_state", state)
 
 
 	

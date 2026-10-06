@@ -1,8 +1,6 @@
 extends StateBase
 
 func _on_enter() -> void:
-	#main_game.draw_high_light_area.clear_highlight()
-	#main_game.grid_range.clear()
 	NetRelay.sync_end_turn.connect(_on_sync_end_turn)
 	
 ## 退出状态时触发
