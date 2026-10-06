@@ -7,16 +7,22 @@ func _on_enter() -> void:
 	
 	if main_game.player2_map_card_be_selected_id != main_game.player2_map_action_card_id:
 		main_game.occupancy.vacate_by_id(main_game.player2_map_action_card_id)
-	if main_game.grid_range.move_range.has(main_game.clicked_position):
-		main_game.movement.move(main_game.map_action_card,main_game.clicked_position)
-		main_game.map_card_be_selected = main_game.map_action_card
-		main_game.map_card_info.update_text(main_game.map_card_be_selected)
-		if main_game.is_my_turn():
-			main_game.map_card_operate.update_button(main_game.map_card_be_selected)
-	elif main_game.grid_range.occupy_cell_map.has(main_game.clicked_position):
-		main_game.movement.move(main_game.map_action_card,main_game.clicked_position)
+	NetRelay.rpc("net_sync_is_in_player2_move_range", main_game.player2_clicked_position)
+	NetRelay.rpc("net_sync_is_in_player2_occupy_cell_map", main_game.player2_clicked_position)
+	if main_game.grid_range.is_in_player2_move_range:
+		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
+		main_game.player2_clicked_position)
+		main_game.player2_map_card_be_selected_id = main_game.player2_map_action_card_id
+		NetRelay.rpc("net_reply_player2_update_text",main_game.player2_map_card_be_selected_id)
+		NetRelay.rpc("net_reply_player2_update_button",main_game.player2_map_card_be_selected_id)
+	elif main_game.grid_range.is_in_player2_occupy_cell_map:
+		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
+		main_game.player2_clicked_position)
 		await get_tree().create_timer(0.5).timeout
-		main_game.occupancy.occupy(main_game.map_action_card.id,main_game.clicked_position)
+		main_game.occupancy.occupy(main_game.player2_map_action_card_id,\
+		main_game.player2_clicked_position)
+		
+		#改到这里了############################################################
 		main_game.map_card_be_selected = null
 		main_game.map_card_info.visible = false
 		main_game.map_card_operate.visible = false

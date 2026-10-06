@@ -42,7 +42,7 @@ var player1_hand:Array[int]=[]
 var player2_hand:Array[int]=[]
 
 var hand_card_be_selected:CardBaseOnhand = null
-var player2_hand_card_selected_id:int = -1
+var player2_hand_card_be_selected_id:int = -1
 var map_card_be_selected:CardBaseOnmap = null
 var player2_map_card_be_selected_id:int = -1
 var map_action_card:CardBaseOnmap = null

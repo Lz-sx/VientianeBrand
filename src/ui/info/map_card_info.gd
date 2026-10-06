@@ -1,5 +1,6 @@
 extends Control
 class_name MapCardInfo
+@onready var main_game: MainGame = $"../../.."
 @onready var building: Button = $HBoxContainer/Building
 @onready var vehicle: Button = $HBoxContainer/Vehicle
 @onready var character: Button = $HBoxContainer/Character
@@ -13,7 +14,11 @@ var character_text:String
 var weapon_text:String
 var armor_text:String
 
+func _ready() -> void:
+	NetRelay.reply_player2_update_text.connect(_on_reply_player2_update_text)
 
+func _on_reply_player2_update_text(id:int):
+	update_text(main_game.grid_range.get_unit_by_id(id))
 
 func update_text(map_card_be_selected:CardBaseOnmap):
 	building_text = ""

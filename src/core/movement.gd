@@ -35,6 +35,9 @@ func _on_sync_move(selected_unit_id: int, tile_position: Vector2i):
 		game_grid.add_unit(selected_unit, tile_position)
 	)
 
-func move(selected_unit: CardBaseOnmap, tile_position: Vector2i):
+func move_by_unit(selected_unit: CardBaseOnmap, tile_position: Vector2i):
 	print("move1")
 	NetRelay.rpc("net_sync_move", selected_unit.id, tile_position)
+
+func move_by_id(id:int, tile_position: Vector2i):
+	NetRelay.rpc("net_sync_move", id, tile_position)

@@ -10,7 +10,6 @@ func _on_enter() -> void:
 	NetRelay.rpc("net_sync_action_point", main_game.current_player2_action_point)
 	NetRelay.rpc("net_sync_turn_change", Data.Faction.PLAYER2)
 	NetRelay.rpc("net_sync_show_turn_operate",Data.Faction.PLAYER2, true)
-	print(1)
 	parent_fsm.change_state("IdleState")
 
 ## 退出状态时触发

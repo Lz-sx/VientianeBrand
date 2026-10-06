@@ -9,9 +9,11 @@ signal sync_spawn_unit(id:int, cell_position:Vector2i, faction:Data.Faction)
 signal request_select_hand_card(id:int)
 signal request_select_map_card(id:int)
 signal request_select_map_action_card(id:int)
-signal request_deploy(position:Vector2i)
+signal request_player2_update_clicked_position(position:Vector2i)
 signal reply_release_hand_card(id:int)
 signal reply_release_map_card(id:int)
+signal reply_player2_update_text(id:int)
+signal reply_player2_update_button(id:int)
 signal sync_turn_change(faction:Data.Faction)
 signal sync_init_turn(faction:Data.Faction)
 signal sync_occupy(id:int, position:Vector2i)
@@ -23,7 +25,10 @@ signal sync_end_turn
 signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
 signal sync_change_player2_state(state:Data.State)
 signal reply_player2_deploystate_exit
-
+signal sync_is_in_player2_move_range(pos:Vector2i)
+signal sync_is_in_player2_occupy_cell_map(pos:Vector2i)
+signal sync_is_in_player2_deploy_range(pos:Vector2i)
+signal sync_is_in_player2_arm_slot_map(pos:Vector2i)
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
 #两端->两端
@@ -88,8 +93,23 @@ func net_sync_show_turn_operate(faction:Data.Faction, mode:bool) -> void:
 func net_sync_change_player2_state(state:Data.State) -> void:
 	emit_signal("sync_change_player2_state", state)
 
-
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_is_in_player2_move_range(pos:Vector2i) -> void:
+	emit_signal("sync_is_in_player2_move_range", pos)
 	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_is_in_player2_occupy_cell_map(pos:Vector2i) -> void:
+	emit_signal("sync_is_in_player2_occupy_cell_map", pos)
+
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_is_in_player2_deploy_range(pos:Vector2i) -> void:
+	emit_signal("sync_is_in_player2_deploy_range", pos)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_is_in_player2_arm_slot_map(pos:Vector2i) -> void:
+	emit_signal("sync_is_in_player2_arm_slot_map", pos)
+	
+
 
 
 @rpc("call_remote", "reliable")
@@ -112,7 +132,13 @@ func net_reply_release_map_action_card(id:int):
 func net_reply_player2_deploystate_exit():
 	emit_signal("reply_player2_deploystate_exit")
 
+@rpc("call_remote", "reliable")
+func net_reply_player2_update_text(id:int):
+	emit_signal("reply_player2_update_text",id)
 
+@rpc("call_remote", "reliable")
+func net_reply_player2_update_button(id:int):
+	emit_signal("reply_player2_update_button",id)
 
 
 
@@ -130,5 +156,5 @@ func net_request_select_map_action_card(id:int):
 	emit_signal("request_select_map_action_card", id)
 
 @rpc("any_peer", "call_remote", "reliable")
-func net_request_deploy(position:Vector2i):
-	emit_signal("request_deploy", position)
+func net_request_player2_update_clicked_position(position:Vector2i):
+	emit_signal("request_player2_update_clicked_position", position)

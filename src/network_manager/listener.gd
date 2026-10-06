@@ -30,10 +30,10 @@ func _on_map_action_card_selected_changed(card:CardBaseOnmap):
 		NetRelay.rpc("net_request_select_map_action_card", card.id)
 
 func _on_request_select_hand_card(id:int):
-	main_game.player2_hand_card_selected_id = id
+	main_game.player2_hand_card_be_selected_id = id
 
 func _on_request_select_map_card(id:int):
-	main_game.player2_map_card_selected_id = id
+	main_game.player2_map_card_be_selected_id = id
 
 func _on_request_select_map_action_card(id:int):
 	main_game.player2_map_action_card_id = id 
@@ -120,7 +120,8 @@ func _input(_event: InputEvent) -> void:
 			main_game.grid_range.occupy_cell_map.has(main_game.clicked_position) or \
 			main_game.grid_range.arm_slot_map.has(main_game.clicked_position) or\
 			main_game.grid_range.start_range.has(main_game.clicked_position):
-				NetRelay.rpc("net_request_deploy", main_game.clicked_position)
+				NetRelay.rpc("net_request_player2_update_clicked_position", main_game.clicked_position)
+				NetRelay.rpc("net_sync_change_player2_state", Data.State.DeployState)
 				
 		if main_game.player2_state == Data.State.IdleState:
 			if main_game.hand_card_be_selected != null:
@@ -129,14 +130,17 @@ func _input(_event: InputEvent) -> void:
 					if main_game.grid_range.deploy_range.has(main_game.clicked_position) or \
 					main_game.grid_range.occupy_cell_map.has(main_game.clicked_position) or \
 					main_game.grid_range.arm_slot_map.has(main_game.clicked_position):
+						NetRelay.rpc("net_request_player2_update_clicked_position", main_game.clicked_position)
 						NetRelay.rpc("net_sync_change_player2_state", Data.State.DeployState)
 			if main_game.map_card_be_selected != null and main_game.map_action_card != null:
 				if _event.is_action_pressed("mouse_left") and main_game.map.is_click_on_map():
 					main_game.clicked_position = main_game.map.get_hovered_tile()
 					if main_game.clicked_position in main_game.grid_range.attack_target_map.keys():
+						NetRelay.rpc("net_request_player2_update_clicked_position", main_game.clicked_position)
 						NetRelay.rpc("net_sync_change_player2_state", Data.State.AttackState)
 					elif main_game.clicked_position in main_game.grid_range.move_range or \
 					main_game.clicked_position in main_game.grid_range.occupy_cell_map.keys():
+						NetRelay.rpc("net_request_player2_update_clicked_position", main_game.clicked_position)
 						NetRelay.rpc("net_sync_change_player2_state", Data.State.MoveState)
 						
 	else:

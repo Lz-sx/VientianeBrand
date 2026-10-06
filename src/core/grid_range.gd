@@ -26,6 +26,12 @@ var X_LENGTH = 20
 var Y_LENGTH = 20
 var START_Y = 1
 
+var is_in_player2_move_range:bool = false
+var is_in_player2_occupy_cell_map:bool = false
+var is_in_player2_deploy_range:bool = false
+var is_in_player2_arm_slot_map:bool = false
+
+
 func _ready() -> void:
 	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
 	Events.cancel_hand_card_selected.connect(_on_cancel_hand_card_selected)
@@ -41,7 +47,37 @@ func _ready() -> void:
 	Events.weapon_skill.connect(_on_weapon_skill)
 	Events.armor_skill.connect(_on_armor_skill)
 	
+	NetRelay.sync_is_in_player2_move_range.connect(_on_sync_is_in_player2_move_range)
+	NetRelay.sync_is_in_player2_occupy_cell_map.connect(_on_sync_is_in_player2_occupy_cell_map)
+	NetRelay.sync_is_in_player2_deploy_range.connect(_on_sync_is_in_player2_deploy_range)
+	NetRelay.sync_is_in_player2_arm_slot_map.connect(_on_sync_is_in_player2_arm_slot_map)
 	
+func _on_sync_is_in_player2_move_range(pos:Vector2i):
+	if move_range.has(pos):
+		is_in_player2_move_range = true
+	else:
+		is_in_player2_move_range = false
+
+func _on_sync_is_in_player2_occupy_cell_map(pos:Vector2i):
+	if occupy_cell_map.has(pos):
+		is_in_player2_occupy_cell_map = true
+	else:
+		is_in_player2_occupy_cell_map = false
+
+func _on_sync_is_in_player2_deploy_range(pos:Vector2i):
+	var temp:bool = false
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		if deploy_range.has(pos):
+			temp = true
+		else:
+			temp = false
+	is_in_player2_deploy_range = temp
+
+func _on_sync_is_in_player2_arm_slot_map(pos:Vector2i):
+	if arm_slot_map.has(pos):
+		is_in_player2_arm_slot_map = true
+	else:
+		is_in_player2_arm_slot_map = false
 
 func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():
@@ -189,6 +225,13 @@ func find_active_unit_map():
 		if unit != null:
 			active_unit_map[cell_pos] = unit
 
+func get_unit_by_id(id:int) -> CardBaseOnmap:
+	for pos in active_unit_map:
+		if active_unit_map[pos].id == id:
+			return active_unit_map[pos]
+	return null
+	
+	
 func find_deploy_range(selected_unit_faction:Data.Faction, selected_unit_type:Data.Type):
 	if selected_unit_type == Data.Type.WEAPON or selected_unit_type == Data.Type.ARMOR\
 	or selected_unit_type == Data.Type.SKILL:

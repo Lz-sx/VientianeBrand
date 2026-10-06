@@ -4,7 +4,7 @@ func _on_enter() -> void:
 	
 	main_game.current_player1_action_point -= 1
 	NetRelay.rpc("net_sync_action_point", main_game.current_player1_action_point)
-	print(5)
+
 ## 退出状态时触发
 func _on_exit() -> void:
 	main_game.map_action_card = null

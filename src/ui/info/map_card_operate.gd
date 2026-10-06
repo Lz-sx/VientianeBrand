@@ -1,5 +1,6 @@
 extends Control
 class_name  MapCardOperate
+@onready var main_game: MainGame = $"../.."
 @onready var building: HBoxContainer = $VBoxContainer/Building
 @onready var vehicle: HBoxContainer = $VBoxContainer/Vehicle
 @onready var character: HBoxContainer = $VBoxContainer/Character
@@ -11,10 +12,13 @@ const default_name_size = 3
 
 func _ready() -> void:
 	#Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
-	pass
+	NetRelay.reply_player2_update_button.connect(_on_reply_player2_update_button)
 
 #func _on_hand_card_selected_changed():
 	#self.visible = false
+
+func _on_reply_player2_update_button(id:int):
+	update_button(main_game.grid_range.get_unit_by_id(id))
 
 func update_button(map_card_be_selected:CardBaseOnmap):
 	building.visible = false
