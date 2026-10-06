@@ -288,5 +288,8 @@ func _on_sync_vacate(selected_unit_id:int):
 				if not vehicle.capacity < Data.card_data[vehicle.id]["capacity"]:
 						vehicle.char_icon.visible = false
 
-func vacate(selected_unit:CardBaseOnmap):
+func vacate_by_unit(selected_unit:CardBaseOnmap):
 	NetRelay.rpc("net_sync_vacate",selected_unit.id)
+
+func vacate_by_id(id:int):
+	NetRelay.rpc("net_sync_vacate",id)

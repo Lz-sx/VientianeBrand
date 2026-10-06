@@ -7,7 +7,7 @@ func _on_enter() -> void:
 	
 ## 退出状态时触发
 func _on_exit() -> void:
-	pass
+	NetRelay.request_deploy.disconnect(_on_request_deploy)
 
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:

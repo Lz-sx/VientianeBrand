@@ -6,9 +6,12 @@ signal sync_action_point(value:int)
 signal deal_cards(player:Data.Faction, card_id:int)
 signal sync_add_hand_cards(player:Data.Faction, card_id:int)
 signal sync_spawn_unit(id:int, cell_position:Vector2i, faction:Data.Faction)
-signal request_select_card(id:int)
+signal request_select_hand_card(id:int)
+signal request_select_map_card(id:int)
+signal request_select_map_action_card(id:int)
 signal request_deploy(position:Vector2i)
 signal reply_release_hand_card(id:int)
+signal reply_release_map_card(id:int)
 signal sync_turn_change(faction:Data.Faction)
 signal sync_init_turn(faction:Data.Faction)
 signal sync_occupy(id:int, position:Vector2i)
@@ -19,6 +22,7 @@ signal sync_move(selected_unit_id: int, tile_position: Vector2i)
 signal sync_end_turn
 signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
 signal sync_change_player2_state(state:Data.State)
+signal reply_player2_deploystate_exit
 
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
@@ -96,14 +100,35 @@ func net_deal_cards(player:Data.Faction, card_id:int):
 func net_reply_release_hand_card(id:int):
 	emit_signal("reply_release_hand_card",id)
 
+@rpc("call_remote", "reliable")
+func net_reply_release_map_card(id:int):
+	emit_signal("reply_release_map_card",id)
+	
+@rpc("call_remote", "reliable")
+func net_reply_release_map_action_card(id:int):
+	emit_signal("reply_release_map_action_card",id)
+
+@rpc("call_remote", "reliable")
+func net_reply_player2_deploystate_exit():
+	emit_signal("reply_player2_deploystate_exit")
+
+
 
 
 
 
 @rpc("any_peer", "call_remote", "reliable")
-func net_request_select_card(id:int):
-	emit_signal("request_select_card", id)
-	
+func net_request_select_hand_card(id:int):
+	emit_signal("request_select_hand_card", id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func net_request_select_map_card(id:int):
+	emit_signal("request_select_map_card", id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func net_request_select_map_action_card(id:int):
+	emit_signal("request_select_map_action_card", id)
+
 @rpc("any_peer", "call_remote", "reliable")
 func net_request_deploy(position:Vector2i):
 	emit_signal("request_deploy", position)

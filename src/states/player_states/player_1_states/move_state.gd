@@ -6,7 +6,7 @@ func _on_enter() -> void:
 	NetRelay.rpc("net_sync_action_point", main_game.current_player1_action_point)
 	
 	if main_game.map_card_be_selected != main_game.map_action_card:
-		main_game.occupancy.vacate(main_game.map_action_card)
+		main_game.occupancy.vacate_by_card(main_game.map_action_card)
 	if main_game.grid_range.move_range.has(main_game.clicked_position):
 		main_game.movement.move(main_game.map_action_card,main_game.clicked_position)
 		main_game.map_card_be_selected = main_game.map_action_card

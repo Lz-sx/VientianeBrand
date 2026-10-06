@@ -31,6 +31,7 @@ enum State{
 	MoveState,
 	AttackState,
 	EndTurnState,
+	NULL
 }
 
 var card_data:Dictionary = {

@@ -44,11 +44,13 @@ var player2_hand:Array[int]=[]
 var hand_card_be_selected:CardBaseOnhand = null
 var player2_hand_card_selected_id:int = -1
 var map_card_be_selected:CardBaseOnmap = null
+var player2_map_card_be_selected_id:int = -1
 var map_action_card:CardBaseOnmap = null
+var player2_map_action_card_id:int = -1
 var clicked_position:Vector2i
 var player2_clicked_position:Vector2i
 var id_map_card_map:Dictionary
-var player2_state:Data.State = Data.State.EndTurnState
+var player2_state:Data.State = Data.State.NULL
 
 #备份
 func backup_game_state():

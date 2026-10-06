@@ -1,7 +1,9 @@
 extends StateBase
 
 func _on_enter() -> void:
+	print(2)
 	NetRelay.sync_end_turn.connect(_on_sync_end_turn)
+	NetRelay.rpc("net_sync_change_player2_state", Data.State.IdleState)
 	
 ## 退出状态时触发
 func _on_exit() -> void:

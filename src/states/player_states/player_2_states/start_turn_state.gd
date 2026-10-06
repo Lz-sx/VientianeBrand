@@ -1,6 +1,7 @@
 extends StateBase
 
 func _on_enter() -> void:
+	NetRelay.rpc("net_sync_change_player2_state", Data.State.StartTurnState)
 	await main_game.deal_cards.deal_card_to_hand(Data.Faction.PLAYER2,\
 	main_game.player2_draw_count_delta)	
 	main_game.current_player2_action_point += main_game.DEFALUT_ACTION_POINT
@@ -9,6 +10,7 @@ func _on_enter() -> void:
 	NetRelay.rpc("net_sync_action_point", main_game.current_player2_action_point)
 	NetRelay.rpc("net_sync_turn_change", Data.Faction.PLAYER2)
 	NetRelay.rpc("net_sync_show_turn_operate",Data.Faction.PLAYER2, true)
+	print(1)
 	parent_fsm.change_state("IdleState")
 
 ## 退出状态时触发

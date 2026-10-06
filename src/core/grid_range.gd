@@ -64,6 +64,7 @@ func _on_building_attack():
 	if not main_game.action_point._can_action(main_game.my_faction):
 		return
 	main_game.map_action_card = main_game.map_card_be_selected
+	Events.map_action_card_selected_changed.emit(main_game.map_action_card)
 	find_attack_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
 	main_game.map_action_card)
 	Events.attack_range_found.emit()
@@ -77,6 +78,7 @@ func _on_vehicle_attack():
 	if not main_game.action_point._can_action(main_game.my_faction):
 		return
 	main_game.map_action_card = find_vehicle(main_game.map_card_be_selected)
+	Events.map_action_card_selected_changed.emit(main_game.map_action_card)
 	find_attack_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
 	main_game.map_action_card)
 	Events.attack_range_found.emit()
@@ -87,6 +89,7 @@ func _on_vehicle_move():
 	if not main_game.action_point._can_action(main_game.my_faction):
 		return
 	main_game.map_action_card = find_vehicle(main_game.map_card_be_selected)
+	Events.map_action_card_selected_changed.emit(main_game.map_action_card)
 	find_move_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
 	main_game.map_action_card)
 	Events.move_range_found.emit()
@@ -100,6 +103,7 @@ func _on_character_attack():
 	if not main_game.action_point._can_action(main_game.my_faction):
 		return
 	main_game.map_action_card = find_character(main_game.map_card_be_selected)
+	Events.map_action_card_selected_changed.emit(main_game.map_action_card)
 	find_attack_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
 	main_game.map_action_card)
 	Events.attack_range_found.emit()
@@ -110,6 +114,7 @@ func _on_character_move():
 	if not main_game.action_point._can_action(main_game.my_faction):
 		return
 	main_game.map_action_card = find_character(main_game.map_card_be_selected)
+	Events.map_action_card_selected_changed.emit(main_game.map_action_card)
 	find_move_range(main_game.game_grid.get_position_by_map_card(main_game.map_card_be_selected),\
 	main_game.map_action_card)
 	Events.move_range_found.emit()
