@@ -31,6 +31,10 @@ enum State{
 	MoveState,
 	AttackState,
 	EndTurnState,
+	StartStartTurnState,
+	StartIdleState,
+	StartDeployState,
+	StartEndTurnState,
 	NULL
 }
 

@@ -31,6 +31,10 @@ var is_in_player2_occupy_cell_map:bool = false
 var is_in_player2_deploy_range:bool = false
 var is_in_player2_arm_slot_map:bool = false
 
+var is_in_player2_move_range_synced:bool = false
+var is_in_player2_occupy_cell_map_synced:bool = false
+var is_in_player2_deploy_range_synced:bool = false
+var is_in_player2_arm_slot_map_synced:bool = false
 
 func _ready() -> void:
 	Events.hand_card_selected_changed.connect(_on_hand_card_selected_changed)
@@ -51,33 +55,68 @@ func _ready() -> void:
 	NetRelay.sync_is_in_player2_occupy_cell_map.connect(_on_sync_is_in_player2_occupy_cell_map)
 	NetRelay.sync_is_in_player2_deploy_range.connect(_on_sync_is_in_player2_deploy_range)
 	NetRelay.sync_is_in_player2_arm_slot_map.connect(_on_sync_is_in_player2_arm_slot_map)
-	
-func _on_sync_is_in_player2_move_range(pos:Vector2i):
-	if move_range.has(pos):
-		is_in_player2_move_range = true
-	else:
-		is_in_player2_move_range = false
+	NetRelay.request_is_in_player2_move_range.connect(_on_request_is_in_player2_move_range)
+	NetRelay.request_is_in_player2_occupy_cell_map.connect(_on_request_is_in_player2_occupy_cell_map)
+	NetRelay.request_is_in_player2_deploy_range.connect(_on_request_is_in_player2_deploy_range)
+	NetRelay.request_is_in_player2_arm_slot_map.connect(_on_request_is_in_player2_arm_slot_map)
 
-func _on_sync_is_in_player2_occupy_cell_map(pos:Vector2i):
-	if occupy_cell_map.has(pos):
-		is_in_player2_occupy_cell_map = true
-	else:
-		is_in_player2_occupy_cell_map = false
-
-func _on_sync_is_in_player2_deploy_range(pos:Vector2i):
-	var temp:bool = false
+func _on_request_is_in_player2_move_range(pos:Vector2i):
 	if main_game.my_faction == Data.Faction.PLAYER2:
+		var temp:bool = false
+		if move_range.has(pos):
+			temp = true
+		else:
+			temp = false
+		is_in_player2_move_range = temp
+		NetRelay.rpc("net_sync_is_in_player2_move_range",temp)
+
+func _on_sync_is_in_player2_move_range(temp:bool):
+	is_in_player2_move_range = temp
+	is_in_player2_move_range_synced = temp
+
+func _on_request_is_in_player2_occupy_cell_map(pos:Vector2i):
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		var temp:bool = false
+		if occupy_cell_map.has(pos):
+			temp = true
+		else:
+			temp = false
+		is_in_player2_occupy_cell_map = temp
+		NetRelay.rpc("net_sync_is_in_player2_occupy_cell_map",temp)
+
+func _on_sync_is_in_player2_occupy_cell_map(temp:bool):
+	is_in_player2_occupy_cell_map = temp
+	is_in_player2_occupy_cell_map_synced = true
+
+func _on_request_is_in_player2_deploy_range(pos:Vector2i):
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		var temp:bool = false
 		if deploy_range.has(pos):
 			temp = true
 		else:
 			temp = false
-	is_in_player2_deploy_range = temp
+		is_in_player2_deploy_range = temp
+		NetRelay.rpc("net_sync_is_in_player2_deploy_range",temp)
 
-func _on_sync_is_in_player2_arm_slot_map(pos:Vector2i):
-	if arm_slot_map.has(pos):
-		is_in_player2_arm_slot_map = true
-	else:
-		is_in_player2_arm_slot_map = false
+func _on_sync_is_in_player2_deploy_range(temp:bool):
+	is_in_player2_deploy_range = temp
+	print(main_game.my_faction)
+	print(temp)
+	is_in_player2_deploy_range_synced = true
+	
+func _on_request_is_in_player2_arm_slot_map(pos:Vector2i):
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		var temp:bool = false
+		if arm_slot_map.has(pos):
+			temp = true
+		else:
+			temp = false
+		is_in_player2_arm_slot_map = temp
+		NetRelay.rpc("net_sync_is_in_player2_arm_slot_map",temp)
+
+func _on_sync_is_in_player2_arm_slot_map(temp:bool):
+	is_in_player2_arm_slot_map = temp
+	is_in_player2_arm_slot_map_synced = true
 
 func _on_hand_card_selected_changed(new_card:CardBaseOnhand):
 	if main_game.is_my_turn():

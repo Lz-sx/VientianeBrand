@@ -25,10 +25,14 @@ signal sync_end_turn
 signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
 signal sync_change_player2_state(state:Data.State)
 signal reply_player2_deploystate_exit
-signal sync_is_in_player2_move_range(pos:Vector2i)
-signal sync_is_in_player2_occupy_cell_map(pos:Vector2i)
-signal sync_is_in_player2_deploy_range(pos:Vector2i)
-signal sync_is_in_player2_arm_slot_map(pos:Vector2i)
+signal sync_is_in_player2_move_range(temp:bool)
+signal sync_is_in_player2_occupy_cell_map(temp:bool)
+signal sync_is_in_player2_deploy_range(temp:bool)
+signal sync_is_in_player2_arm_slot_map(temp:bool)
+signal request_is_in_player2_move_range(pos:Vector2i)
+signal request_is_in_player2_occupy_cell_map(pos:Vector2i)
+signal request_is_in_player2_deploy_range(pos:Vector2i)
+signal request_is_in_player2_arm_slot_map(pos:Vector2i)
 signal sync_unit_pos(unit_id:int, pos:Vector2i)
 
 #两端->两端
@@ -94,20 +98,20 @@ func net_sync_change_player2_state(state:Data.State) -> void:
 	emit_signal("sync_change_player2_state", state)
 
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_is_in_player2_move_range(pos:Vector2i) -> void:
-	emit_signal("sync_is_in_player2_move_range", pos)
+func net_sync_is_in_player2_move_range(temp:bool) -> void:
+	emit_signal("sync_is_in_player2_move_range", temp)
 	
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_is_in_player2_occupy_cell_map(pos:Vector2i) -> void:
-	emit_signal("sync_is_in_player2_occupy_cell_map", pos)
+func net_sync_is_in_player2_occupy_cell_map(temp:bool) -> void:
+	emit_signal("sync_is_in_player2_occupy_cell_map", temp)
 
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_is_in_player2_deploy_range(pos:Vector2i) -> void:
-	emit_signal("sync_is_in_player2_deploy_range", pos)
+func net_sync_is_in_player2_deploy_range(temp:bool) -> void:
+	emit_signal("sync_is_in_player2_deploy_range", temp)
 	
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_is_in_player2_arm_slot_map(pos:Vector2i) -> void:
-	emit_signal("sync_is_in_player2_arm_slot_map", pos)
+func net_sync_is_in_player2_arm_slot_map(temp:bool) -> void:
+	emit_signal("sync_is_in_player2_arm_slot_map", temp)
 	
 
 
@@ -158,3 +162,19 @@ func net_request_select_map_action_card(id:int):
 @rpc("any_peer", "call_remote", "reliable")
 func net_request_player2_update_clicked_position(position:Vector2i):
 	emit_signal("request_player2_update_clicked_position", position)
+	
+@rpc("any_peer", "call_remote", "reliable")
+func net_request_is_in_player2_move_range(position:Vector2i):
+	emit_signal("request_is_in_player2_move_range", position)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_request_is_in_player2_occupy_cell_map(pos:Vector2i) -> void:
+	emit_signal("request_is_in_player2_occupy_cell_map", pos)
+
+@rpc("any_peer", "call_local", "reliable")
+func net_request_is_in_player2_deploy_range(pos:Vector2i) -> void:
+	emit_signal("request_is_in_player2_deploy_range", pos)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_request_is_in_player2_arm_slot_map(pos:Vector2i) -> void:
+	emit_signal("request_is_in_player2_arm_slot_map", pos)

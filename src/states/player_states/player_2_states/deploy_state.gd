@@ -1,13 +1,23 @@
 extends StateBase
 
 func _on_enter() -> void:
-	NetRelay.rpc("net_sync_is_in_player2_deploy_range", main_game.player2_clicked_position)
-	NetRelay.rpc("net_sync_is_in_player2_occupy_cell_map", main_game.player2_clicked_position)
-	NetRelay.rpc("net_sync_is_in_player2_arm_slot_map", main_game.player2_clicked_position)
-	#await get_tree().create_timer(0.1).timeout
-	print(main_game.grid_range.is_in_player2_deploy_range)
-	print(main_game.grid_range.is_in_player2_occupy_cell_map)
-	print(main_game.grid_range.is_in_player2_arm_slot_map)
+	main_game.grid_range.is_in_player2_arm_slot_map_synced = false
+	main_game.grid_range.is_in_player2_deploy_range_synced = false
+	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
+	
+	NetRelay.rpc("net_request_is_in_player2_deploy_range", main_game.player2_clicked_position)
+	NetRelay.rpc("net_request_is_in_player2_occupy_cell_map", main_game.player2_clicked_position)
+	NetRelay.rpc("net_request_is_in_player2_arm_slot_map", main_game.player2_clicked_position)
+	
+	while not (main_game.grid_range.is_in_player2_deploy_range_synced \
+			and main_game.grid_range.is_in_player2_occupy_cell_map_synced \
+			and main_game.grid_range.is_in_player2_arm_slot_map_synced):
+		await get_tree().process_frame
+		
+	main_game.grid_range.is_in_player2_arm_slot_map_synced = false
+	main_game.grid_range.is_in_player2_deploy_range_synced = false
+	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
+	
 	if main_game.grid_range.is_in_player2_deploy_range:
 		print(111)
 		main_game.unit_spawner.spawn_unit(main_game.player2_hand_card_be_selected_id,\
