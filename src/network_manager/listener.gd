@@ -15,7 +15,9 @@ func _ready() -> void:
 	NetRelay.reply_release_map_card.connect(_on_reply_release_map_card)
 	
 	NetRelay.sync_change_player2_state.connect(_on_sync_change_player2_state)
+	
 	NetRelay.reply_player2_deploystate_exit.connect(_on_net_reply_player2_deploystate_exit)
+	NetRelay.reply_player2_movestate_exit.connect(_on_reply_player2_movestate_exit)
 #手卡选择监听
 func _on_hand_card_selected_changed(card:CardBaseOnhand):
 	if main_game.my_faction == Data.Faction.PLAYER2:
@@ -48,8 +50,11 @@ func _on_reply_release_hand_card(id:int):
 		main_game.hand_root.remove_card(hand_card_be_selected)
 		main_game.hand_root.cancel_hand_card_selected()
 		
-func _on_reply_release_map_card(id:int):
-	pass
+func _on_reply_release_map_card():
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		main_game.map_card_be_selected = null
+		main_game.map_card_info.visible = false
+		main_game.map_card_operate.visible = false
 
 func _on_sync_change_player2_state(state:Data.State):
 	#var last_state:Data.State = main_game.player2_state
@@ -59,7 +64,12 @@ func _on_net_reply_player2_deploystate_exit():
 	if main_game.my_faction == Data.Faction.PLAYER2:
 		main_game.hand_root.remove_card(main_game.hand_card_be_selected)
 		main_game.hand_root.cancel_hand_card_selected()
-				
+
+func _on_reply_player2_movestate_exit():
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		main_game.map_action_card = null
+		main_game.grid_range.clear()
+
 func _input(_event: InputEvent) -> void:
 	if main_game.my_faction == Data.Faction.PLAYER2:
 		if main_game.player2_state == Data.State.StartIdleState:

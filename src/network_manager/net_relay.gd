@@ -11,7 +11,7 @@ signal request_select_map_card(id:int)
 signal request_select_map_action_card(id:int)
 signal request_player2_update_clicked_position(position:Vector2i)
 signal reply_release_hand_card(id:int)
-signal reply_release_map_card(id:int)
+signal reply_release_map_card()
 signal reply_player2_update_text(id:int)
 signal reply_player2_update_button(id:int)
 signal sync_turn_change(faction:Data.Faction)
@@ -25,6 +25,7 @@ signal sync_end_turn
 signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
 signal sync_change_player2_state(state:Data.State)
 signal reply_player2_deploystate_exit
+signal reply_player2_movestate_exit
 signal sync_is_in_player2_move_range(temp:bool)
 signal sync_is_in_player2_occupy_cell_map(temp:bool)
 signal sync_is_in_player2_deploy_range(temp:bool)
@@ -125,8 +126,8 @@ func net_reply_release_hand_card(id:int):
 	emit_signal("reply_release_hand_card",id)
 
 @rpc("call_remote", "reliable")
-func net_reply_release_map_card(id:int):
-	emit_signal("reply_release_map_card",id)
+func net_reply_release_map_card():
+	emit_signal("reply_release_map_card")
 	
 @rpc("call_remote", "reliable")
 func net_reply_release_map_action_card(id:int):
@@ -135,6 +136,10 @@ func net_reply_release_map_action_card(id:int):
 @rpc("call_remote", "reliable")
 func net_reply_player2_deploystate_exit():
 	emit_signal("reply_player2_deploystate_exit")
+
+@rpc("call_remote", "reliable")
+func net_reply_player2_movestate_exit():
+	emit_signal("reply_player2_movestate_exit")
 
 @rpc("call_remote", "reliable")
 func net_reply_player2_update_text(id:int):

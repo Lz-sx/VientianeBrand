@@ -7,8 +7,17 @@ func _on_enter() -> void:
 	
 	if main_game.player2_map_card_be_selected_id != main_game.player2_map_action_card_id:
 		main_game.occupancy.vacate_by_id(main_game.player2_map_action_card_id)
-	NetRelay.rpc("net_sync_is_in_player2_move_range", main_game.player2_clicked_position)
-	NetRelay.rpc("net_sync_is_in_player2_occupy_cell_map", main_game.player2_clicked_position)
+		
+	main_game.grid_range.is_in_player2_move_range_synced = false
+	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
+	
+	NetRelay.rpc("net_request_is_in_player2_move_range", main_game.player2_clicked_position)
+	NetRelay.rpc("net_request_is_in_player2_occupy_cell_map", main_game.player2_clicked_position)
+	
+	while not (main_game.grid_range.is_in_player2_move_range_synced \
+			and main_game.grid_range.is_in_player2_occupy_cell_map_synced):
+		await get_tree().process_frame
+	
 	if main_game.grid_range.is_in_player2_move_range:
 		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
@@ -22,16 +31,17 @@ func _on_enter() -> void:
 		main_game.occupancy.occupy(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
 		
-		#改到这里了############################################################
-		main_game.map_card_be_selected = null
-		main_game.map_card_info.visible = false
-		main_game.map_card_operate.visible = false
-		
+		NetRelay.rpc("net_reply_release_map_card")
+	
+	main_game.grid_range.is_in_player2_move_range_synced = false
+	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
+	
 	parent_fsm.change_state("IdleState")
+	
 ## 退出状态时触发
 func _on_exit() -> void:
-	main_game.map_action_card = null
-	main_game.grid_range.clear()
+	NetRelay.rpc("reply_player2_movestate_exit")
+	
 	
 ## 状态每帧更新
 func _state_process(_delta: float) -> void:

@@ -1,11 +1,15 @@
 extends Node
 class_name ARM
 @export var grid_range: GridRange
+@onready var main_game: MainGame = $".."
 
 func _ready() -> void:
-	NetRelay.sync_spawn_and_equip_weapon.connect(sync_spawn_and_equip_weapon)
+	NetRelay.sync_spawn_and_equip_weapon.connect(_on_sync_spawn_and_equip_weapon)
 
-func sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
+func _on_sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
+	print("3号")
+	print("运行阵营")
+	print(main_game.my_faction)
 	if not Data.card_data.has(id):
 		print("错误：不存在卡牌ID ", id)
 		return null
@@ -15,12 +19,12 @@ func sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
 		return null
 	
 	var unit_instance = unit_scene.instantiate()
-	
+	print("运行到这了")
 	var target_card = _find_character_at_position(pos)
 	if target_card == null:
 		unit_instance.queue_free()
 		return null
-	
+		
 	if arm_type == Data.Type.WEAPON:
 		var weapon_node = target_card.get_node_or_null("Weapon")
 		if weapon_node != null and weapon_node.get_child_count() == 0:
@@ -42,10 +46,13 @@ func sync_spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i):
 
 
 func spawn_and_equip_weapon(id:int, arm_type:Data.Type, pos:Vector2i) :
+	print("2号")
+	print("发送信号")
 	NetRelay.rpc("net_sync_spawn_and_equip_weapon", id, arm_type, pos)
 	
 
 func _find_character_at_position(pos:Vector2i) -> CharacterCardBase:
+	grid_range.find_active_unit_map()
 	if not grid_range.active_unit_map.has(pos):
 		return null
 	

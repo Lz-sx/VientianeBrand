@@ -40,10 +40,10 @@ func _occupy_character_to_vehicle(selected:CardBaseOnmap, vehicle:VehicleCardBas
 		return OccupyResult.CHARACTER_TO_VEHICLE
 	return OccupyResult.FAILED
 
-func _occupy_building_replace_vehicle(selected:BuildingCardBase, vehicle:VehicleCardBase) -> OccupyResult:
-	var pos = grid_range.occupy_cell_map.find_key(vehicle)
-	if pos == null:
-		return OccupyResult.FAILED
+func _occupy_building_replace_vehicle(selected:BuildingCardBase, vehicle:VehicleCardBase, pos:Vector2i) -> OccupyResult:
+	#var pos = grid_range.occupy_cell_map.find_key(vehicle)
+	#if pos == null:
+		#return OccupyResult.FAILED
 	remove_node(vehicle)
 	
 	if selected.get_parent() != null:
@@ -113,10 +113,10 @@ func _occupy_character_to_building_vehicle(selected:CardBaseOnmap, building:Buil
 			return OccupyResult.CHARACTER_TO_BUILDING_VEHICLE
 	return OccupyResult.FAILED
 
-func _occupy_building_replace_character(selected:BuildingCardBase, character:CardBaseOnmap) -> OccupyResult:
-	var pos = grid_range.occupy_cell_map.find_key(character)
-	if pos == null:
-		return OccupyResult.FAILED
+func _occupy_building_replace_character(selected:BuildingCardBase, character:CardBaseOnmap, pos:Vector2i) -> OccupyResult:
+	#var pos = grid_range.occupy_cell_map.find_key(character)
+	#if pos == null:
+		#return OccupyResult.FAILED
 	
 	remove_node(character)
 	
@@ -134,10 +134,10 @@ func _occupy_building_replace_character(selected:BuildingCardBase, character:Car
 	garrison.add_child(character)
 	return OccupyResult.BUILDING_REPLACE_CHARACTER
 
-func _occupy_vehicle_replace_character(selected:VehicleCardBase, character:CardBaseOnmap) -> OccupyResult:
-	var pos = grid_range.occupy_cell_map.find_key(character)
-	if pos == null:
-		return OccupyResult.FAILED
+func _occupy_vehicle_replace_character(selected:VehicleCardBase, character:CardBaseOnmap, pos:Vector2i) -> OccupyResult:
+	#var pos = grid_range.occupy_cell_map.find_key(character)
+	#if pos == null:
+		#return OccupyResult.FAILED
 	
 	remove_node(character)
 	
@@ -155,9 +155,11 @@ func _occupy_vehicle_replace_character(selected:VehicleCardBase, character:CardB
 	passenger.add_child(character)
 	return OccupyResult.VEHICLE_REPLACE_CHARACTER
 
-func occupy_unit(selected_unit:CardBaseOnmap, target_unit:CardBaseOnmap) -> OccupyResult:
+func occupy_unit(selected_unit:CardBaseOnmap, target_unit:CardBaseOnmap, pos:Vector2i) -> OccupyResult:
 	if selected_unit.Faction != target_unit.Faction:
 		return OccupyResult.FAILED
+	
+	#grid_range.find_active_unit_map()
 	
 	match target_unit.Type:
 		Data.Type.VEHICLE:
@@ -165,7 +167,7 @@ func occupy_unit(selected_unit:CardBaseOnmap, target_unit:CardBaseOnmap) -> Occu
 			if selected_unit.Type == Data.Type.CHARACTER:
 				return _occupy_character_to_vehicle(selected_unit, vehicle)
 			elif selected_unit.Type == Data.Type.BUILDING:
-				return _occupy_building_replace_vehicle(selected_unit as BuildingCardBase, vehicle)
+				return _occupy_building_replace_vehicle(selected_unit as BuildingCardBase, vehicle, pos)
 		
 		Data.Type.BUILDING:
 			var building = target_unit as BuildingCardBase
@@ -182,9 +184,9 @@ func occupy_unit(selected_unit:CardBaseOnmap, target_unit:CardBaseOnmap) -> Occu
 		
 		Data.Type.CHARACTER:
 			if selected_unit.Type == Data.Type.BUILDING:
-				return _occupy_building_replace_character(selected_unit as BuildingCardBase, target_unit)
+				return _occupy_building_replace_character(selected_unit as BuildingCardBase, target_unit, pos)
 			elif selected_unit.Type == Data.Type.VEHICLE:
-				return _occupy_vehicle_replace_character(selected_unit as VehicleCardBase, target_unit)
+				return _occupy_vehicle_replace_character(selected_unit as VehicleCardBase, target_unit, pos)
 	
 	return OccupyResult.FAILED
 
@@ -218,7 +220,7 @@ func _on_sync_occupy(card_id:int, tile_position:Vector2i):
 	if target_unit == null:
 		return
 	var selected_unit = main_game.id_map_card_map[card_id]
-	match occupy_unit(selected_unit, target_unit):
+	match occupy_unit(selected_unit, target_unit, tile_position):
 		OccupyResult.CHARACTER_TO_VEHICLE:
 			target_unit = target_unit as VehicleCardBase
 			target_unit.char_icon.visible = true
