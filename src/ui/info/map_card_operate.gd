@@ -30,6 +30,9 @@ func update_button(map_card_be_selected:CardBaseOnmap):
 	show_button(map_card_be_selected)
 
 func show_button(card:CardBaseOnmap):
+	if card == null:
+		print("show_button传入空参数")
+		return
 	if not Data.card_data.has(card.id):
 		return
 	

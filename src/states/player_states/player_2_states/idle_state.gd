@@ -3,9 +3,10 @@ extends StateBase
 func _on_enter() -> void:
 	NetRelay.sync_end_turn.connect(_on_sync_end_turn)
 	NetRelay.rpc("net_sync_change_player2_state", Data.State.IdleState)
+	NetRelay.rpc("net_reply_player2_idlestate_enter")
 	NetRelay.request_player2_update_clicked_position.connect(_on_request_player2_update_clicked_position)
 
-	
+
 ## 退出状态时触发
 func _on_exit() -> void:
 	NetRelay.sync_end_turn.disconnect(_on_sync_end_turn)

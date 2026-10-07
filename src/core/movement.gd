@@ -6,12 +6,13 @@ class_name Movement
 @onready var obstacle: TileMapLayer = $"../Map/Obstacle"
 @onready var main_game: MainGame = $".."
 
+var is_move_over:bool = false
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	NetRelay.sync_move.connect(_on_sync_move)
 
 func _on_sync_move(selected_unit_id: int, tile_position: Vector2i):
-	print("move2")
 	var selected_unit = main_game.id_map_card_map[selected_unit_id]
 	selected_unit.z_index = 50
 	game_grid.remove_unit_by_unit(selected_unit)
@@ -33,10 +34,10 @@ func _on_sync_move(selected_unit_id: int, tile_position: Vector2i):
 	tween.finished.connect(func():
 		selected_unit.z_index = 0
 		game_grid.add_unit(selected_unit, tile_position)
+		is_move_over = true
 	)
 
 func move_by_unit(selected_unit: CardBaseOnmap, tile_position: Vector2i):
-	print("move1")
 	NetRelay.rpc("net_sync_move", selected_unit.id, tile_position)
 
 func move_by_id(id:int, tile_position: Vector2i):

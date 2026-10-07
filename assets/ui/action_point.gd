@@ -6,10 +6,10 @@ class_name ActionPoint
 @onready var label: Label = $Label
 
 func _ready() -> void:
-	NetRelay.sync_action_point.connect(_on_sync_action_point)
+	NetRelay.sync_action_point_show.connect(_on_sync_action_point_show)
 	NetRelay.sync_init_turn.connect(_on_sync_init_turn)
 
-func _on_sync_action_point(point:int):
+func _on_sync_action_point_show(point:int):
 	label.text = str(point)
 	
 func _on_sync_init_turn(faction:Data.Faction):
@@ -43,6 +43,8 @@ func turn_changed_2to1():
 	label.visible = true
 	
 func _can_action(faction:Data.Faction) -> bool:
+	print(faction)
+	print(main_game.current_player2_action_point)
 	if faction == Data.Faction.PLAYER1:
 		if main_game.current_player1_action_point > 0:
 			return true

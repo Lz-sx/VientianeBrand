@@ -2,7 +2,8 @@ extends Node
 
 # 定义同步信号
 signal sync_main_init
-signal sync_action_point(value:int)
+signal sync_action_point_show(value:int)
+signal sync_action_point(player:Data.Faction, value:int)
 signal deal_cards(player:Data.Faction, card_id:int)
 signal sync_add_hand_cards(player:Data.Faction, card_id:int)
 signal sync_spawn_unit(id:int, cell_position:Vector2i, faction:Data.Faction)
@@ -24,6 +25,7 @@ signal sync_move(selected_unit_id: int, tile_position: Vector2i)
 signal sync_end_turn
 signal sync_show_turn_operate(faction:Data.Faction,mode:bool)
 signal sync_change_player2_state(state:Data.State)
+signal reply_player2_idlestate_enter
 signal reply_player2_deploystate_exit
 signal reply_player2_movestate_exit
 signal sync_is_in_player2_move_range(temp:bool)
@@ -43,8 +45,12 @@ func net_sync_main_init() -> void:
 	
 # RPC函数，收到网络消息只发射信号，不访问场景节点
 @rpc("any_peer", "call_local", "reliable")
-func net_sync_action_point(value:int):
-	emit_signal("sync_action_point",value)
+func net_sync_action_point_show(value:int):
+	emit_signal("sync_action_point_show",value)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_action_point(player:Data.Faction, value:int):
+	emit_signal("sync_action_point",player,value)
 
 @rpc("any_peer", "call_local", "reliable")
 func net_sync_add_hand_cards(player:Data.Faction, card_id:int):
@@ -132,6 +138,10 @@ func net_reply_release_map_card():
 @rpc("call_remote", "reliable")
 func net_reply_release_map_action_card(id:int):
 	emit_signal("reply_release_map_action_card",id)
+
+@rpc("call_remote", "reliable")
+func net_reply_player2_idlestate_enter():
+	emit_signal("reply_player2_idlestate_enter")
 
 @rpc("call_remote", "reliable")
 func net_reply_player2_deploystate_exit():

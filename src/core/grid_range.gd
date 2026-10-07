@@ -100,8 +100,6 @@ func _on_request_is_in_player2_deploy_range(pos:Vector2i):
 
 func _on_sync_is_in_player2_deploy_range(temp:bool):
 	is_in_player2_deploy_range = temp
-	print(main_game.my_faction)
-	print(temp)
 	is_in_player2_deploy_range_synced = true
 	
 func _on_request_is_in_player2_arm_slot_map(pos:Vector2i):
@@ -265,6 +263,7 @@ func find_active_unit_map():
 			active_unit_map[cell_pos] = unit
 
 func get_unit_by_id(id:int) -> CardBaseOnmap:
+	find_active_unit_map()
 	for pos in active_unit_map:
 		if active_unit_map[pos].id == id:
 			return active_unit_map[pos]

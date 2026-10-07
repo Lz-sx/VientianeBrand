@@ -18,23 +18,36 @@ func _on_enter() -> void:
 			and main_game.grid_range.is_in_player2_occupy_cell_map_synced):
 		await get_tree().process_frame
 	
+	main_game.grid_range.is_in_player2_move_range_synced = false
+	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
+	
 	if main_game.grid_range.is_in_player2_move_range:
 		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
 		main_game.player2_map_card_be_selected_id = main_game.player2_map_action_card_id
+		
+		main_game.movement.is_move_over = false
+		while not main_game.movement.is_move_over:
+			await get_tree().process_frame
+		main_game.movement.is_move_over = false
+		
 		NetRelay.rpc("net_reply_player2_update_text",main_game.player2_map_card_be_selected_id)
 		NetRelay.rpc("net_reply_player2_update_button",main_game.player2_map_card_be_selected_id)
 	elif main_game.grid_range.is_in_player2_occupy_cell_map:
+		print(9191919191)
 		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
-		await get_tree().create_timer(0.5).timeout
+		#await get_tree().create_timer(0.5).timeout
+		
+		main_game.movement.is_move_over = false
+		while not main_game.movement.is_move_over:
+			await get_tree().process_frame
+		main_game.movement.is_move_over = false
+		
 		main_game.occupancy.occupy(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
 		
 		NetRelay.rpc("net_reply_release_map_card")
-	
-	main_game.grid_range.is_in_player2_move_range_synced = false
-	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
 	
 	parent_fsm.change_state("IdleState")
 	
