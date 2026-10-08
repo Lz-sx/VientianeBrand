@@ -72,7 +72,7 @@ func _on_request_is_in_player2_move_range(pos:Vector2i):
 
 func _on_sync_is_in_player2_move_range(temp:bool):
 	is_in_player2_move_range = temp
-	is_in_player2_move_range_synced = temp
+	is_in_player2_move_range_synced = true
 
 func _on_request_is_in_player2_occupy_cell_map(pos:Vector2i):
 	if main_game.my_faction == Data.Faction.PLAYER2:

@@ -15,6 +15,7 @@ signal reply_release_hand_card(id:int)
 signal reply_release_map_card()
 signal reply_player2_update_text(id:int)
 signal reply_player2_update_button(id:int)
+signal reply_attack(id:int, pos:Vector2i)
 signal sync_turn_change(faction:Data.Faction)
 signal sync_init_turn(faction:Data.Faction)
 signal sync_occupy(id:int, position:Vector2i)
@@ -167,6 +168,12 @@ func net_reply_player2_update_text(id:int):
 @rpc("call_remote", "reliable")
 func net_reply_player2_update_button(id:int):
 	emit_signal("reply_player2_update_button",id)
+
+@rpc("call_remote", "reliable")
+func net_reply_attack(id:int, pos:Vector2i):
+	emit_signal("reply_attack",id, pos)
+
+
 
 
 

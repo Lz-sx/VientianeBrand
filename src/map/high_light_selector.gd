@@ -43,7 +43,9 @@ func _update_labels(tile_position:Vector2i)->void:
 		var obstacle_val = cell_data.get("obstacle")
 		if board_val != null:
 			#label_2.text = map.game_grid.get_board_string(board_val)
-			label_2.text = map.game_grid.get_unit_string(cell_data.get("unit"))
+			var unit = cell_data.get("unit")
+			if not is_instance_valid(unit):
+				label_2.text = map.game_grid.get_unit_string(unit)
 		else:
 			label_2.text = "unknown"
 		if obstacle_val != null:

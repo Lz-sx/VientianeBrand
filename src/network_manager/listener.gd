@@ -29,6 +29,9 @@ func _on_map_card_selected_changed(card:CardBaseOnmap):
 		NetRelay.rpc("net_request_select_map_card", card.id)
 
 func _on_map_action_card_selected_changed(card:CardBaseOnmap):
+	if card == null:
+		print("更新player2的action_card失败")
+		return
 	if main_game.my_faction == Data.Faction.PLAYER2:
 		NetRelay.rpc("net_request_select_map_action_card", card.id)
 

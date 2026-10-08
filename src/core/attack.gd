@@ -6,6 +6,7 @@ class_name Attack
 
 func _ready() -> void:
 	NetRelay.sync_attack.connect(_on_sync_attack)
+	NetRelay.reply_attack.connect(_on_reply_attack)
 
 func _on_sync_attack(selected_id:int, target_id:int):
 	var selected_unit = main_game.id_map_card_map[selected_id]
@@ -79,9 +80,14 @@ func attack_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
 		if target_unit.hp == 0:
 			die(target_unit)
 
-func attack(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
+func attack_by_unit(selected_unit:CardBaseOnmap,target_unit:CardBaseOnmap):
 	NetRelay.rpc("net_sync_attack",selected_unit.id, target_unit.id)
-	
+
+func _on_reply_attack(selected_unit_id:int, pos:Vector2i):
+	if main_game.my_faction == Data.Faction.PLAYER2:
+		var target_unit = main_game.grid_range.attack_target_map[pos]
+		NetRelay.rpc("net_sync_attack",selected_unit_id, target_unit.id)
+
 	
 # 目标受击动画：红闪+左右抖动
 func hit_animation(target: CardBaseOnmap) -> Tween:

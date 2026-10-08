@@ -4,7 +4,10 @@ func _on_enter() -> void:
 	
 	main_game.current_player1_action_point -= 1
 	NetRelay.rpc("net_sync_action_point_show", main_game.current_player1_action_point)
-
+	NetRelay.rpc("net_reply_attack", main_game.player2_map_action_card_id, \
+	main_game.player2_clicked_position)
+	parent_fsm.change_state("IdleState")
+	
 ## 退出状态时触发
 func _on_exit() -> void:
 	main_game.map_action_card = null

@@ -19,14 +19,14 @@ func _on_enter() -> void:
 		print("等待结束")
 	main_game.grid_range.is_in_player2_move_range_synced = false
 	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
-	
+	print("请求判断")
 	NetRelay.rpc("net_request_is_in_player2_move_range", main_game.player2_clicked_position)
 	NetRelay.rpc("net_request_is_in_player2_occupy_cell_map", main_game.player2_clicked_position)
 	
 	while not (main_game.grid_range.is_in_player2_move_range_synced \
 			and main_game.grid_range.is_in_player2_occupy_cell_map_synced):
 		await get_tree().process_frame
-	
+	print("判断结束")
 	main_game.grid_range.is_in_player2_move_range_synced = false
 	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
 	
