@@ -7,7 +7,8 @@ class_name Occupancy
 @export var grid_range: GridRange
 @onready var main_game: MainGame = $".."
 
-
+var is_player1_vacate_over:bool = false
+var is_player2_vacate_over:bool = false
 
 enum OccupyResult {
 	CHARACTER_TO_VEHICLE = 0,
@@ -24,7 +25,14 @@ enum OccupyResult {
 func _ready() -> void:
 	NetRelay.sync_occupy.connect(_on_sync_occupy)
 	NetRelay.sync_vacate.connect(_on_sync_vacate)
+	NetRelay.sync_is_vacate_over.connect(_on_sync_is_vacate_over)
 
+func _on_sync_is_vacate_over(faction:Data.Faction,temp:bool):
+	if faction == Data.Faction.PLAYER1:
+		is_player1_vacate_over = temp
+	elif faction == Data.Faction.PLAYER2:
+		is_player2_vacate_over = temp
+		
 func remove_node(selected_unit:CardBaseOnmap):
 	if selected_unit.get_parent() != null:
 		selected_unit.get_parent().remove_child(selected_unit)
@@ -289,6 +297,7 @@ func _on_sync_vacate(selected_unit_id:int):
 				var vehicle = grand_parent as VehicleCardBase
 				if not vehicle.capacity < Data.card_data[vehicle.id]["capacity"]:
 						vehicle.char_icon.visible = false
+	NetRelay.rpc("net_sync_is_vacate_over", main_game.my_faction, true)
 
 func vacate_by_unit(selected_unit:CardBaseOnmap):
 	NetRelay.rpc("net_sync_vacate",selected_unit.id)

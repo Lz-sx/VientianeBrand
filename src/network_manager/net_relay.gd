@@ -32,6 +32,8 @@ signal sync_is_in_player2_move_range(temp:bool)
 signal sync_is_in_player2_occupy_cell_map(temp:bool)
 signal sync_is_in_player2_deploy_range(temp:bool)
 signal sync_is_in_player2_arm_slot_map(temp:bool)
+signal sync_is_vacate_over(faction:Data.Faction,temp:bool)
+signal sync_is_move_over(faction:Data.Faction,temp:bool)
 signal request_is_in_player2_move_range(pos:Vector2i)
 signal request_is_in_player2_occupy_cell_map(pos:Vector2i)
 signal request_is_in_player2_deploy_range(pos:Vector2i)
@@ -120,6 +122,13 @@ func net_sync_is_in_player2_deploy_range(temp:bool) -> void:
 func net_sync_is_in_player2_arm_slot_map(temp:bool) -> void:
 	emit_signal("sync_is_in_player2_arm_slot_map", temp)
 	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_is_vacate_over(faction:Data.Faction,temp:bool) -> void:
+	emit_signal("sync_is_vacate_over", faction,temp)
+	
+@rpc("any_peer", "call_local", "reliable")
+func net_sync_is_move_over(faction:Data.Faction,temp:bool) -> void:
+	emit_signal("sync_is_move_over", faction,temp)
 
 
 

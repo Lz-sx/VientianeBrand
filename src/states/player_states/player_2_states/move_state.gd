@@ -3,11 +3,20 @@ extends StateBase
 func _on_enter() -> void:
 	
 	main_game.current_player2_action_point -= 1
-	NetRelay.rpc("net_sync_action_point", main_game.current_player2_action_point)
+	NetRelay.rpc("net_sync_action_point_show", main_game.current_player2_action_point)
 	
 	if main_game.player2_map_card_be_selected_id != main_game.player2_map_action_card_id:
+		print("出")
+		main_game.occupancy.is_player1_vacate_over = false
+		main_game.occupancy.is_player2_vacate_over = false
 		main_game.occupancy.vacate_by_id(main_game.player2_map_action_card_id)
-		
+		print("等待")
+		while not (main_game.occupancy.is_player1_vacate_over\
+		and main_game.occupancy.is_player2_vacate_over):
+			await get_tree().process_frame
+		main_game.occupancy.is_player1_vacate_over = false
+		main_game.occupancy.is_player2_vacate_over = false
+		print("等待结束")
 	main_game.grid_range.is_in_player2_move_range_synced = false
 	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
 	
@@ -22,27 +31,39 @@ func _on_enter() -> void:
 	main_game.grid_range.is_in_player2_occupy_cell_map_synced = false
 	
 	if main_game.grid_range.is_in_player2_move_range:
+		print("开始移动")
+		main_game.movement.is_player1_move_over = false
+		main_game.movement.is_player2_move_over = false
 		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
 		main_game.player2_map_card_be_selected_id = main_game.player2_map_action_card_id
 		
-		main_game.movement.is_move_over = false
-		while not main_game.movement.is_move_over:
+		print("等待")
+		while not (main_game.movement.is_player1_move_over\
+		and main_game.movement.is_player2_move_over):
 			await get_tree().process_frame
-		main_game.movement.is_move_over = false
+		main_game.movement.is_player1_move_over = false
+		main_game.movement.is_player2_move_over = false
+		print("等待结束")
 		
 		NetRelay.rpc("net_reply_player2_update_text",main_game.player2_map_card_be_selected_id)
 		NetRelay.rpc("net_reply_player2_update_button",main_game.player2_map_card_be_selected_id)
 	elif main_game.grid_range.is_in_player2_occupy_cell_map:
-		print(9191919191)
+		main_game.movement.is_player1_move_over = false
+		main_game.movement.is_player2_move_over = false
+		print("开始移动")
 		main_game.movement.move_by_id(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)
 		#await get_tree().create_timer(0.5).timeout
 		
-		main_game.movement.is_move_over = false
-		while not main_game.movement.is_move_over:
+		print("等待")
+		while not (main_game.movement.is_player1_move_over\
+		and main_game.movement.is_player2_move_over):
 			await get_tree().process_frame
-		main_game.movement.is_move_over = false
+		main_game.movement.is_player1_move_over = false
+		main_game.movement.is_player2_move_over = false
+		print("等待结束")
+		print("占据")
 		
 		main_game.occupancy.occupy(main_game.player2_map_action_card_id,\
 		main_game.player2_clicked_position)

@@ -43,8 +43,6 @@ func turn_changed_2to1():
 	label.visible = true
 	
 func _can_action(faction:Data.Faction) -> bool:
-	print(faction)
-	print(main_game.current_player2_action_point)
 	if faction == Data.Faction.PLAYER1:
 		if main_game.current_player1_action_point > 0:
 			return true

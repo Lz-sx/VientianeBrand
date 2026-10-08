@@ -6,11 +6,19 @@ class_name Movement
 @onready var obstacle: TileMapLayer = $"../Map/Obstacle"
 @onready var main_game: MainGame = $".."
 
-var is_move_over:bool = false
+var is_player1_move_over:bool = false
+var is_player2_move_over:bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	NetRelay.sync_move.connect(_on_sync_move)
+	NetRelay.sync_is_move_over.connect(_on_sync_is_move_over)
+
+func _on_sync_is_move_over(faction:Data.Faction,temp:bool):
+	if faction == Data.Faction.PLAYER1:
+		is_player1_move_over = temp
+	elif faction == Data.Faction.PLAYER2:
+		is_player2_move_over = temp
 
 func _on_sync_move(selected_unit_id: int, tile_position: Vector2i):
 	var selected_unit = main_game.id_map_card_map[selected_unit_id]
@@ -34,7 +42,7 @@ func _on_sync_move(selected_unit_id: int, tile_position: Vector2i):
 	tween.finished.connect(func():
 		selected_unit.z_index = 0
 		game_grid.add_unit(selected_unit, tile_position)
-		is_move_over = true
+		NetRelay.rpc("net_sync_is_move_over", main_game.my_faction, true)
 	)
 
 func move_by_unit(selected_unit: CardBaseOnmap, tile_position: Vector2i):
